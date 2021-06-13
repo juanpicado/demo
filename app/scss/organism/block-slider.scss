@@ -1,17 +1,17 @@
 @import "../helper/variables";
 @import "../helper/mixins";
 
-.slider {
+.block-slider {
     position: relative;
     overflow: hidden;
 
-    .slider-headline {
+    .block-slider-headline {
         @include content-width;
         @include text(h3);
         padding-bottom: 2rem;
     }
 
-    .slider-overlay {
+    .block-slider-overlay {
         position: absolute;
         z-index: 1;
         top: 0;
@@ -22,24 +22,24 @@
         pointer-events: none;
     }
 
-    .slider-frame {
+    .block-slider-frame {
         position: relative;
     }
 
-    .slider-container {
+    .block-slider-container {
         position: relative;
         overflow: visible;
         @include content-width;
         padding-bottom: 10rem;
     }
 
-    .slider-slide {
+    .block-slider-slide {
         overflow: visible;
         will-change: transform;
         backface-visibility: hidden;
     }
 
-    .slider-drag-info {
+    .block-slider-drag-info {
         position: absolute;
         left: 0;
         bottom: 0;
@@ -52,8 +52,8 @@
         @include text(p);
     }
 
-    .slider-next-container,
-    .slider-prev-container {
+    .block-slider-next-container,
+    .block-slider-prev-container {
         position: absolute;
         z-index: 1;
         display: flex;
@@ -64,7 +64,7 @@
         @include transition(opacity, 0.1s);
     }
 
-    .slider-next-container {
+    .block-slider-next-container {
         right: 0;
         top: 0;
 
@@ -81,7 +81,7 @@
         }
     }
 
-    .slider-prev-container {
+    .block-slider-prev-container {
         right: auto;
         left: 0;
 
@@ -107,12 +107,12 @@
 
     @include hover {
         &.has-prev {
-            .slider-prev-container {
+            .block-slider-prev-container {
                 opacity: 1;
             }
         }
 
-        .slider-next-container {
+        .block-slider-next-container {
             opacity: 1;
         }
     }

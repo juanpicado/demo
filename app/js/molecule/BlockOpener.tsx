@@ -6,7 +6,7 @@ import { cutText } from "../lib/util/Text";
 import { GenreList } from "../atom/GenreList";
 import { parseDate } from "../lib/util/Date";
 
-export const Opener: React.FC<App.MovieDetails> = ({
+export const BlockOpener: React.FC<App.MovieDetails> = ({
     title,
     id,
     release_date,
@@ -16,35 +16,35 @@ export const Opener: React.FC<App.MovieDetails> = ({
     runtime,
 }) => {
     return (
-        <div className="opener">
-            <div className="opener-inner">
-                <h1 className="opener-headline">{title}</h1>
-                <div className="opener-info">
+        <div className="block-opener">
+            <div className="block-opener-inner">
+                <h1 className="block-opener-headline">{title}</h1>
+                <div className="block-opener-info">
                     <span>{parseDate(release_date)}</span>
-                    <span className="opener-info-separator" />
+                    <span className="block-opener-info-separator" />
                     {runtime && (
                         <>
                             <span>{runtime} min</span>
-                            <span className="opener-info-separator" />
+                            <span className="block-opener-info-separator" />
                         </>
                     )}
                     <GenreList genres={genres} />
                 </div>
-                <div className="opener-text">{cutText(overview)}</div>
+                <div className="block-opener-text">{cutText(overview)}</div>
                 <Button action={generateItemUrl(title, id)}>See more</Button>
             </div>
             {backdrop_path && (
-                <div className="opener-background">
+                <div className="block-opener-background">
                     <img
-                        className="opener-background-image"
+                        className="block-opener-background-image"
                         src={generateImageUrl(backdrop_path, "original")}
                         alt={title}
                         loading="eager"
                     />
                 </div>
             )}
-            <div className="opener-bottom-overlay" />
-            <div className="opener-left-overlay" />
+            <div className="block-opener-bottom-overlay" />
+            <div className="block-opener-left-overlay" />
         </div>
     );
 };

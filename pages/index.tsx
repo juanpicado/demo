@@ -2,9 +2,9 @@ import React, { useRef } from "react";
 import { GetStaticProps } from "next";
 import { getMovieById, getMovieGenres, getTrending } from "../app/js/lib/api/backend";
 import { App } from "../app/types/app";
-import { Slider } from "../app/js/organism/Slider";
-import { Opener } from "../app/js/molecule/Opener";
-import { Genre } from "../app/js/organism/Genre";
+import { BlockSlider } from "../app/js/organism/BlockSlider";
+import { BlockOpener } from "../app/js/molecule/BlockOpener";
+import { BlockGenre } from "../app/js/organism/BlockGenre";
 import { useInfiniteScroll } from "../app/js/lib/util/InfiniteScroll";
 
 interface HomeProps {
@@ -19,16 +19,16 @@ const Home: React.FC<HomeProps> = ({ daily, opener, genres }) => {
 
     return (
         <React.Fragment>
-            <Opener {...opener} />
+            <BlockOpener {...opener} />
             <div className="block">
-                <Slider title="Popular Today" items={daily} slides={4} />
+                <BlockSlider title="Popular Today" items={daily} slides={4} />
             </div>
             <div ref={containerRef}>
                 {Object.keys(genres)
                     .slice(0, page)
                     .map(genreKey => (
                         <div key={genreKey} className="block">
-                            <Genre {...genres[genreKey]} />
+                            <BlockGenre {...genres[genreKey]} />
                         </div>
                     ))}
             </div>
