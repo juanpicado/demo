@@ -8,8 +8,7 @@ interface CardProps extends App.Movie {
     imageSize?: string;
 }
 
-export const Card: React.FC<CardProps> = ({id, title, poster_path, imageSize}) => {
-
+export const Card: React.FC<CardProps> = ({ id, title, poster_path, imageSize }) => {
     if (!poster_path) return null;
 
     return (
@@ -21,6 +20,7 @@ export const Card: React.FC<CardProps> = ({id, title, poster_path, imageSize}) =
                             className="card-image"
                             src={generateImageUrl(poster_path, imageSize)}
                             alt={title}
+                            loading="lazy"
                         />
                     </div>
                     <CardProgress />

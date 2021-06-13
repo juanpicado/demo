@@ -39,6 +39,7 @@ export const Opener: React.FC<App.MovieDetails> = ({
                         className="opener-background-image"
                         src={generateImageUrl(backdrop_path, "original")}
                         alt={title}
+                        loading="eager"
                     />
                 </div>
             )}
