@@ -21,6 +21,7 @@ export module App {
         vote_count: number;
         video: boolean;
         vote_average: number;
+        success?: boolean;
     }
 
     interface MovieDetails {

@@ -1,18 +1,21 @@
 import React from "react";
 import Link from "next/link";
 import { App } from "../../types/app";
-import { generateImageUrl } from "../lib/util/ImageUrl";
+import { generateImageUrl, generateItemUrl } from "../lib/util/Urls";
 import { CardProgress } from "../atom/CardProgress";
 
-export const Card: React.FC<App.Movie> = props => {
+export const Card: React.FC<App.Movie> = ({id, title, poster_path}) => {
+
+    if (!poster_path) return null;
+
     return (
-        <Link href={`/item/movie/${props.id}`}>
+        <Link href={generateItemUrl(title, id)}>
             <button type="button" className="card">
                 <div className="card-image-wrapper">
                     <img
                         className="card-image"
-                        src={generateImageUrl(props.poster_path)}
-                        alt={props.title}
+                        src={generateImageUrl(poster_path)}
+                        alt={title}
                     />
                 </div>
                 <CardProgress />

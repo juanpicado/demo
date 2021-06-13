@@ -1,8 +1,11 @@
 import { App } from "../../../types/app";
 
+const baseUrl = process.env.NEXT_PUBLIC_THE_MOVIE_DB_V3_BASE_URL;
+const apiKey = process.env.NEXT_PUBLIC_THE_MOVIE_DB_V3_API_KEY;
+
 const db = <T>(endpoint: string, params = ""): Promise<T> => {
     return fetch(
-        `${process.env.NEXT_PUBLIC_THE_MOVIE_DB_V3_BASE_URL}${endpoint}?api_key=${process.env.NEXT_PUBLIC_THE_MOVIE_DB_V3_API_KEY}${params}`
+        `${baseUrl}${endpoint}?api_key=${apiKey}${params}`
     )
         .then(res => res.json())
         .catch(console.error);
@@ -13,7 +16,7 @@ export const getMovieGenres = async (): Promise<Record<string, App.Genre>> => {
     return res.genres.reduce((map, item) => {
         map[item.id] = item;
         return map;
-    }, {});
+    }, {} as Record<string, App.Genre>);
 };
 
 export const getTrending = async (time: "day" | "week"): Promise<App.Page<App.Movie[]>> => {

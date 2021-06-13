@@ -2,6 +2,7 @@ import React from "react";
 import { App } from "../../../app/types/app";
 import { GetServerSideProps } from "next";
 import { getMovieById } from "../../../app/js/lib/api/backend";
+import { cutIdFromSlug } from "../../../app/js/lib/util/Urls";
 
 interface ItemProps {
     item: App.Movie;
@@ -14,14 +15,30 @@ const Item: React.FC<ItemProps> = ({ item }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-    const { type, id } = params;
-    let item: App.Movie = null;
+    const slug = params?.slug;
+    const type = params?.type;
 
-    if ("movie" === type && id) {
-        item = await getMovieById(id as string);
+    let item: App.Movie | null = null;
+
+    if (!slug || "string" !== typeof slug) {
+        return {
+            notFound: true,
+        };
     }
 
-    if (!item) {
+    const id = cutIdFromSlug(slug);
+
+    if (!id) {
+        return {
+            notFound: true,
+        };
+    }
+
+    if ("movie" === type && id) {
+        item = await getMovieById(id);
+    }
+
+    if (!item || item.success === false) {
         return {
             notFound: true,
         };
