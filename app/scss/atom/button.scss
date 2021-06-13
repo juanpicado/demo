@@ -5,17 +5,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 4rem;
     min-width: 15rem;
-    padding: 1.5rem 2rem;
+    padding: 0 2rem;
     border-radius: 0.5rem;
     color: $black;
     background-color: $white;
     @include text(button);
-    @include transition(background-color, 0.1s);
+    @include transition(background-color color transform, 0.2s);
+    backface-visibility: hidden;
+
+    .button-text {
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
 
     &.is-secondary {
         color: $white;
-        background-color: $gray;
+        background-color: $primary;
 
         @include hover {
             background-color: $gray;
@@ -23,6 +30,12 @@
     }
 
     @include hover {
-        background-color: $gray;
+        transform: scale(1.025);
+        color: $white;
+        background-color: $primary;
+    }
+
+    &:active {
+        transform: scale(0.975);
     }
 }

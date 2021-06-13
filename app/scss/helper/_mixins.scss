@@ -50,20 +50,23 @@
     }
 }
 
-@mixin transition($property, $duration) {
-    transition: $property $duration;
-    will-change: $property;
+@mixin transition($properties, $duration) {
+    transition-property: join($properties, (), 'comma');
+    transition-duration: $duration;
+    will-change: join($properties, (), 'comma');
 }
 
-@mixin hover() {
+@mixin hover($fallback: false) {
     @media (hover: hover) {
         &:hover {
             @content;
         }
     }
 
-    &:active {
-        @content;
+    @if $fallback == true {
+        @media (hover: none) {
+            @content;
+        }
     }
 }
 //endregion

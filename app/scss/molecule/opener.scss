@@ -34,15 +34,6 @@
         margin: 1rem 0 2rem;
     }
 
-    .opener-controls {
-        display: flex;
-        margin: 0 -0.5rem;
-
-        .button {
-            margin: 0 0.5rem;
-        }
-    }
-
     .opener-background {
         position: absolute;
         z-index: -1;
@@ -69,11 +60,11 @@
     }
 
     .opener-bottom-overlay {
-        background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+        background: linear-gradient(0deg, $black 0%, transparent 100%);
     }
 
     .opener-left-overlay {
-        background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+        background: linear-gradient(90deg, $black-75 0%, transparent 100%);
     }
 }
 
