@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
-import classnames from "classnames";
 import { App } from "../../types/app";
 import { Card } from "../molecule/Card";
 import { useSlider } from "../lib/util/Slider";
 import { ChevronLeft, ChevronRight, Icon } from "../lib/util/Icon";
+import { classes } from "../lib/util/Classes";
 
 interface SliderProps {
     title?: string;
@@ -11,14 +11,14 @@ interface SliderProps {
 }
 
 export const Slider: React.FC<SliderProps> = ({ items, title }) => {
-    const sliderRef = useRef<HTMLDivElement>(null);
+    const sliderRef = useRef<HTMLDivElement | null>(null);
     const { next, prev, active } = useSlider(sliderRef, {
         slidesPerView: 6,
         spacing: 15,
         rubberband: false,
     });
 
-    const sliderClasses = classnames({
+    const sliderClasses = classes({
         slider: true,
         "has-prev": active > 0,
     });

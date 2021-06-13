@@ -4,7 +4,7 @@ import { Slider } from "./Slider";
 import { getMoviesByGenre } from "../lib/api/backend";
 
 export const Genre: React.FC<App.Genre> = ({ id, name }) => {
-    const [movies, setMovies] = useState<App.Movie[]>(null);
+    const [movies, setMovies] = useState<App.Movie[] | null>(null);
 
     useEffect(() => {
         fetchMovies();

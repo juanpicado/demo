@@ -7,7 +7,7 @@ export const parseDate = (dateStr: string): string => {
     return `${day}. ${month} ${year}`;
 };
 
-const months = {
+const months: Record<number, string> = {
     1: "January",
     2: "February",
     3: "March",

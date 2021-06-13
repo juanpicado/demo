@@ -1,6 +1,6 @@
 import React from "react";
-import classnames from "classnames";
 import Link from "next/link";
+import { classes } from "../lib/util/Classes";
 
 interface ButtonProps {
     action: string | (() => void);
@@ -12,7 +12,7 @@ export const Button: React.FC<ButtonProps> = ({ isSecondary, action, children })
         <Link href={action}>
             <button
                 type="button"
-                className={classnames({
+                className={classes({
                     button: true,
                     "is-secondary": isSecondary,
                 })}>
@@ -22,7 +22,7 @@ export const Button: React.FC<ButtonProps> = ({ isSecondary, action, children })
     ) : (
         <button
             type="button"
-            className={classnames({
+            className={classes({
                 button: true,
                 "is-secondary": isSecondary,
             })}

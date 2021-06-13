@@ -3,21 +3,21 @@ import KeenSlider, { TOptionsEvents } from "keen-slider";
 
 interface UseSliderData {
     active: number;
-    sliderRef: MutableRefObject<KeenSlider>;
     next: () => void;
     prev: () => void;
 }
 export function useSlider(
-    ref: MutableRefObject<HTMLDivElement>,
+    ref: MutableRefObject<HTMLDivElement | null>,
     options?: TOptionsEvents
 ): UseSliderData {
-    const sliderRef = useRef<KeenSlider>(null);
+    const sliderRef = useRef<KeenSlider | null>(null);
     const [active, setActive] = useState<number>(0);
 
     useEffect(() => {
         if (!ref.current || sliderRef.current) {
             return;
         }
+
         sliderRef.current = new KeenSlider(ref.current, {
             ...options,
             slideChanged: ref => {
@@ -29,8 +29,7 @@ export function useSlider(
 
     return {
         active,
-        sliderRef,
-        next: () => sliderRef.current.next(),
-        prev: () => sliderRef.current.prev(),
+        next: () => sliderRef.current?.next(),
+        prev: () => sliderRef.current?.prev(),
     };
 }
