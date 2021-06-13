@@ -1,43 +1,36 @@
 import React from "react";
-import { App } from "../../types/app";
-import { generateImageUrl, generateItemUrl } from "../lib/util/Urls";
+import { generateImageUrl } from "../lib/util/Urls";
 import { Button } from "../atom/Button";
 import { cutText } from "../lib/util/Text";
-import { GenreList } from "../atom/GenreList";
-import { parseDate } from "../lib/util/Date";
+import { App } from "../../types/app";
 
-export const BlockOpener: React.FC<App.MovieDetails> = ({
-    title,
-    id,
-    release_date,
-    overview,
-    backdrop_path,
-    genres,
-    runtime,
-}) => {
+export const BlockOpener: React.FC<App.ItemDetails> = ({ title, text, image, url, infos }) => {
     return (
         <div className="block-opener">
             <div className="block-opener-inner">
                 <h1 className="block-opener-headline">{title}</h1>
                 <div className="block-opener-info">
-                    <span>{parseDate(release_date)}</span>
-                    <span className="block-opener-info-separator" />
-                    {runtime && (
-                        <>
-                            <span>{runtime} min</span>
-                            <span className="block-opener-info-separator" />
-                        </>
-                    )}
-                    <GenreList genres={genres} />
+                    {infos &&
+                        infos.length > 0 &&
+                        infos.map((info, index) => {
+                            if (!info) return null;
+
+                            return (
+                                <React.Fragment key={info + index}>
+                                    <span>{info}</span>
+                                    <span className="block-opener-info-separator" />
+                                </React.Fragment>
+                            );
+                        })}
                 </div>
-                <div className="block-opener-text">{cutText(overview)}</div>
-                <Button action={generateItemUrl(title, id)}>See more</Button>
+                <div className="block-opener-text">{cutText(text)}</div>
+                <Button action={url}>See more</Button>
             </div>
-            {backdrop_path && (
+            {image && (
                 <div className="block-opener-background">
                     <img
                         className="block-opener-background-image"
-                        src={generateImageUrl(backdrop_path, "original")}
+                        src={generateImageUrl(image, "original")}
                         alt={title}
                         loading="eager"
                     />

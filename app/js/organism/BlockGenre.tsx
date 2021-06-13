@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { App } from "../../types/app";
+import { Api } from "../../types/api";
 import { BlockSlider } from "./BlockSlider";
-import { getMoviesByGenre } from "../lib/api/backend";
+import { getItemsByGenre } from "../lib/api/backend";
 
-export const BlockGenre: React.FC<App.Genre> = ({ id, name }) => {
-    const [movies, setMovies] = useState<App.Movie[] | null>(null);
+export const BlockGenre: React.FC<Api.Genre> = ({ id, name, media_type }) => {
+    const [items, setItems] = useState<Api.Item[] | null>(null);
 
     useEffect(() => {
-        fetchMovies();
+        fetchItems().catch(console.error);
     }, []);
 
-    const fetchMovies = async () => {
-        const movies = await getMoviesByGenre(id);
-        setMovies(movies.results);
+    const fetchItems = async () => {
+        const results = await getItemsByGenre(id, media_type);
+        setItems(results);
     };
 
-    if (!movies) return null;
+    if (!items) return null;
 
-    return <BlockSlider title={name} items={movies} />;
+    return <BlockSlider title={name} items={items} mediaType={media_type} />;
 };

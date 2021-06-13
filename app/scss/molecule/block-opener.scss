@@ -27,6 +27,10 @@
             content: "|";
             margin: 0 1rem;
         }
+
+        &:last-child {
+            display: none;
+        }
     }
 
     .block-opener-text {

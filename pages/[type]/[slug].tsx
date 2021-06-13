@@ -1,26 +1,26 @@
 import React from "react";
-import { App } from "../../../app/types/app";
+import { Api } from "../../app/types/api";
 import { GetServerSideProps } from "next";
-import { getMovieById } from "../../../app/js/lib/api/backend";
-import { cutIdFromSlug } from "../../../app/js/lib/util/Urls";
+import { getItemById } from "../../app/js/lib/api/backend";
+import { cutIdFromSlug } from "../../app/js/lib/util/Urls";
 
 interface ItemProps {
-    item: App.Movie;
+    item: Api.Item;
 }
 
 const Item: React.FC<ItemProps> = ({ item }) => {
     if (!item) return null;
 
-    return <div>{item.title}</div>;
+    return <div>hallo</div>;
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const slug = params?.slug;
     const type = params?.type;
 
-    let item: App.Movie | null = null;
+    let item: Api.ItemDetails | null = null;
 
-    if (!slug || "string" !== typeof slug) {
+    if (!slug || "string" !== typeof slug || !type || "string" !== typeof type) {
         return {
             notFound: true,
         };
@@ -34,8 +34,8 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         };
     }
 
-    if ("movie" === type && id) {
-        item = await getMovieById(id);
+    if (id) {
+        item = await getItemById(id, type);
     }
 
     if (!item || item.success === false) {

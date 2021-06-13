@@ -2,13 +2,6 @@
 @import "../helper/mixins";
 
 .card-progress {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    @include square(100%);
-    padding: 2rem;
-    background-color: rgba(0, 0, 0, 0.7);
-
     .card-progress-bar {
         position: relative;
         width: 100%;

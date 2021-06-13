@@ -5,10 +5,16 @@
     position: relative;
     overflow: hidden;
 
-    .block-slider-headline {
+    .block-slider-head {
+        display: flex;
         @include content-width;
-        @include text(h3);
         padding-bottom: 2rem;
+        @include text(h3);
+    }
+
+    .block-slider-type {
+        color: $dark-gray;
+        margin-left: 2rem;
     }
 
     .block-slider-overlay {
@@ -48,7 +54,7 @@
         align-items: center;
         height: 10rem;
         width: 100%;
-        opacity: 0.35;
+        color: $dark-gray;
         @include text(p);
     }
 

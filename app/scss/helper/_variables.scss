@@ -5,6 +5,7 @@ $black-50: rgba(18, 18, 18, 0.5);
 $black-75: rgba(18, 18, 18, 0.75);
 $white: #fff;
 $gray: #c4c4c4;
+$dark-gray: #717171;
 
 $primary: #bb86fc;
 $error: #cf6679;
@@ -51,6 +52,11 @@ $font-settings: (
             font-weight: 600,
             line-height: 1,
         ),
+        h4: (
+            font-size: 1.5rem,
+            font-weight: 600,
+            line-height: 1,
+        ),
         button: (
             font-size: 1.5rem,
             font-weight: map-get($font-weights, bold),
@@ -76,6 +82,9 @@ $font-settings: (
         ),
         h3: (
             font-size: 2.5rem,
+        ),
+        h4: (
+            font-size: 2rem,
         ),
         p: (
             font-size: 1.7rem,
