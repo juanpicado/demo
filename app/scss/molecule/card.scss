@@ -2,14 +2,26 @@
 @import "../helper/mixins";
 
 .card {
+    position: relative;
+    display: flex;
+    width: 100%;
+    border-radius: $radius;
+    transform: translateZ(0);
+    overflow: hidden;
+    @include fit-aspect-ratio(150%);
     @include transition(transform, 0.3s);
 
-    .card-image-wrapper {
-        overflow: hidden;
-        transform: translateZ(0);
-        border-radius: $radius;
+    .card-inner {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        height: 35rem;
+        height: 100%;
+    }
+
+    .card-image-wrapper {
+        width: 100%;
+        height: 100%;
     }
 
     .card-image {
@@ -20,12 +32,15 @@
     }
 
     .card-progress {
+        position: absolute;
+        top: 0;
+        left: 0;
         opacity: 0;
         @include transition(opacity, 0.3s);
     }
 
     @include hover {
-        transform: translateY(-1.5rem);
+        transform: translateY(-1.5rem) translateZ(0);
 
         .card-image {
             transform: scale(1.025);

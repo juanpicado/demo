@@ -8,12 +8,13 @@ import { classes } from "../lib/util/Classes";
 interface SliderProps {
     title?: string;
     items: App.Movie[];
+    slides?: number;
 }
 
-export const Slider: React.FC<SliderProps> = ({ items, title }) => {
+export const Slider: React.FC<SliderProps> = ({ items, title, slides = 6 }) => {
     const sliderRef = useRef<HTMLDivElement | null>(null);
     const { next, prev, active } = useSlider(sliderRef, {
-        slidesPerView: 6,
+        slidesPerView: slides,
         spacing: 15,
         rubberband: false,
     });
@@ -40,7 +41,7 @@ export const Slider: React.FC<SliderProps> = ({ items, title }) => {
                             <div
                                 className="slider-slide keen-slider__slide"
                                 key={item.original_title + index}>
-                                <Card {...item} />
+                                <Card {...item} imageSize={slides < 6 ? "original" : undefined} />
                             </div>
                         ))}
                         <div className="slider-drag-info">Drag me here</div>

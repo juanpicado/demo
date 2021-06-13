@@ -20,12 +20,16 @@ const Home: React.FC<HomeProps> = ({ daily, opener, genres }) => {
     return (
         <React.Fragment>
             <Opener {...opener} />
-            <Slider title="Popular Today" items={daily} />
+            <div className="block">
+                <Slider title="Popular Today" items={daily} slides={4} />
+            </div>
             <div ref={containerRef}>
                 {Object.keys(genres)
                     .slice(0, page)
                     .map(genreKey => (
-                        <Genre key={genreKey} {...genres[genreKey]} />
+                        <div key={genreKey} className="block">
+                            <Genre {...genres[genreKey]} />
+                        </div>
                     ))}
             </div>
         </React.Fragment>
