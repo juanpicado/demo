@@ -35,17 +35,15 @@ export const Slider: React.FC<SliderProps> = ({ items, title, slides = 6 }) => {
                 <button type="button" className="slider-next-container" onClick={next}>
                     <Icon name="chevron-right" icon={ChevronRight} />
                 </button>
-                <div className="slider-inner">
-                    <div className="slider-container keen-slider" ref={sliderRef}>
-                        {items.map((item, index) => (
-                            <div
-                                className="slider-slide keen-slider__slide"
-                                key={item.original_title + index}>
-                                <Card {...item} imageSize={slides < 6 ? "original" : undefined} />
-                            </div>
-                        ))}
-                        <div className="slider-drag-info">Drag me here</div>
-                    </div>
+                <div className="slider-container keen-slider" ref={sliderRef}>
+                    {items.map((item, index) => (
+                        <div
+                            className="slider-slide keen-slider__slide"
+                            key={item.original_title + index}>
+                            <Card {...item} imageSize={slides < 6 ? "original" : undefined} />
+                        </div>
+                    ))}
+                    <div className="slider-drag-info">Drag me here</div>
                 </div>
             </div>
         </div>
