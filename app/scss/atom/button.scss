@@ -1,0 +1,28 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 15rem;
+    padding: 1.5rem 2rem;
+    border-radius: 0.5rem;
+    color: $black;
+    background-color: $white;
+    @include text(button);
+    @include transition(background-color, 0.1s);
+
+    &.is-secondary {
+        color: $white;
+        background-color: $gray;
+
+        @include hover {
+            background-color: $gray;
+        }
+    }
+
+    @include hover {
+        background-color: $gray;
+    }
+}

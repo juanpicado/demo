@@ -1,0 +1,33 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+
+.card-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.7);
+
+    .card-progress-bar {
+        position: relative;
+        width: 100%;
+        height: 0.4rem;
+        border-radius: 0.2rem;
+        background-color: gray;
+        overflow: hidden;
+    }
+
+    .card-progress-inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 50%;
+        background-color: $white;
+    }
+}

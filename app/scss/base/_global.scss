@@ -1,0 +1,9 @@
+@import "../helper/mixins";
+@import "../helper/variables";
+
+body {
+    font-family: "Circular Std", Helvetica, Arial, sans-serif;
+    @include text(p);
+    background: $body;
+    color: $white;
+}
