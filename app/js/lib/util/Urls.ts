@@ -3,7 +3,7 @@ export const generateItemUrl = (type: string, title: string, id: string | number
         return "";
     }
 
-    return `/${type}/${title.toLowerCase()}-${id}`;
+    return `/${type}/${encodeURIComponent(`${title.toLowerCase()}-${id}`)}`;
 };
 
 export const cutIdFromSlug = (slug: string): string => {

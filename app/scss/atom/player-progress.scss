@@ -1,0 +1,68 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+
+.player-progress {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 0.85rem;
+
+    .player-progress-inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        transform: scaleX(0);
+        background-color: $primary;
+        transform-origin: left;
+        will-change: transform;
+        backface-visibility: hidden;
+    }
+
+    .player-progress-knob {
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        left: 0;
+        transform: translate(-50%, -50%);
+        @include square(2rem);
+        border-radius: 50%;
+        background-color: $primary;
+        will-change: left;
+        backface-visibility: hidden;
+    }
+
+    .player-mouse-indicator {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        transform: translateX(-50%);
+        opacity: 0;
+        height: 100%;
+        width: 0.2rem;
+        background-color: $dark-gray;
+        will-change: left;
+        pointer-events: none;
+
+        &.is-active {
+            opacity: 1;
+        }
+    }
+
+    .player-progress-frame {
+        position: relative;
+        width: 100%;
+        height: 0.5rem;
+        background-color: $gray;
+        overflow: hidden;
+    }
+
+    @include hover {
+        .player-progress-frame {
+            height: 0.85rem;
+        }
+    }
+}

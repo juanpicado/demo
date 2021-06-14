@@ -1,3 +1,15 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+
+.__slot-watch {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    @include square(100%);
+    background-color: $deep-black;
+}
+
 .block {
     margin-bottom: 6rem;
 

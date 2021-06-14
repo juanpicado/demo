@@ -17,6 +17,10 @@
         line-height: 1;
     }
 
+    .navigation-highlight {
+        color: $primary;
+    }
+
     .navigation-group {
         display: flex;
         margin: 0.3rem -1rem 0 5rem;

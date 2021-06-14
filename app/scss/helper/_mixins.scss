@@ -69,7 +69,26 @@
         }
     }
 }
-//endregion
+
+@mixin player-controls-hover($init, $end) {
+    display: flex;
+    @include transition(color, .2s);
+
+    .icon-#{$init},
+    .icon-#{$end} {
+        @include square(4rem);
+        @include transition(transform, .2s);
+    }
+
+    @include hover {
+        color: $primary;
+
+        .icon-#{$init},
+        .icon-#{$end} {
+            transform: scale(1.1);
+        }
+    }
+}
 
 //region Media Queries
 @mixin on-min-width ($min-width) {

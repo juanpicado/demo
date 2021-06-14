@@ -8,7 +8,7 @@
     @include transition(color, 0.2s);
 
     &.is-active {
-        color: $white;
+        color: $primary;
     }
 
     &::after {

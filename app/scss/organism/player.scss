@@ -1,0 +1,23 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+
+.player {
+    position: relative;
+    @include square(100%);
+
+    .player-video {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        @include square(100%);
+        margin: auto;
+    }
+
+    .player-controls {
+        position: absolute;
+        z-index: 1;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+}

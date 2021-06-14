@@ -11,14 +11,20 @@
 @import "atom/button";
 @import "atom/card-progress";
 @import "atom/navigation-link";
+@import "atom/player-fullscreen";
+@import "atom/player-play";
+@import "atom/player-progress";
+@import "atom/player-skip";
 
 // Molecule
 @import "molecule/block-opener";
 @import "molecule/card";
 @import "molecule/navigation";
+@import "molecule/player-controls";
 
 // Organism
 @import "organism/block-slider";
+@import "organism/player";
 
 // Template
 @import "template/_default";

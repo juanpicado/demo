@@ -11,7 +11,12 @@ export const Navigation: React.FC = () => {
         <div className="navigation">
             <div className="navigation-inner">
                 <div className="navigation-logo">
-                    <Link href="/">Streamio</Link>
+                    <Link href="/">
+                        <span>
+                            Stream
+                            <span className="navigation-highlight">io</span>
+                        </span>
+                    </Link>
                 </div>
                 <div className="navigation-group">
                     <NavigationLink
