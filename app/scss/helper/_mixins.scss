@@ -51,9 +51,9 @@
 }
 
 @mixin transition($properties, $duration) {
-    transition-property: join($properties, (), 'comma');
+    transition-property: join($properties, (), "comma");
     transition-duration: $duration;
-    will-change: join($properties, (), 'comma');
+    will-change: join($properties, (), "comma");
 }
 
 @mixin hover($fallback: false) {

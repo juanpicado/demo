@@ -19,19 +19,22 @@ export const BlockSlider: React.FC<SliderProps> = ({ items, title, mediaType, sl
     const router = useRouter();
     const { type } = router.query;
     const sliderRef = useRef<HTMLDivElement | null>(null);
-    const { next, prev, active } = useSlider(sliderRef, {
-        slidesPerView: slides,
-        spacing: 15,
-        rubberband: false,
-    });
-
-    const sliderClasses = classes({
-        "block-slider": true,
-        "has-prev": active > 0,
-    });
+    const { mounted, next, prev, active } = useSlider(
+        sliderRef,
+        {
+            slidesPerView: slides,
+            spacing: 15,
+            rubberband: false,
+        },
+        [items]
+    );
 
     return (
-        <div className={sliderClasses}>
+        <div
+            className={classes({
+                "block-slider": true,
+                "has-prev": active > 0,
+            })}>
             <div className="block-slider-head">
                 {title && <div className="block-slider-headline">{title}</div>}
                 {!type && mediaType && (
@@ -58,7 +61,7 @@ export const BlockSlider: React.FC<SliderProps> = ({ items, title, mediaType, sl
                             </div>
                         );
                     })}
-                    <div className="block-slider-drag-info">Drag me here</div>
+                    {mounted && <div className="block-slider-drag-info">Drag me here</div>}
                 </div>
             </div>
         </div>
