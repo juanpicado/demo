@@ -1,6 +1,8 @@
 //region Colors
+$deep-black: #000;
 $body: #121212;
 $black: #121212;
+$gray-black: #232323;
 $black-50: rgba(18, 18, 18, 0.5);
 $black-75: rgba(18, 18, 18, 0.75);
 $white: #fff;
@@ -40,38 +42,49 @@ $font-settings: (
         h1: (
             font-size: 3.5rem,
             font-weight: map-get($font-weights, bold),
+            letter-spacing: -0.15rem,
             line-height: 1,
         ),
         h2: (
             font-size: 3rem,
             font-weight: 600,
+            letter-spacing: -0.05rem,
             line-height: 1,
         ),
         h3: (
             font-size: 2rem,
             font-weight: 600,
+            letter-spacing: -0.1rem,
             line-height: 1,
         ),
         h4: (
             font-size: 1.5rem,
             font-weight: 600,
+            letter-spacing: -0.05rem,
             line-height: 1,
         ),
         button: (
             font-size: 1.5rem,
             font-weight: map-get($font-weights, bold),
+            letter-spacing: -0.05rem,
             line-height: 1,
         ),
         p: (
             font-size: 1.5rem,
             font-weight: 400,
+            letter-spacing: -0.05rem,
             line-height: 1.2,
         ),
         meta: (
             font-size: 1.5rem,
             line-height: 1,
+            letter-spacing: -0.05rem,
             color: $gray,
         ),
+        navigation: (
+            font-size: 1.5rem,
+            font-weight: 600,
+        )
     ),
     large: (
         h1: (
