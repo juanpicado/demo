@@ -70,6 +70,15 @@
     .block-opener-left-overlay {
         background: linear-gradient(90deg, $black-75 0%, transparent 100%);
     }
+
+    .block-opener-controls {
+        display: flex;
+        margin: 0 -0.5rem;
+
+        .button {
+            margin: 0 0.5rem;
+        }
+    }
 }
 
 

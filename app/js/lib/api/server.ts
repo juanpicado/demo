@@ -2,6 +2,7 @@ import { GetServerSidePropsContext } from "next";
 import { Api } from "../../../types/api";
 import { cutIdFromSlug } from "../util/Urls";
 import { getItemById } from "./backend";
+import { itemDetailsByMediaType } from "../util/MediaTypes";
 
 export const getServerSideItem = async (ctx: GetServerSidePropsContext, props = {}) => {
     const slug = ctx.params?.slug;
@@ -39,7 +40,7 @@ export const getServerSideItem = async (ctx: GetServerSidePropsContext, props = 
     return {
         props: {
             ...props,
-            item,
+            item: itemDetailsByMediaType(item),
         },
     };
 };

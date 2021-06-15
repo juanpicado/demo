@@ -11,29 +11,7 @@
         color: $primary;
     }
 
-    &::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -0.4rem;
-        height: 0.1rem;
-        width: 100%;
-        transform: scaleX(0);
-        background-color: $white;
-        @include transition(transform, 0.2s);
-    }
-
     @include hover {
         color: $white;
-
-        &::after {
-            transform: scaleX(1);
-        }
-
-        &.is-active {
-            &::after {
-                transform: scaleX(0);
-            }
-        }
     }
 }

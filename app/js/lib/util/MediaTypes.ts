@@ -33,6 +33,10 @@ export const itemByMediaType = (item: Api.Item): App.Item => {
     }
 };
 
+export const itemsByMediaType = (items: Api.Item[]): App.Item[] => {
+    return items.map(item => itemByMediaType(item));
+};
+
 export const itemDetailsByMediaType = (item: Api.ItemDetails): App.ItemDetails => {
     switch (item.media_type) {
         case MOVIE_KEY:
@@ -58,4 +62,8 @@ export const itemDetailsByMediaType = (item: Api.ItemDetails): App.ItemDetails =
                 infos: [item.genres.map(genre => genre.name).join(", ")],
             };
     }
+};
+
+export const itemsDetailsByMediaType = (items: Api.ItemDetails[]): App.ItemDetails[] => {
+    return items.map(item => itemDetailsByMediaType(item));
 };

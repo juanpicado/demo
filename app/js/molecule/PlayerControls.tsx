@@ -4,7 +4,11 @@ import { PlayerPlay } from "../atom/PlayerPlay";
 import { PlayerFullscreen } from "../atom/PlayerFullscreen";
 import { PlayerSkip } from "../atom/PlayerSkip";
 
-export const PlayerControls: React.FC = () => {
+interface PlayerControls {
+    title: string;
+}
+
+export const PlayerControls: React.FC<PlayerControls> = () => {
     return (
         <div className="player-controls">
             <PlayerProgress />

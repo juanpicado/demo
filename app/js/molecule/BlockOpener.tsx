@@ -24,7 +24,12 @@ export const BlockOpener: React.FC<App.ItemDetails> = ({ title, text, image, url
                         })}
                 </div>
                 <div className="block-opener-text">{cutText(text)}</div>
-                <Button action={url}>See more</Button>
+                <div className="block-opener-controls">
+                    <Button action={"/watch" + url}>Play</Button>
+                    <Button action={url} isSecondary>
+                        More info
+                    </Button>
+                </div>
             </div>
             {image && (
                 <div className="block-opener-background">

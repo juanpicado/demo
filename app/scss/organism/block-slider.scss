@@ -4,6 +4,11 @@
 .block-slider {
     position: relative;
     overflow: hidden;
+    opacity: 0;
+
+    &.is-mounted {
+        opacity: 1;
+    }
 
     .block-slider-head {
         display: flex;

@@ -22,9 +22,10 @@
 
     &.is-secondary {
         color: $white;
-        background-color: $primary;
+        background-color: $dark-gray;
 
         @include hover {
+            color: $black;
             background-color: $gray;
         }
     }

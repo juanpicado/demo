@@ -1,11 +1,37 @@
 import React from "react";
 import { GetStaticProps } from "next";
 import { getItemById, getGenres, getTrending } from "../app/js/lib/api/backend";
-import { IndexProps, IndexTemplate } from "../app/js/template/IndexTemplate";
-import { MOVIE_KEY, TV_KEY } from "../app/js/lib/util/MediaTypes";
+import { itemDetailsByMediaType, MOVIE_KEY, TV_KEY } from "../app/js/lib/util/MediaTypes";
+import { BlockOpener } from "../app/js/molecule/BlockOpener";
+import { BlockSlider } from "../app/js/organism/BlockSlider";
+import { BlockGenre } from "../app/js/organism/BlockGenre";
+import { App } from "../app/types/app";
+import { Api } from "../app/types/api";
 
-const Home: React.FC<IndexProps> = props => {
-    return <IndexTemplate {...props} />;
+export interface IndexProps {
+    opener: App.ItemDetails;
+    daily: Api.Item[];
+    genres: Record<string, Api.Genre>;
+}
+
+const Home: React.FC<IndexProps> = ({ daily, genres, opener }) => {
+    return (
+        <React.Fragment>
+            <BlockOpener {...opener} />
+            <div className="block">
+                <BlockSlider title="Popular Today" items={daily} slides={4} />
+            </div>
+            <div>
+                {Object.keys(genres)
+                    .slice(0, 6)
+                    .map(genreKey => (
+                        <div key={genreKey} className="block">
+                            <BlockGenre {...genres[genreKey]} />
+                        </div>
+                    ))}
+            </div>
+        </React.Fragment>
+    );
 };
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -15,7 +41,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
         props: {
-            opener,
+            opener: itemDetailsByMediaType(opener),
             genres: genres,
             daily: results,
         },

@@ -12,7 +12,7 @@ interface WatchProps {
 const Watch: React.FC<WatchProps> = ({ item }) => {
     return (
         <PlayerProvider>
-            <Player />
+            <Player item={item} />
         </PlayerProvider>
     );
 };

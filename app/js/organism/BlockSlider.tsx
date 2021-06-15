@@ -33,6 +33,7 @@ export const BlockSlider: React.FC<SliderProps> = ({ items, title, mediaType, sl
         <div
             className={classes({
                 "block-slider": true,
+                "is-mounted": mounted,
                 "has-prev": active > 0,
             })}>
             <div className="block-slider-head">
