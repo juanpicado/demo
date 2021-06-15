@@ -21,7 +21,7 @@ export const Player: React.FC<PlayerProps> = ({ item }) => {
 
     return (
         <div className="player">
-            <video ref={videoRef} className="player-video" src="/test.mp4" playsInline />
+            <video ref={videoRef} className="player-video" />
             <PlayerControls title={item.title} />
         </div>
     );

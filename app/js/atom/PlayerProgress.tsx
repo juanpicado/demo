@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { classes } from "../lib/util/Classes";
 import { usePlayer } from "../context/PlayerContext";
 
 export const PlayerProgress: React.FC = () => {
-    const { progress, jumpToAbs } = usePlayer();
+    const { progress, buffer, jumpToAbs } = usePlayer();
     const containerRef = useRef<HTMLButtonElement | null>(null);
     const indicatorRef = useRef<HTMLDivElement | null>(null);
     const [indicatorActive, setIndicatorActive] = useState<boolean>(false);
@@ -53,6 +53,10 @@ export const PlayerProgress: React.FC = () => {
                 <div
                     className="player-progress-inner"
                     style={{ transform: `scaleX(${progress})` }}
+                />
+                <div
+                    className="player-progress-buffer"
+                    style={{ transform: `scaleX(${buffer})` }}
                 />
                 <div
                     ref={indicatorRef}

@@ -1,5 +1,5 @@
 {
-  "name": "next-video-plaform-node-hls",
+  "name": "next-video-streaming-node-hls",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "hls.js": "^1.0.7",
     "keen-slider": "^5.4.0",
     "lodash": "^4.17.21",
     "next": "10.1.3",

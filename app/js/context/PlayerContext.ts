@@ -4,6 +4,7 @@ interface PlayerContextData {
     initVideoPlayer: (el: HTMLVideoElement) => void;
     playing: boolean;
     progress: number;
+    buffer: number;
     fullscreen: boolean;
     togglePlayState: () => void;
     toggleFullscreenState: () => void;
