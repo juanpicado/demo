@@ -7,12 +7,15 @@ interface PlayerContextData {
     waiting: boolean;
     progress: number;
     buffer: number;
+    currentTimeStamp: string;
     fullscreen: boolean;
+    controlsActive: boolean;
     subtitles: Player.Subtitles | null;
     activeSubtitle: string | null;
     toggleSubtitles: (index: string) => void;
     togglePlayState: () => void;
     toggleFullscreenState: () => void;
+    timeByAbs: (abs: number) => string;
     jumpToAbs: (abs: number) => void;
     jumpToSecondsFromCurrent: (seconds: number) => void;
 }

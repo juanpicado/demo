@@ -2,12 +2,22 @@
 @import "../helper/mixins";
 
 .player-progress {
-    position: relative;
     display: flex;
     align-items: center;
-    width: 100%;
-    height: 0.85rem;
-    @include transition(opacity, 0.2s);
+
+    .player-progress-timestamp {
+        text-align: right;
+        min-width: 6rem;
+    }
+
+    .player-progress-bar {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 0.85rem;
+        @include transition(opacity, 0.2s);
+    }
 
     .player-progress-inner,
     .player-progress-buffer {
@@ -53,13 +63,24 @@
         opacity: 0;
         height: 100%;
         width: 0.2rem;
-        background-color: $dark-gray;
+        background-color: $gray-black;
         will-change: left;
         pointer-events: none;
 
         &.is-active {
             opacity: 1;
         }
+    }
+
+    .player-mouse-indicator-time {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, calc(-100% - 1rem));
+        background-color: $gray-black;
+        padding: 0.5rem 1rem;
+        border-radius: $radius;
     }
 
     .player-progress-frame {

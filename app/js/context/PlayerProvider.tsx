@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { PlayerContext } from "./PlayerContext";
 import Hls from "hls.js";
 import { Player } from "../../types/player";
+import { secondsTimeToTimestamp } from "../lib/util/Time";
 
 const videoSrc = "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8";
 
@@ -9,15 +10,18 @@ export const PlayerProvider: React.FC = ({ children }) => {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const hlsRef = useRef<Hls | null>(null);
+    const mouseMoveTimeout = useRef<NodeJS.Timeout | null>(null);
 
     const [initialized, setInitialized] = useState<boolean>(false);
     const [playing, setPlaying] = useState<boolean>(false);
     const [waiting, setWaiting] = useState<boolean>(false);
     const [progress, setProgress] = useState<number>(0);
     const [buffer, setBuffer] = useState<number>(0);
+    const [currentTimeStamp, setCurrentTimeStamp] = useState<string>("");
     const [fullscreen, setFullscreen] = useState<boolean>(false);
     const [subtitles, setSubtitles] = useState<Player.Subtitles | null>(null);
     const [activeSubtitle, setActiveSubtitle] = useState<string | null>(null);
+    const [controlsActive, setControlsActive] = useState<boolean>(false);
 
     const video = videoRef.current;
     const container = containerRef.current;
@@ -77,6 +81,17 @@ export const PlayerProvider: React.FC = ({ children }) => {
         }
 
         video.currentTime = video.duration * abs;
+    };
+
+    const timeByAbs = (abs: number): string => {
+        if (!video) {
+            return "";
+        }
+
+        const max = video.duration / 59;
+        const t = Math.min(max, Math.max(0, (video.duration * abs) / 59));
+
+        return secondsTimeToTimestamp(t);
     };
 
     const toggleFullscreenState = () => {
@@ -165,7 +180,18 @@ export const PlayerProvider: React.FC = ({ children }) => {
 
     const onProgress = () => calcBuffer();
 
-    const onTimeUpdate = () => setWaiting(false);
+    const onTimeUpdate = () => {
+        if (!video) {
+            return;
+        }
+
+        setWaiting(false);
+
+        const duration = video.duration / 59;
+        const time = video.currentTime / 59;
+
+        setCurrentTimeStamp(secondsTimeToTimestamp(duration - time));
+    };
 
     const onSubtitlesLoaded = () => {
         if (!video) {
@@ -180,6 +206,21 @@ export const PlayerProvider: React.FC = ({ children }) => {
         }
 
         setSubtitles(list);
+    };
+
+    const onMouseMove = () => {
+        setControlsActive(true);
+        document.body.classList.remove("hide-cursor");
+
+        if (mouseMoveTimeout.current) {
+            clearTimeout(mouseMoveTimeout.current);
+            mouseMoveTimeout.current = null;
+        }
+
+        mouseMoveTimeout.current = setTimeout(() => {
+            document.body.classList.add("hide-cursor");
+            setControlsActive(false);
+        }, 3000);
     };
 
     useEffect(() => {
@@ -197,6 +238,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
         video.addEventListener("seeked", onSeek);
         video.addEventListener("waiting", onWait);
         container.addEventListener("fullscreenchange", onFullscreen);
+        document.addEventListener("mousemove", onMouseMove);
         return () => {
             hls.off(Hls.Events.MANIFEST_PARSED, onManifestParsed);
             hls.off(Hls.Events.SUBTITLE_TRACK_LOADED, onSubtitlesLoaded);
@@ -207,6 +249,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
             video.removeEventListener("progress", onProgress);
             video.removeEventListener("seeked", onSeek);
             container.removeEventListener("fullscreenchange", onFullscreen);
+            document.removeEventListener("mousemove", onMouseMove);
         };
     }, [initialized]);
 
@@ -218,12 +261,15 @@ export const PlayerProvider: React.FC = ({ children }) => {
                 waiting,
                 progress,
                 buffer,
+                currentTimeStamp,
                 fullscreen,
+                controlsActive,
                 subtitles,
                 activeSubtitle,
                 toggleSubtitles,
                 togglePlayState,
                 toggleFullscreenState,
+                timeByAbs,
                 jumpToAbs,
                 jumpToSecondsFromCurrent,
             }}>

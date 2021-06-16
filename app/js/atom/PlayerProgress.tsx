@@ -3,10 +3,12 @@ import { classes } from "../lib/util/Classes";
 import { usePlayer } from "../context/PlayerContext";
 
 export const PlayerProgress: React.FC = () => {
-    const { progress, buffer, jumpToAbs } = usePlayer();
+    const { progress, buffer, currentTimeStamp, jumpToAbs, timeByAbs } = usePlayer();
     const containerRef = useRef<HTMLButtonElement | null>(null);
     const indicatorRef = useRef<HTMLDivElement | null>(null);
     const [indicatorActive, setIndicatorActive] = useState<boolean>(false);
+    const [indicatorPosition, setIndicatorPosition] = useState<number>(0);
+    const [indicatorTime, setIndicatorTime] = useState<string>("");
 
     const onClick = (e: React.MouseEvent) => {
         const indicator = indicatorRef.current;
@@ -38,35 +40,49 @@ export const PlayerProgress: React.FC = () => {
             return;
         }
 
-        indicator.style.left = e.clientX - container.offsetLeft + "px";
+        const { width, left } = container.getBoundingClientRect();
+
+        const x = e.clientX - left;
+
+        setIndicatorPosition(x);
+        setIndicatorTime(timeByAbs(x / width));
     };
 
     return (
-        <button
-            ref={containerRef}
-            className="player-progress"
-            onClick={onClick}
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-            onMouseMove={onMouseMove}>
-            <div className="player-progress-frame">
-                <div
-                    className="player-progress-inner"
-                    style={{ transform: `scaleX(${progress})` }}
-                />
-                <div
-                    className="player-progress-buffer"
-                    style={{ transform: `scaleX(${buffer})` }}
-                />
+        <div className="player-progress">
+            <button
+                ref={containerRef}
+                className="player-progress-bar"
+                onClick={onClick}
+                onMouseEnter={onMouseEnter}
+                onMouseLeave={onMouseLeave}
+                onMouseMove={onMouseMove}>
+                <div className="player-progress-frame">
+                    <div
+                        className="player-progress-inner"
+                        style={{ transform: `scaleX(${progress})` }}
+                    />
+                    <div
+                        className="player-progress-buffer"
+                        style={{ transform: `scaleX(${buffer})` }}
+                    />
+                </div>
                 <div
                     ref={indicatorRef}
                     className={classes({
                         "player-mouse-indicator": true,
                         "is-active": indicatorActive,
                     })}
-                />
-            </div>
-            <div className="player-progress-knob" style={{ left: progress * 100 + "%" }} />
-        </button>
+                    style={{ left: indicatorPosition + "px" }}>
+                    {indicatorTime && (
+                        <span className="player-mouse-indicator-time">{indicatorTime}</span>
+                    )}
+                </div>
+                <div className="player-progress-knob" style={{ left: progress * 100 + "%" }} />
+            </button>
+            {currentTimeStamp && (
+                <span className="player-progress-timestamp">{currentTimeStamp}</span>
+            )}
+        </div>
     );
 };

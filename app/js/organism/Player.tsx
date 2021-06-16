@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { PlayerControls } from "../molecule/PlayerControls";
 import { usePlayer } from "../context/PlayerContext";
 import { App } from "../../types/app";
@@ -9,7 +9,7 @@ interface PlayerProps {
 }
 
 export const Player: React.FC<PlayerProps> = ({ item }) => {
-    const { waiting, initVideoPlayer } = usePlayer();
+    const { waiting, controlsActive, initVideoPlayer, togglePlayState } = usePlayer();
     const videoRef = useRef<HTMLVideoElement | null>(null);
 
     useEffect(() => {
@@ -28,7 +28,8 @@ export const Player: React.FC<PlayerProps> = ({ item }) => {
                 </div>
             )}
             <video ref={videoRef} className="player-video" />
-            <PlayerControls title={item.title} />
+            <div className="player-overlay" onClick={togglePlayState} />
+            {controlsActive && <PlayerControls title={item.title} />}
         </div>
     );
 };

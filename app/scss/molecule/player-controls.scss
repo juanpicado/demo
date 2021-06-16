@@ -16,17 +16,25 @@
         }
     }
 
+    .player-controls-back {
+        position: fixed;
+        z-index: 1;
+        top: 3rem;
+        left: 3rem;
+        @include player-controls-hover(arrow-left, arrow-left);
+    }
+
     .player-progress {
         margin-bottom: 2rem;
     }
 
-    .player-inner {
+    .player-controls-inner {
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
 
-    .player-group {
+    .player-controls-group {
         display: flex;
         align-items: center;
 
@@ -35,13 +43,19 @@
         }
     }
 
+    .player-controls-title {
+        @include text(h3);
+    }
+
     .player-skip-wrapper {
         display: flex;
         align-items: center;
-        margin: 0 -1rem 0 5rem;
+        margin: 0 4rem;
 
         .player-skip {
-            margin: 0 1rem;
+            &:last-child {
+                margin-left: 4rem;
+            }
         }
     }
 }
