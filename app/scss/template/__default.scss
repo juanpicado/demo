@@ -19,3 +19,13 @@
     flex-direction: column;
     margin-bottom: 8rem;
 }
+
+#nprogress {
+    .bar {
+        background-color: $primary;
+    }
+
+    .preg {
+        box-shadow: 0 0 10px $primary, 0 0 5px $primary;
+    }
+}
