@@ -268,6 +268,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
                 currentTimeStamp,
                 fullscreen,
                 controlsActive,
+                setControlsActive,
                 subtitles,
                 activeSubtitle,
                 toggleSubtitles,

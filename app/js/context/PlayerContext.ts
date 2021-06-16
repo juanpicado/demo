@@ -10,6 +10,7 @@ interface PlayerContextData {
     currentTimeStamp: string;
     fullscreen: boolean;
     controlsActive: boolean;
+    setControlsActive: (value: boolean) => void;
     subtitles: Player.Subtitles | null;
     activeSubtitle: string | null;
     toggleSubtitles: (index: string) => void;

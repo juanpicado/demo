@@ -9,7 +9,13 @@ interface PlayerProps {
 }
 
 export const Player: React.FC<PlayerProps> = ({ item }) => {
-    const { waiting, controlsActive, initVideoPlayer, togglePlayState } = usePlayer();
+    const {
+        waiting,
+        controlsActive,
+        setControlsActive,
+        initVideoPlayer,
+        togglePlayState,
+    } = usePlayer();
     const videoRef = useRef<HTMLVideoElement | null>(null);
 
     useEffect(() => {
@@ -28,7 +34,13 @@ export const Player: React.FC<PlayerProps> = ({ item }) => {
                 </div>
             )}
             <video ref={videoRef} className="player-video" playsInline />
-            <div className="player-overlay" onClick={togglePlayState} />
+            <div
+                className="player-overlay"
+                onClick={() => {
+                    togglePlayState();
+                    setControlsActive(true);
+                }}
+            />
             {controlsActive && <PlayerControls title={item.title} />}
         </div>
     );
