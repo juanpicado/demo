@@ -42,12 +42,12 @@ export const getTrending = async (
     return await db<Api.Page<Api.TrendingItem[]>>(`/trending/${type}/${time}`);
 };
 
-export const getMovieById = async (id: number | string): Promise<Api.MovieDetails> => {
+const getMovieById = async (id: number | string): Promise<Api.MovieDetails> => {
     const item = await db<Api.MovieDetails>(`/movie/${id}`);
     return { ...item, media_type: MOVIE_KEY };
 };
 
-export const getTvById = async (id: number | string): Promise<Api.TVDetails> => {
+const getTvById = async (id: number | string): Promise<Api.TVDetails> => {
     const item = await db<Promise<Api.TVDetails>>(`/tv/${id}`);
     return { ...item, media_type: TV_KEY };
 };
@@ -63,7 +63,7 @@ export const getItemById = async (id: number | string, type: string): Promise<Ap
     }
 };
 
-export const getMovieByGenre = async (genreId: number | string): Promise<Api.Movie[]> => {
+const getMovieByGenre = async (genreId: number | string): Promise<Api.Movie[]> => {
     const { results } = await db<Api.Page<Api.Movie[]>>(
         "/discover/movie",
         `&with_genres=${genreId}`
@@ -77,7 +77,7 @@ export const getMovieByGenre = async (genreId: number | string): Promise<Api.Mov
     });
 };
 
-export const getTvByGenre = async (genreId: number | string): Promise<Api.TV[]> => {
+const getTvByGenre = async (genreId: number | string): Promise<Api.TV[]> => {
     const { results } = await db<Api.Page<Api.TV[]>>("/discover/tv", `&with_genres=${genreId}`);
 
     return results.map(result => {

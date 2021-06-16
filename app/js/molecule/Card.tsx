@@ -4,12 +4,13 @@ import Image from "next/image";
 import { generateImageUrl } from "../lib/util/Urls";
 import { CardProgress } from "../atom/CardProgress";
 import { App } from "../../types/app";
+import { cutText } from "../lib/util/Text";
 
 interface CardProps extends App.Item {
     imageSize?: string;
 }
 
-export const Card: React.FC<CardProps> = ({ title, image, url, imageSize }) => {
+export const Card: React.FC<CardProps> = ({ title, text, image, url, imageSize }) => {
     if (!image) return null;
 
     return (
@@ -25,7 +26,10 @@ export const Card: React.FC<CardProps> = ({ title, image, url, imageSize }) => {
                         />
                     </div>
                     <div className="card-frame">
-                        <div className="card-frame-title">{title}</div>
+                        <div className="card-frame-group">
+                            <div className="card-frame-title">{title}</div>
+                            <div className="card-frame-text">{cutText(text)}</div>
+                        </div>
                         <CardProgress />
                     </div>
                 </div>

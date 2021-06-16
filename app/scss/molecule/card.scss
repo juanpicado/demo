@@ -45,6 +45,11 @@
 
     .card-frame-title {
         @include text(h4);
+        margin-bottom: 1rem;
+    }
+
+    .card-frame-text {
+        color: $gray;
     }
 
     @include hover {

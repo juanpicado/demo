@@ -3,27 +3,24 @@ import { Api } from "../../../types/api";
 import { cutIdFromSlug } from "../util/Urls";
 import { getItemById } from "./backend";
 import { itemDetailsByMediaType } from "../util/MediaTypes";
+import { App } from "../../../types/app";
 
-export const getServerSideItem = async (ctx: GetServerSidePropsContext, props = {}) => {
+export const getServerSideItem = async (
+    ctx: GetServerSidePropsContext
+): Promise<App.ItemDetails | null> => {
     const slug = ctx.params?.slug;
     const type = ctx.params?.type;
 
     let item: Api.ItemDetails | null = null;
 
     if (!slug || "string" !== typeof slug || !type || "string" !== typeof type) {
-        return {
-            notFound: true,
-            props: {},
-        };
+        return null;
     }
 
     const id = cutIdFromSlug(slug);
 
     if (!id) {
-        return {
-            notFound: true,
-            props: {},
-        };
+        return null;
     }
 
     if (id) {
@@ -31,16 +28,8 @@ export const getServerSideItem = async (ctx: GetServerSidePropsContext, props = 
     }
 
     if (!item || item.success === false) {
-        return {
-            notFound: true,
-            props: {},
-        };
+        return null;
     }
 
-    return {
-        props: {
-            ...props,
-            item: itemDetailsByMediaType(item),
-        },
-    };
+    return itemDetailsByMediaType(item);
 };

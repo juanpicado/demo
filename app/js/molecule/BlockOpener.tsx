@@ -5,7 +5,18 @@ import { Button } from "../atom/Button";
 import { cutText } from "../lib/util/Text";
 import { App } from "../../types/app";
 
-export const BlockOpener: React.FC<App.ItemDetails> = ({ title, text, image, url, infos }) => {
+interface BlockOpenerProps extends App.ItemDetails {
+    isDetailsPage?: boolean;
+}
+
+export const BlockOpener: React.FC<BlockOpenerProps> = ({
+    title,
+    text,
+    image,
+    url,
+    infos,
+    isDetailsPage,
+}) => {
     return (
         <div className="block-opener">
             <div className="block-opener-inner">
@@ -27,9 +38,11 @@ export const BlockOpener: React.FC<App.ItemDetails> = ({ title, text, image, url
                 <div className="block-opener-text">{cutText(text)}</div>
                 <div className="block-opener-controls">
                     <Button action={"/watch" + url}>Play</Button>
-                    <Button action={url} isSecondary>
-                        More info
-                    </Button>
+                    {!isDetailsPage && (
+                        <Button action={url} isSecondary>
+                            More info
+                        </Button>
+                    )}
                 </div>
             </div>
             {image && (

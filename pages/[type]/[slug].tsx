@@ -1,20 +1,57 @@
 import React from "react";
-import { Api } from "../../app/types/api";
 import { GetServerSideProps } from "next";
 import { getServerSideItem } from "../../app/js/lib/api/server";
+import { BlockOpener } from "../../app/js/molecule/BlockOpener";
+import { App } from "../../app/types/app";
+import { getItemsByGenre } from "../../app/js/lib/api/backend";
+import { Api } from "../../app/types/api";
+import { BlockSlider } from "../../app/js/organism/BlockSlider";
 
 interface ItemProps {
-    item: Api.Item;
+    item: App.ItemDetails;
+    recommendations: Api.Item[];
 }
 
-const Item: React.FC<ItemProps> = ({ item }) => {
+const Item: React.FC<ItemProps> = ({ item, recommendations }) => {
     if (!item) return null;
 
-    return <div>hallo</div>;
+    return (
+        <React.Fragment>
+            <BlockOpener {...item} isDetailsPage />
+            <BlockSlider title="You could also like" items={recommendations} />
+        </React.Fragment>
+    );
 };
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-    return getServerSideItem(ctx);
+    const item = await getServerSideItem(ctx);
+
+    if (!item) {
+        return {
+            notFound: true,
+            props: {},
+        };
+    }
+
+    if (item.genres.length === 0) {
+        return {
+            props: {
+                item,
+            },
+        };
+    }
+
+    const genreId = item.genres[0].id;
+    const recommendations = await getItemsByGenre(genreId, item.media_type);
+
+    return {
+        props: {
+            item,
+            recommendations: recommendations.filter(
+                recommendation => recommendation.id !== item.id
+            ),
+        },
+    };
 };
 
 export default Item;

@@ -18,7 +18,21 @@ const Watch: React.FC<WatchProps> = ({ item }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-    return getServerSideItem(ctx, { hideNav: true });
+    const item = await getServerSideItem(ctx);
+
+    if (!item) {
+        return {
+            notFound: true,
+            props: {},
+        };
+    }
+
+    return {
+        props: {
+            item,
+            hideNav: true,
+        },
+    };
 };
 
 export default Watch;
