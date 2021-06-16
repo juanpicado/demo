@@ -5,12 +5,22 @@
     position: relative;
     @include square(100%);
 
+    .player-loading {
+        position: absolute;
+        z-index: 1;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
     .player-video {
         position: absolute;
         top: 0;
         bottom: 0;
         @include square(100%);
         margin: auto;
+        pointer-events: none;
+        user-select: none;
     }
 
     .player-controls {

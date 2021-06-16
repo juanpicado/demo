@@ -5,6 +5,17 @@
     padding: 5rem 3rem 3rem;
     background: linear-gradient(0deg, $black-75 0%, transparent 100%);
 
+    &.subtitles-active {
+        .player-subtitles-list {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .player-progress {
+            opacity: 0;
+        }
+    }
+
     .player-progress {
         margin-bottom: 2rem;
     }
@@ -18,6 +29,10 @@
     .player-group {
         display: flex;
         align-items: center;
+
+        .player-fullscreen {
+            margin-left: 4rem;
+        }
     }
 
     .player-skip-wrapper {

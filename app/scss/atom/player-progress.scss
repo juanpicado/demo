@@ -7,6 +7,7 @@
     align-items: center;
     width: 100%;
     height: 0.85rem;
+    @include transition(opacity, 0.2s);
 
     .player-progress-inner,
     .player-progress-buffer {
