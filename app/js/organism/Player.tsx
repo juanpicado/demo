@@ -27,7 +27,7 @@ export const Player: React.FC<PlayerProps> = ({ item }) => {
                     <Spinner />
                 </div>
             )}
-            <video ref={videoRef} className="player-video" />
+            <video ref={videoRef} className="player-video" playsInline />
             <div className="player-overlay" onClick={togglePlayState} />
             {controlsActive && <PlayerControls title={item.title} />}
         </div>
