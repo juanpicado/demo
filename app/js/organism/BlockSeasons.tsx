@@ -11,10 +11,6 @@ interface BlockSeasonsProps {
 export const BlockSeasons: React.FC<BlockSeasonsProps> = ({ seasons, tvId }) => {
     const [activeSeason, setActiveSeason] = useState<number>(0);
 
-    useEffect(() => {
-        return () => setActiveSeason(0);
-    }, []);
-
     return (
         <div className="block-seasons">
             <div className="block-seasons-head">

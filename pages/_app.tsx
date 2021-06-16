@@ -20,7 +20,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
     return (
         <React.Fragment>
             {!pageProps.hideNav && <Navigation />}
-            <Component {...pageProps} />
+            <Component {...pageProps} key={router.asPath} />
         </React.Fragment>
     );
 };
