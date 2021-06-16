@@ -1,4 +1,4 @@
-import { Api } from "./api";
+import { Api, Season } from "./api";
 import { MediaTypes } from "../js/lib/util/MediaTypes";
 
 export namespace App {
@@ -22,7 +22,12 @@ export namespace App {
         infos: Info[];
         genres: Api.Genre[];
         media_type: MediaTypes;
+        seasons?: Season[];
     }
 
     type Info = string | null;
+
+    type Season = Api.Season;
+
+    type Episode = Api.Episode;
 }

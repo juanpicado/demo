@@ -35,7 +35,7 @@ export const BlockOpener: React.FC<BlockOpenerProps> = ({
                             );
                         })}
                 </div>
-                <div className="block-opener-text">{cutText(text)}</div>
+                <div className="block-opener-text">{!isDetailsPage ? cutText(text) : text}</div>
                 <div className="block-opener-controls">
                     <Button action={"/watch" + url}>Play</Button>
                     {!isDetailsPage && (

@@ -1,0 +1,70 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+
+.dropdown {
+    position: relative;
+    @include text(h4);
+
+    &.is-active {
+        .icon-chevron-down {
+            transform: rotate(180deg);
+        }
+    }
+
+    .dropdown-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $gray-black;
+        padding: 1.5rem 2rem;
+        border-radius: $radius;
+    }
+
+    .dropdown-head-title {
+        min-width: 10rem;
+        max-width: 20rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .icon-chevron-down {
+        @include square(2rem);
+        margin-left: 2rem;
+        @include transition(transform, 0.2s);
+    }
+
+    .dropdown-list {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        max-height: 40rem;
+        transform: translateY(calc(100% + 2rem)) translateZ(0);
+        background-color: $gray-black;
+        border: .1rem solid $dark-gray;
+        border-radius: $radius;
+        overflow-y: scroll;
+        @include text(h4);
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .dropdown-item {
+        display: block;
+        width: 100%;
+        border-bottom: .1rem solid $dark-gray;
+        padding: 1.5rem;
+        @include transition(background-color, 0.2s);
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        @include hover {
+            background-color: $dark-gray;
+        }
+    }
+}

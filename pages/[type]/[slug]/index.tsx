@@ -1,11 +1,12 @@
 import React from "react";
 import { GetServerSideProps } from "next";
-import { getServerSideItem } from "../../app/js/lib/api/server";
-import { BlockOpener } from "../../app/js/molecule/BlockOpener";
-import { App } from "../../app/types/app";
-import { getItemsByGenre } from "../../app/js/lib/api/backend";
-import { Api } from "../../app/types/api";
-import { BlockSlider } from "../../app/js/organism/BlockSlider";
+import { getServerSideItem } from "../../../app/js/lib/api/server";
+import { BlockOpener } from "../../../app/js/molecule/BlockOpener";
+import { App } from "../../../app/types/app";
+import { getItemsByGenre } from "../../../app/js/lib/api/backend";
+import { Api } from "../../../app/types/api";
+import { BlockSlider } from "../../../app/js/organism/BlockSlider";
+import { BlockSeasons } from "../../../app/js/organism/BlockSeasons";
 
 interface ItemProps {
     item: App.ItemDetails;
@@ -18,7 +19,16 @@ const Item: React.FC<ItemProps> = ({ item, recommendations }) => {
     return (
         <React.Fragment>
             <BlockOpener {...item} isDetailsPage />
-            <BlockSlider title="You could also like" items={recommendations} />
+            {item.seasons && (
+                <div className="block">
+                    <BlockSeasons seasons={item.seasons} tvId={item.id} />
+                </div>
+            )}
+            {recommendations && (
+                <div className="block">
+                    <BlockSlider title="You could also like" items={recommendations} />
+                </div>
+            )}
         </React.Fragment>
     );
 };

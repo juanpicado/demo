@@ -98,3 +98,10 @@ export const getItemsByGenre = async (id: number | string, type: string): Promis
             throw new Error("Unspecified media type");
     }
 };
+
+export const getSeasonById = async (
+    tvId: number | string,
+    seasonId: number | string
+): Promise<Api.SeasonDetails> => {
+    return await db<Api.SeasonDetails>(`/tv/${tvId}/season/${seasonId}`);
+};

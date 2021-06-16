@@ -92,7 +92,7 @@ export namespace Api {
         poster_path: string | null;
         production_companies: ProductionCompany[];
         status: string;
-        seasons: any[];
+        seasons: Season[];
         tagline: string | null;
         type: string;
         vote_count: number;
@@ -121,5 +121,26 @@ export namespace Api {
         id: string;
         name: string;
         media_type: string;
+    }
+
+    interface Season {
+        air_date: string;
+        episode_count: number;
+        id: number;
+        name: string;
+        poster_path: string;
+        season_number: number;
+    }
+
+    interface SeasonDetails extends Season {
+        episodes: Episode[];
+    }
+
+    interface Episode {
+        air_date: string;
+        id: number;
+        name: string;
+        still_path: string;
+        overview: string;
     }
 }

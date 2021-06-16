@@ -1,0 +1,70 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+
+.season-list {
+    border-radius: $radius;
+    overflow: hidden;
+    background-color: $gray-black;
+
+    .season-list-episode {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 2rem 4rem 2rem 2rem;
+        @include transition(background-color, 0.2s);
+
+        @include hover {
+            background-color: $dark-gray;
+
+            .icon-play {
+                color: $white;
+            }
+        }
+    }
+
+    .season-list-episode-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .icon-play-wrapper {
+        text-align: center;
+    }
+
+    .icon-play {
+        @include square(5rem);
+        color: $dark-gray;
+
+        @include transition(color, 0.2s);
+    }
+
+    .season-list-episode-number {
+        text-align: center;
+        padding-right: 2rem;
+        width: 10rem;
+        @include text(episode-number);
+    }
+
+    .season-list-episode-image {
+        position: relative;
+        height: 10rem;
+        width: 15rem;
+        border-radius: $radius;
+        overflow: hidden;
+        transform: translateZ(0);
+        background-color: $black;
+    }
+
+    .season-list-episode-name {
+        margin-left: 3rem;
+        @include text(h4);
+    }
+
+    .season-list-loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 4rem;
+    }
+}

@@ -72,6 +72,7 @@ export const itemDetailsByMediaType = (item: Api.ItemDetails): App.ItemDetails =
                 genres: item.genres,
                 infos: [item.genres.map(genre => genre.name).join(", ")],
                 media_type: item.media_type,
+                seasons: item.seasons,
             };
     }
 };

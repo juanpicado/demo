@@ -250,6 +250,10 @@ export const PlayerProvider: React.FC = ({ children }) => {
             video.removeEventListener("seeked", onSeek);
             container.removeEventListener("fullscreenchange", onFullscreen);
             document.removeEventListener("mousemove", onMouseMove);
+
+            if (mouseMoveTimeout.current) {
+                clearTimeout(mouseMoveTimeout.current);
+            }
         };
     }, [initialized]);
 

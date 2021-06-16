@@ -1,0 +1,26 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+
+.block-seasons {
+    @include content-width;
+
+    .block-seasons-inner {
+        margin: -1rem 0;
+    }
+
+    .season-list {
+        margin: 1rem 0;
+    }
+
+    .block-seasons-head {
+        display: flex;
+        justify-content: space-between;
+        @include text(h3);
+        margin-bottom: 3rem;
+    }
+
+    .season-list-episode-count {
+        margin-left: 2rem;
+        color: $dark-gray;
+    }
+}
