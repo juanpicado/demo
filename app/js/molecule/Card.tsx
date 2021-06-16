@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { generateImageUrl } from "../lib/util/Urls";
 import { CardProgress } from "../atom/CardProgress";
 import { App } from "../../types/app";
@@ -16,11 +17,11 @@ export const Card: React.FC<CardProps> = ({ title, image, url, imageSize }) => {
             <button type="button" className="card">
                 <div className="card-inner">
                     <div className="card-image-wrapper">
-                        <img
+                        <Image
                             className="card-image"
                             src={generateImageUrl(image, imageSize)}
                             alt={title}
-                            loading="lazy"
+                            layout="fill"
                         />
                     </div>
                     <div className="card-frame">

@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { generateImageUrl } from "../lib/util/Urls";
 import { Button } from "../atom/Button";
 import { cutText } from "../lib/util/Text";
@@ -33,11 +34,13 @@ export const BlockOpener: React.FC<App.ItemDetails> = ({ title, text, image, url
             </div>
             {image && (
                 <div className="block-opener-background">
-                    <img
+                    <Image
                         className="block-opener-background-image"
                         src={generateImageUrl(image, "original")}
                         alt={title}
-                        loading="eager"
+                        layout="fill"
+                        objectFit="cover"
+                        objectPosition="50% 20%"
                     />
                 </div>
             )}
