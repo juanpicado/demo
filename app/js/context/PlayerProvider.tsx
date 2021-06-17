@@ -17,6 +17,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
     const [waiting, setWaiting] = useState<boolean>(false);
     const [progress, setProgress] = useState<number>(0);
     const [buffer, setBuffer] = useState<number>(0);
+    const [currentTimeStamp, setCurrentTimeStamp] = useState<string>("0");
     const [fullscreen, setFullscreen] = useState<boolean>(false);
     const [subtitles, setSubtitles] = useState<Player.Subtitles | null>(null);
     const [activeSubtitle, setActiveSubtitle] = useState<string | null>(null);

@@ -80,9 +80,13 @@ export const PlayerProgress: React.FC = () => {
                 </div>
                 <div className="player-progress-knob" style={{ left: progress * 100 + "%" }} />
             </button>
-            {currentTimeStamp && (
-                <span className="player-progress-timestamp">{currentTimeStamp}</span>
-            )}
+            <span
+                className={classes({
+                    "player-progress-timestamp": true,
+                    "is-active": "0" !== currentTimeStamp,
+                })}>
+                {currentTimeStamp}
+            </span>
         </div>
     );
 };
