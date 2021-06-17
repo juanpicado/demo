@@ -9,7 +9,7 @@
 
     .block-opener-inner {
         width: 100%;
-        z-index: 1;
+        z-index: 2;
         @include content-width;
     }
 
@@ -57,7 +57,8 @@
     }
 
     .block-opener-bottom-overlay {
-        background: linear-gradient(0deg, $black 0%, transparent 100%);
+        z-index: 1;
+        background: linear-gradient(0deg, $black-100 0%, transparent 100%);
     }
 
     .block-opener-left-overlay {

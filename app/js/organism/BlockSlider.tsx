@@ -42,6 +42,7 @@ export const BlockSlider: React.FC<SliderProps> = ({ items, title, mediaType, sl
                 "block-slider": true,
                 "is-mounted": mounted,
                 "has-prev": !isBeginning,
+                "has-next": !isEnd,
             })}>
             <div className="block-slider-head">
                 <div className="block-slider-head-group">
