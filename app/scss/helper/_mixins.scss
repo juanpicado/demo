@@ -11,6 +11,11 @@
     }
 }
 
+@mixin columns($x) {
+    max-width: (100% / 12) * $x;
+    margin: 0 auto;
+}
+
 @mixin text($element) {
     @each $breakpoint, $display-settings in $font-settings {
         @if $breakpoint != small {
