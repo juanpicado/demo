@@ -12,13 +12,13 @@ export const Navigation: React.FC = () => {
             <div className="navigation-inner">
                 <div className="navigation-logo">
                     <Link href="/">
-                        <span>
+                        <button type="button">
                             Stream
                             <span className="navigation-highlight">io</span>
-                        </span>
+                        </button>
                     </Link>
                 </div>
-                <div className="navigation-group">
+                <div className="navigation-link-group">
                     <NavigationLink
                         href={`/${MOVIE_KEY}`}
                         active={router.asPath.includes(MOVIE_KEY)}>

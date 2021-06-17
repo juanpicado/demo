@@ -22,9 +22,15 @@ export const BlockSlider: React.FC<SliderProps> = ({ items, title, mediaType, sl
     const { mounted, next, prev, active } = useSlider(
         sliderRef,
         {
-            slidesPerView: slides,
             spacing: 15,
             rubberband: false,
+            slidesPerView: slides,
+            breakpoints: {
+                "(max-width: 768px)": {
+                    spacing: 10,
+                    slidesPerView: 2,
+                },
+            },
         },
         [items]
     );
@@ -37,10 +43,12 @@ export const BlockSlider: React.FC<SliderProps> = ({ items, title, mediaType, sl
                 "has-prev": active > 0,
             })}>
             <div className="block-slider-head">
-                {title && <div className="block-slider-headline">{title}</div>}
-                {!type && mediaType && (
-                    <div className="block-slider-type">{mediaTypes[mediaType]}</div>
-                )}
+                <div className="block-slider-head-group">
+                    {title && <div className="block-slider-headline">{title}</div>}
+                    {!type && mediaType && (
+                        <div className="block-slider-type">{mediaTypes[mediaType]}</div>
+                    )}
+                </div>
             </div>
             <div className="block-slider-overlay" />
             <div className="block-slider-frame">

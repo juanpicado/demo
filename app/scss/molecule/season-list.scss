@@ -9,10 +9,14 @@
     .season-list-episode {
         display: flex;
         align-items: center;
-        justify-content: space-between;
         width: 100%;
-        padding: 2rem 4rem 2rem 2rem;
+        padding: 2rem;
         @include transition(background-color, 0.2s);
+        border-bottom: 0.1rem solid $dark-gray;
+
+        &:last-child {
+            border: none;
+        }
 
         @include hover {
             background-color: $dark-gray;
@@ -33,23 +37,22 @@
     }
 
     .icon-play {
+        display: none;
+        min-width: 5rem;
         @include square(5rem);
         color: $dark-gray;
-
         @include transition(color, 0.2s);
     }
 
     .season-list-episode-number {
-        text-align: center;
         padding-right: 2rem;
-        width: 10rem;
         @include text(episode-number);
     }
 
     .season-list-episode-image {
         position: relative;
-        height: 10rem;
-        width: 15rem;
+        min-width: 6rem;
+        @include square(6rem);
         border-radius: $radius;
         overflow: hidden;
         transform: translateZ(0);
@@ -57,7 +60,11 @@
     }
 
     .season-list-episode-name {
-        margin-left: 3rem;
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-left: 2rem;
         @include text(h4);
     }
 
@@ -66,5 +73,30 @@
         justify-content: center;
         align-items: center;
         padding: 4rem;
+    }
+
+    @include is-desktop {
+        .season-list-episode {
+            padding: 2rem 4rem 2rem 2rem;
+        }
+
+        .season-list-episode-number {
+            text-align: center;
+            width: 10rem;
+        }
+
+        .season-list-episode-image {
+            height: 10rem;
+            width: 15rem;
+            min-width: 15rem;
+        }
+
+        .season-list-episode-name {
+            margin: 0 3rem;
+        }
+
+        .icon-play {
+            display: block;
+        }
     }
 }

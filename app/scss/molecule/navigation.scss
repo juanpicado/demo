@@ -21,8 +21,8 @@
         color: $primary;
     }
 
-    .navigation-group {
-        display: flex;
+    .navigation-link-group {
+        display: none;
         margin: 0.3rem -1rem 0 5rem;
 
         .navigation-link {
@@ -34,5 +34,11 @@
         font-size: 2.5rem;
         letter-spacing: -0.15rem;
         font-weight: 900;
+    }
+
+    @include is-desktop {
+        .navigation-link-group {
+            display: flex;
+        }
     }
 }

@@ -5,7 +5,7 @@
     width: calc(100% - 2.5rem * 2);
 
     @include is-desktop {
-        max-width: 160rem;
+        max-width: 140rem;
         width: calc(100% - 15rem);
         margin: 0 auto;
     }

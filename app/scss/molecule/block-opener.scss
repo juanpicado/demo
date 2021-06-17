@@ -3,7 +3,7 @@
 
 .block-opener {
     position: relative;
-    min-height: 60rem;
+    min-height: 50rem;
     display: flex;
     align-items: center;
 
@@ -71,6 +71,10 @@
         .button {
             margin: 0 0.5rem;
         }
+    }
+
+    @include is-desktop {
+        min-height: 60rem;
     }
 }
 

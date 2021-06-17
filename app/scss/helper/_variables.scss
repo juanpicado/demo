@@ -23,7 +23,7 @@ $radius: 1rem;
 $breakpoint-tablet: 768px;
 $breakpoint-desktop: 1024px;
 $breakpoint-desktop-large: 1440px;
-$breakpoint-desktop-extra-large: 2000px;
+$breakpoint-desktop-extra-large: 1600px;
 //endregion Breakpoints
 
 
@@ -86,7 +86,7 @@ $font-settings: (
             font-weight: 600,
         ),
         episode-number: (
-            font-size: 5rem,
+            font-size: 2rem,
         ),
     ),
     large: (
@@ -104,6 +104,9 @@ $font-settings: (
         ),
         p: (
             font-size: 1.7rem,
+        ),
+        episode-number: (
+            font-size: 5rem,
         ),
     ),
 );

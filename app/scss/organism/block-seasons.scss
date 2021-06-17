@@ -15,18 +15,28 @@
     .block-seasons-head {
         display: flex;
         justify-content: space-between;
+        align-items: flex-end;
         @include text(h3);
         margin-bottom: 3rem;
     }
 
     .season-list-episode-count {
+        display: none;
         margin-left: 2rem;
         color: $dark-gray;
     }
 
     @include is-desktop {
+
+
+        .season-list-episode-count {
+            display: inline-block;
+        }
+    }
+
+    @include is-desktop-extra-large {
         .block-seasons-frame {
-            @include columns(8);
+            @include columns(10);
         }
     }
 }

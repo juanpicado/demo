@@ -17,9 +17,17 @@
         @include text(h3);
     }
 
+    .block-slider-head-group {
+        display: flex;
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
     .block-slider-type {
         color: $dark-gray;
-        margin-left: 2rem;
+        margin-left: 1rem;
     }
 
     .block-slider-overlay {
@@ -27,6 +35,7 @@
         z-index: 1;
         top: 0;
         left: 0;
+        display: none;
         width: 100%;
         height: 100%;
         background: linear-gradient(270deg, $black-50 0%, transparent 50%);
@@ -41,7 +50,7 @@
         position: relative;
         overflow: visible;
         @include content-width;
-        padding-bottom: 10rem;
+        padding-bottom: 5rem;
     }
 
     .block-slider-slide {
@@ -57,7 +66,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 10rem;
+        height: 5rem;
         width: 100%;
         color: $dark-gray;
         @include text(p);
@@ -67,7 +76,7 @@
     .block-slider-prev-container {
         position: absolute;
         z-index: 1;
-        display: flex;
+        display: none;
         align-items: center;
         height: calc(100% - 10rem);
         pointer-events: auto;
@@ -125,6 +134,29 @@
 
         .block-slider-next-container {
             opacity: 1;
+        }
+    }
+
+    @include is-desktop {
+        .block-slider-overlay {
+            display: block;
+        }
+
+        .block-slider-type {
+            margin-left: 2rem;
+        }
+
+        .block-slider-container {
+            padding-bottom: 10rem;
+        }
+
+        .block-slider-drag-info {
+            height: 10rem;
+        }
+
+        .block-slider-next-container,
+        .block-slider-prev-container {
+            display: flex;
         }
     }
 }
