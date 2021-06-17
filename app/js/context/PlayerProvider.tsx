@@ -152,9 +152,22 @@ export const PlayerProvider: React.FC = ({ children }) => {
         }
     };
 
+    const calcTimestamp = () => {
+        if (!video) {
+            return;
+        }
+
+        const duration = video.duration / 59;
+        const time = video.currentTime / 59;
+
+        setCurrentTimeStamp(secondsTimeToTimestamp(duration - time));
+    };
+
     //
     // Event Listeners
     //
+    const onMetadataLoaded = () => calcTimestamp();
+
     const onManifestParsed = () => {
         if (!video || !video.paused) {
             return;
@@ -200,16 +213,8 @@ export const PlayerProvider: React.FC = ({ children }) => {
     const onProgress = () => calcBuffer();
 
     const onTimeUpdate = () => {
-        if (!video) {
-            return;
-        }
-
         setWaiting(false);
-
-        const duration = video.duration / 59;
-        const time = video.currentTime / 59;
-
-        setCurrentTimeStamp(secondsTimeToTimestamp(duration - time));
+        calcTimestamp();
     };
 
     const onSubtitlesLoaded = () => {
@@ -254,6 +259,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
 
         hls.on(Hls.Events.MANIFEST_PARSED, onManifestParsed);
         hls.on(Hls.Events.SUBTITLE_TRACK_LOADED, onSubtitlesLoaded);
+        video.addEventListener("loadedmetadata", onMetadataLoaded);
         video.addEventListener("play", onPlayProgress);
         video.addEventListener("play", onPlayState);
         video.addEventListener("pause", onPlayState);
@@ -266,6 +272,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
         return () => {
             hls.off(Hls.Events.MANIFEST_PARSED, onManifestParsed);
             hls.off(Hls.Events.SUBTITLE_TRACK_LOADED, onSubtitlesLoaded);
+            video.removeEventListener("loadedmetadata", onMetadataLoaded);
             video.removeEventListener("play", onPlayProgress);
             video.removeEventListener("play", onPlayState);
             video.removeEventListener("pause", onPlayState);
