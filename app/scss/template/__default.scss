@@ -10,6 +10,19 @@
     background-color: $deep-black;
 }
 
+.is-landscape {
+    @media screen and (max-width: 767px) and (orientation: portrait) {
+        transform: rotate(-90deg);
+        transform-origin: left top;
+        width: 100vh;
+        height: 100vw;
+        overflow-x: hidden;
+        position: absolute;
+        top: 100%;
+        left: 0;
+    }
+}
+
 .hide-cursor {
     cursor: none;
 }

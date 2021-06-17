@@ -224,6 +224,11 @@ export const PlayerProvider: React.FC = ({ children }) => {
     };
 
     useEffect(() => {
+        document.documentElement.classList.add("is-landscape");
+        return () => document.documentElement.classList.remove("is-landscape");
+    }, []);
+
+    useEffect(() => {
         if (!initialized || !video || !container || !hls) {
             return;
         }
