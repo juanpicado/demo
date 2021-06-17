@@ -21,7 +21,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
     const [fullscreen, setFullscreen] = useState<boolean>(false);
     const [subtitles, setSubtitles] = useState<Player.Subtitles | null>(null);
     const [activeSubtitle, setActiveSubtitle] = useState<string | null>(null);
-    const [controlsActive, setControlsActive] = useState<boolean>(false);
+    const [controlsActive, setControlsActive] = useState<boolean>(true);
 
     const video = videoRef.current;
     const container = containerRef.current;
