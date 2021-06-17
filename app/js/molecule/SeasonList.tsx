@@ -8,20 +8,25 @@ import { Spinner } from "../atom/Spinner";
 import { Icon, Play } from "../lib/util/Icon";
 
 interface SeasonList extends App.Season {
-    tvId: number;
+    tv_id: number;
+    initialEpisodes?: App.Episode[] | null;
 }
 
-export const SeasonList: React.FC<SeasonList> = ({ tvId, season_number }) => {
-    const [episodes, setEpisodes] = useState<App.Episode[] | null>(null);
+export const SeasonList: React.FC<SeasonList> = ({
+    tv_id,
+    season_number,
+    initialEpisodes = null,
+}) => {
+    const [episodes, setEpisodes] = useState<App.Episode[] | null>(initialEpisodes);
 
     useEffect(() => {
         getEpisodes().catch(console.error);
 
         return () => setEpisodes(null);
-    }, [tvId, season_number]);
+    }, [tv_id, season_number]);
 
     const getEpisodes = async () => {
-        const { episodes } = await getSeasonById(tvId, season_number);
+        const { episodes } = await getSeasonById(tv_id, season_number);
         setEpisodes(episodes);
     };
 
@@ -29,7 +34,7 @@ export const SeasonList: React.FC<SeasonList> = ({ tvId, season_number }) => {
         <div className="season-list">
             {episodes ? (
                 episodes.map((episode, index) => (
-                    <Link key={index} href={"/watch" + generateItemUrl("tv", episode.name, tvId)}>
+                    <Link key={index} href={"/watch" + generateItemUrl("tv", episode.name, tv_id)}>
                         <button type="button" className="season-list-episode">
                             <span className="season-list-episode-group">
                                 <span className="season-list-episode-number">{index + 1}</span>
