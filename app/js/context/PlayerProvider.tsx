@@ -17,7 +17,6 @@ export const PlayerProvider: React.FC = ({ children }) => {
     const [waiting, setWaiting] = useState<boolean>(false);
     const [progress, setProgress] = useState<number>(0);
     const [buffer, setBuffer] = useState<number>(0);
-    const [currentTimeStamp, setCurrentTimeStamp] = useState<string>("");
     const [fullscreen, setFullscreen] = useState<boolean>(false);
     const [subtitles, setSubtitles] = useState<Player.Subtitles | null>(null);
     const [activeSubtitle, setActiveSubtitle] = useState<string | null>(null);
@@ -99,10 +98,29 @@ export const PlayerProvider: React.FC = ({ children }) => {
             return;
         }
 
+        const el = document.documentElement;
+
         if (document.fullscreenElement) {
-            document.exitFullscreen().catch(console.error);
+            document.exitFullscreen();
         } else {
-            container.requestFullscreen().catch(console.error);
+            // Different browsers need respective method
+            if (el.requestFullscreen) {
+                el.requestFullscreen();
+                // @ts-ignore
+            } else if (el.mozRequestFullScreen) {
+                // @ts-ignore
+                el.mozRequestFullScreen();
+                // @ts-ignore
+            } else if (el.webkitRequestFullscreen) {
+                // @ts-ignore
+                el.webkitRequestFullscreen();
+                // @ts-ignore
+            } else if (el.msRequestFullscreen) {
+                // @ts-ignore
+                el.msRequestFullscreen();
+            }
+
+            setFullscreen(true);
         }
     };
 
@@ -242,8 +260,8 @@ export const PlayerProvider: React.FC = ({ children }) => {
         video.addEventListener("progress", onProgress);
         video.addEventListener("seeked", onSeek);
         video.addEventListener("waiting", onWait);
-        container.addEventListener("fullscreenchange", onFullscreen);
         document.addEventListener("mousemove", onMouseMove);
+        document.onfullscreenchange = () => onFullscreen();
         return () => {
             hls.off(Hls.Events.MANIFEST_PARSED, onManifestParsed);
             hls.off(Hls.Events.SUBTITLE_TRACK_LOADED, onSubtitlesLoaded);
@@ -253,7 +271,6 @@ export const PlayerProvider: React.FC = ({ children }) => {
             video.removeEventListener("timeupdate", onTimeUpdate);
             video.removeEventListener("progress", onProgress);
             video.removeEventListener("seeked", onSeek);
-            container.removeEventListener("fullscreenchange", onFullscreen);
             document.removeEventListener("mousemove", onMouseMove);
 
             if (mouseMoveTimeout.current) {
