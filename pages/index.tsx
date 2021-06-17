@@ -18,14 +18,14 @@ const Home: React.FC<IndexProps> = ({ daily, genres, opener }) => {
     return (
         <React.Fragment>
             <BlockOpener {...opener} />
-            <div className="block">
+            <div className="__block">
                 <BlockSlider title="Popular Today" items={daily} slides={4} />
             </div>
             <div>
                 {Object.keys(genres)
                     .slice(0, 6)
                     .map(genreKey => (
-                        <div key={genreKey} className="block">
+                        <div key={genreKey} className="__block">
                             <BlockGenre {...genres[genreKey]} />
                         </div>
                     ))}

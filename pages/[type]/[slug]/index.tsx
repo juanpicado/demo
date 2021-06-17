@@ -21,7 +21,7 @@ const Item: React.FC<ItemProps> = ({ item, recommendations, episodes }) => {
         <React.Fragment>
             <BlockOpener {...item} isDetailsPage />
             {item.seasons && (
-                <div className="block">
+                <div className="__block">
                     <BlockSeasons
                         seasons={item.seasons}
                         tv_id={item.id}
@@ -30,7 +30,7 @@ const Item: React.FC<ItemProps> = ({ item, recommendations, episodes }) => {
                 </div>
             )}
             {recommendations && (
-                <div className="block">
+                <div className="__block">
                     <BlockSlider title="You could also like" items={recommendations} />
                 </div>
             )}
