@@ -7,6 +7,7 @@ import { classes } from "../lib/util/Classes";
 import { useRouter } from "next/router";
 import { mediaTypes } from "../lib/util/MediaTypes";
 import { itemByMediaType } from "../lib/util/MediaTypes";
+import { SliderControls } from "../atom/SliderControls";
 
 interface SliderProps {
     items: Api.Item[];
@@ -19,7 +20,7 @@ export const BlockSlider: React.FC<SliderProps> = ({ items, title, mediaType, sl
     const router = useRouter();
     const { type } = router.query;
     const sliderRef = useRef<HTMLDivElement | null>(null);
-    const { mounted, next, prev, active } = useSlider(
+    const { mounted, next, prev, isBeginning, isEnd } = useSlider(
         sliderRef,
         {
             spacing: 15,
@@ -40,7 +41,7 @@ export const BlockSlider: React.FC<SliderProps> = ({ items, title, mediaType, sl
             className={classes({
                 "block-slider": true,
                 "is-mounted": mounted,
-                "has-prev": active > 0,
+                "has-prev": !isBeginning,
             })}>
             <div className="block-slider-head">
                 <div className="block-slider-head-group">
@@ -49,8 +50,13 @@ export const BlockSlider: React.FC<SliderProps> = ({ items, title, mediaType, sl
                         <div className="block-slider-type">{mediaTypes[mediaType]}</div>
                     )}
                 </div>
+                <SliderControls
+                    onPrev={prev}
+                    onNext={next}
+                    isBeginning={isBeginning}
+                    isEnd={isEnd}
+                />
             </div>
-            <div className="block-slider-overlay" />
             <div className="block-slider-frame">
                 <button type="button" className="block-slider-prev-container" onClick={prev}>
                     <Icon name="chevron-left" icon={ChevronLeft} />

@@ -11,6 +11,19 @@
     }
 }
 
+@mixin outer-content-margin {
+    width: 2.5rem;
+
+    @include is-desktop {
+        width: 7.5rem;
+    }
+
+    @include exceeds-content-width {
+        width: calc((100vw - 140rem) / 2);
+
+    }
+}
+
 @mixin columns($x) {
     max-width: (100% / 12) * $x;
     margin: 0 auto;
@@ -128,6 +141,12 @@
 
 @mixin is-desktop-extra-large {
     @include on-min-width($breakpoint-desktop-extra-large) {
+        @content;
+    }
+}
+
+@mixin exceeds-content-width {
+    @include on-min-width(1550px) {
         @content;
     }
 }

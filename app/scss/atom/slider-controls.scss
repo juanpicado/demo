@@ -1,0 +1,27 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+
+.slider-controls {
+    display: flex;
+    align-items: center;
+
+    .slider-controls-prev,
+    .slider-controls-next {
+        display: block;
+        @include square(3rem);
+        color: $dark-gray;
+
+        &.is-active {
+            color: $white;
+        }
+    }
+
+    .icon-chevron-left,
+    .icon-chevron-right {
+        @include square(100%);
+    }
+
+    .slider-controls-next {
+        margin-left: 1rem;
+    }
+}

@@ -11,7 +11,7 @@ export type MediaTypes = "movie" | "tv";
 
 export const mediaTypes: Record<string, string> = {
     [MOVIE_KEY]: "Movies",
-    [TV_KEY]: "TV Shows",
+    [TV_KEY]: "TV",
 };
 
 export const itemByMediaType = (item: Api.Item): App.Item => {

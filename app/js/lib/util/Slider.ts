@@ -2,6 +2,8 @@ import { useState, useEffect, useRef, MutableRefObject } from "react";
 import KeenSlider, { TOptionsEvents } from "keen-slider";
 
 interface UseSliderData {
+    isBeginning: boolean;
+    isEnd: boolean;
     mounted: boolean;
     active: number;
     next: () => void;
@@ -15,6 +17,8 @@ export function useSlider(
     const sliderRef = useRef<KeenSlider | null>(null);
     const [mounted, setMounted] = useState<boolean>(false);
     const [active, setActive] = useState<number>(0);
+    const [isBeginning, setIsBeginning] = useState<boolean>(!options?.loop);
+    const [isEnd, setIsEnd] = useState<boolean>(false);
 
     useEffect(() => {
         if (!ref.current) {
@@ -27,6 +31,12 @@ export function useSlider(
             slideChanged: ref => {
                 const slide = ref.details().relativeSlide;
                 setActive(slide);
+                setIsBeginning(!ref.options().loop && ref.details().relativeSlide === 0);
+                setIsEnd(
+                    !ref.options().loop &&
+                        ref.details().relativeSlide ===
+                            ref.details().size - ref.details().slidesPerView
+                );
             },
         });
 
@@ -37,6 +47,8 @@ export function useSlider(
     }, [...dependencies]);
 
     return {
+        isBeginning,
+        isEnd,
         mounted,
         active,
         next: () => sliderRef.current?.next(),
