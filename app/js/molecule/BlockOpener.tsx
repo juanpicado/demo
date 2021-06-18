@@ -4,12 +4,16 @@ import { generateImageUrl } from "../lib/util/Urls";
 import { Button } from "../atom/Button";
 import { cutText } from "../lib/util/Text";
 import { App } from "../../types/app";
+import { classes } from "../lib/util/Classes";
+import { Icon, Star } from "../lib/util/Icon";
+import { useWatchlist } from "../context/Watchlist/WatchlistProvider";
 
 interface BlockOpenerProps extends App.ItemDetails {
     isDetailsPage?: boolean;
 }
 
 export const BlockOpener: React.FC<BlockOpenerProps> = ({
+    id,
     title,
     text,
     image,
@@ -17,6 +21,8 @@ export const BlockOpener: React.FC<BlockOpenerProps> = ({
     infos,
     isDetailsPage,
 }) => {
+    const { hasBookmark, toggleWatchlistItem } = useWatchlist();
+
     return (
         <div className="block-opener">
             <div className="block-opener-inner">
@@ -43,6 +49,15 @@ export const BlockOpener: React.FC<BlockOpenerProps> = ({
                             More info
                         </Button>
                     )}
+                    <button
+                        type="button"
+                        className={classes({
+                            "block-opener-watchlist-button": true,
+                            "is-active": hasBookmark(id),
+                        })}
+                        onClick={() => toggleWatchlistItem(id)}>
+                        <Icon name="star" icon={Star} />
+                    </button>
                 </div>
             </div>
             {image && (

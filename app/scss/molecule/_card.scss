@@ -9,7 +9,7 @@
     transform: translateZ(0);
     overflow: hidden;
     @include fit-aspect-ratio(150%);
-    @include transition(transform, 0.3s);
+    @include transition(transform, 0.2s);
 
     .card-inner {
         position: absolute;
@@ -26,7 +26,7 @@
     }
 
     .card-image {
-        @include transition(transform, 0.3s);
+        @include transition(transform, 0.2s);
     }
 
     .card-frame {
@@ -40,7 +40,7 @@
         padding: 2rem;
         background-color: rgba(0, 0, 0, 0.7);
         opacity: 0;
-        @include transition(opacity, 0.3s);
+        @include transition(opacity, 0.2s);
         pointer-events: none;
     }
 

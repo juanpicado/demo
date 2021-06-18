@@ -67,11 +67,36 @@
 
     .block-opener-controls {
         display: flex;
+        align-items: center;
         margin: 0 -0.5rem;
 
         .button {
             margin: 0 0.5rem;
         }
+    }
+
+    .block-opener-watchlist-button {
+        @include square(3rem);
+        margin-left: 1rem;
+
+        @include hover {
+            .icon-star {
+                fill: $white;
+            }
+        }
+
+        &.is-active {
+            color: $primary;
+
+            .icon-star {
+                fill: $primary;
+            }
+        }
+    }
+
+    .icon-star {
+        fill: transparent;
+        @include transition(fill, 0.1s);
     }
 
     @include is-desktop {
