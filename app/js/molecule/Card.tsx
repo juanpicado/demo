@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { generateImageUrl } from "../lib/util/Urls";
 import { CardProgress } from "../atom/CardProgress";

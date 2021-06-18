@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { App } from "../../../types/app";
 
 interface WatchlistItem {
     id: number;
@@ -21,6 +22,7 @@ const CONTEXT_WATCHLIST = "streamio-watchlist";
 
 export const WatchlistProvider: React.FC = ({ children }) => {
     const [watchlist, setWatchlist] = useState<WatchlistRecord>({});
+    const [watchlistData, setWatchlistData] = useState<App.ItemDetails[]>([]);
 
     useEffect(() => {
         const json = localStorage.getItem(CONTEXT_WATCHLIST);
@@ -34,6 +36,14 @@ export const WatchlistProvider: React.FC = ({ children }) => {
     useEffect(() => {
         localStorage.setItem(CONTEXT_WATCHLIST, JSON.stringify(watchlist));
     }, [watchlist]);
+
+    useEffect(() => {
+        if (Object.keys(watchlist).length === 0) {
+            return;
+        }
+
+        // fetch data
+    }, [Object.keys(watchlist)]);
 
     const toggleWatchlistItem = (id: number) => {
         setWatchlist(prevState => {

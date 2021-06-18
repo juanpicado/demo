@@ -3,6 +3,7 @@ import { PlayerContext } from "./PlayerContext";
 import Hls from "hls.js";
 import { Player } from "../../../types/player";
 import { secondsTimeToTimestamp } from "../../lib/util/Time";
+import { exitFullscreen, isFullscreen, requestFullscreen } from "../../lib/util/Player";
 
 const videoSrc = "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8";
 
@@ -93,32 +94,15 @@ export const PlayerProvider: React.FC = ({ children }) => {
     };
 
     const toggleFullscreenState = () => {
-        if (!container) {
+        if (!container || !video) {
             return;
         }
 
-        const el = document.documentElement;
-
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
+        if (isFullscreen()) {
+            exitFullscreen();
+            setFullscreen(false);
         } else {
-            // Different browsers need respective method
-            if (el.requestFullscreen) {
-                el.requestFullscreen();
-                // @ts-ignore
-            } else if (el.mozRequestFullScreen) {
-                // @ts-ignore
-                el.mozRequestFullScreen();
-                // @ts-ignore
-            } else if (el.webkitRequestFullscreen) {
-                // @ts-ignore
-                el.webkitRequestFullscreen();
-                // @ts-ignore
-            } else if (el.msRequestFullscreen) {
-                // @ts-ignore
-                el.msRequestFullscreen();
-            }
-
+            requestFullscreen(video);
             setFullscreen(true);
         }
     };
@@ -194,8 +178,6 @@ export const PlayerProvider: React.FC = ({ children }) => {
         setPlaying(!video.paused);
     };
 
-    const onFullscreen = () => setFullscreen(!!document.fullscreenElement);
-
     const onSeek = () => calcProgress();
 
     const onWait = () => {
@@ -252,6 +234,10 @@ export const PlayerProvider: React.FC = ({ children }) => {
         return () => {
             document.documentElement.style.removeProperty("width");
             document.documentElement.classList.remove("is-landscape");
+
+            if (isFullscreen()) {
+                exitFullscreen();
+            }
         };
     }, []);
 
@@ -271,7 +257,6 @@ export const PlayerProvider: React.FC = ({ children }) => {
         video.addEventListener("seeked", onSeek);
         video.addEventListener("waiting", onWait);
         document.addEventListener("mousemove", onMouseMove);
-        document.onfullscreenchange = () => onFullscreen();
         return () => {
             hls.off(Hls.Events.MANIFEST_PARSED, onManifestParsed);
             hls.off(Hls.Events.SUBTITLE_TRACK_LOADED, onSubtitlesLoaded);
