@@ -35,12 +35,10 @@ export const PlayerProvider: React.FC = ({ children }) => {
             hlsRef.current = hls;
             videoRef.current = el;
             setInitialized(true);
-        } else if (el.canPlayType("application/vnd.apple.mpegurl")) {
+        } else {
             el.src = videoSrc;
             videoRef.current = el;
             setInitialized(true);
-        } else {
-            // fallback
         }
     };
 
@@ -266,8 +264,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
         hls.on(Hls.Events.SUBTITLE_TRACK_LOADED, onSubtitlesLoaded);
         video.addEventListener("loadedmetadata", onMetadataLoaded);
         video.addEventListener("play", onPlayProgress);
-        // video.addEventListener("play", onPlayState);
-        video.onplay = () => onPlayState();
+        video.addEventListener("play", onPlayState);
         video.addEventListener("pause", onPlayState);
         video.addEventListener("timeupdate", onTimeUpdate);
         video.addEventListener("progress", onProgress);
@@ -280,7 +277,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
             hls.off(Hls.Events.SUBTITLE_TRACK_LOADED, onSubtitlesLoaded);
             video.removeEventListener("loadedmetadata", onMetadataLoaded);
             video.removeEventListener("play", onPlayProgress);
-            // video.removeEventListener("play", onPlayState);
+            video.removeEventListener("play", onPlayState);
             video.removeEventListener("pause", onPlayState);
             video.removeEventListener("timeupdate", onTimeUpdate);
             video.removeEventListener("progress", onProgress);
