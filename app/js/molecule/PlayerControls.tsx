@@ -38,7 +38,12 @@ export const PlayerControls: React.FC<PlayerControls> = ({ title }) => {
             <button type="button" className="player-controls-back" onClick={router.back}>
                 <Icon name="arrow-left" icon={ArrowLeft} />
             </button>
-            <PlayerProgress />
+            <div className="player-default-progress">
+                <PlayerProgress />
+            </div>
+            <div className="player-touch-progress">
+                <PlayerProgress isTouch />
+            </div>
             <div className="player-controls-inner">
                 <div className="player-controls-group">
                     <PlayerPlay />

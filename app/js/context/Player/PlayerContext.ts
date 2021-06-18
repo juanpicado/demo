@@ -1,6 +1,17 @@
 import { createContext, useContext } from "react";
 import { Player } from "../../../types/player";
 
+interface PlayerEventListeners {
+    onPlay: () => void;
+    onPause: () => void;
+    onMetadataLoaded: () => void;
+    onTimeUpdate: () => void;
+    onProgress: () => void;
+    onSeeked: () => void;
+    onWaiting: () => void;
+    onPlayerInteract: () => void;
+}
+
 interface PlayerContextData {
     initVideoPlayer: (el: HTMLVideoElement) => void;
     playing: boolean;
@@ -19,6 +30,7 @@ interface PlayerContextData {
     timeByAbs: (abs: number) => string;
     jumpToAbs: (abs: number) => void;
     jumpToSecondsFromCurrent: (seconds: number) => void;
+    eventListeners: PlayerEventListeners;
 }
 
 export const PlayerContext = createContext<PlayerContextData>({} as PlayerContextData);

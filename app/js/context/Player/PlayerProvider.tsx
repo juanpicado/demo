@@ -158,6 +158,15 @@ export const PlayerProvider: React.FC = ({ children }) => {
         togglePlayState();
     };
 
+    const onPlay = () => {
+        onPlayProgress();
+        onPlayState();
+    };
+
+    const onPause = () => {
+        onPlayState();
+    };
+
     const onPlayProgress = () => {
         if (!video) {
             return;
@@ -178,9 +187,9 @@ export const PlayerProvider: React.FC = ({ children }) => {
         setPlaying(!video.paused);
     };
 
-    const onSeek = () => calcProgress();
+    const onSeeked = () => calcProgress();
 
-    const onWait = () => {
+    const onWaiting = () => {
         if (!video) {
             return;
         }
@@ -212,7 +221,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
         setSubtitles(list);
     };
 
-    const onMouseMove = () => {
+    const onPlayerInteract = () => {
         setControlsActive(true);
         document.body.classList.remove("hide-cursor");
 
@@ -226,6 +235,8 @@ export const PlayerProvider: React.FC = ({ children }) => {
             setControlsActive(false);
         }, 3000);
     };
+
+    const onMouseMove = () => onPlayerInteract();
 
     useEffect(() => {
         document.documentElement.classList.add("is-landscape");
@@ -242,31 +253,16 @@ export const PlayerProvider: React.FC = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        if (!initialized || !video || !container || !hls) {
+        if (!initialized || !hls) {
             return;
         }
 
         hls.on(Hls.Events.MANIFEST_PARSED, onManifestParsed);
         hls.on(Hls.Events.SUBTITLE_TRACK_LOADED, onSubtitlesLoaded);
-        video.addEventListener("loadedmetadata", onMetadataLoaded);
-        video.addEventListener("play", onPlayProgress);
-        video.addEventListener("play", onPlayState);
-        video.addEventListener("pause", onPlayState);
-        video.addEventListener("timeupdate", onTimeUpdate);
-        video.addEventListener("progress", onProgress);
-        video.addEventListener("seeked", onSeek);
-        video.addEventListener("waiting", onWait);
         document.addEventListener("mousemove", onMouseMove);
         return () => {
             hls.off(Hls.Events.MANIFEST_PARSED, onManifestParsed);
             hls.off(Hls.Events.SUBTITLE_TRACK_LOADED, onSubtitlesLoaded);
-            video.removeEventListener("loadedmetadata", onMetadataLoaded);
-            video.removeEventListener("play", onPlayProgress);
-            video.removeEventListener("play", onPlayState);
-            video.removeEventListener("pause", onPlayState);
-            video.removeEventListener("timeupdate", onTimeUpdate);
-            video.removeEventListener("progress", onProgress);
-            video.removeEventListener("seeked", onSeek);
             document.removeEventListener("mousemove", onMouseMove);
 
             if (mouseMoveTimeout.current) {
@@ -295,6 +291,16 @@ export const PlayerProvider: React.FC = ({ children }) => {
                 timeByAbs,
                 jumpToAbs,
                 jumpToSecondsFromCurrent,
+                eventListeners: {
+                    onPlay,
+                    onPause,
+                    onMetadataLoaded,
+                    onTimeUpdate,
+                    onProgress,
+                    onSeeked,
+                    onWaiting,
+                    onPlayerInteract,
+                },
             }}>
             <div ref={containerRef} className="__slot-watch">
                 {children}

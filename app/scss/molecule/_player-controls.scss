@@ -58,4 +58,18 @@
             }
         }
     }
+
+    .player-touch-progress {
+        display: none;
+    }
+
+    @include on-landscape {
+        .player-touch-progress {
+            display: block;
+        }
+
+        .player-default-progress {
+            display: none;
+        }
+    }
 }

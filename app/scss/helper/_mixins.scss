@@ -106,9 +106,34 @@
             transform: scale(1.1);
         }
     }
+
+    &:active {
+        color: $primary;
+    }
+}
+
+@mixin rotate-html {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    width: 100vh;
+    height: 100vw;
+    overflow-x: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
 }
 
 //region Media Queries
+@mixin on-landscape {
+    @media screen and (max-width: 767px) and (orientation: portrait) {
+        @content;
+    }
+
+    @media screen and (hover: none) and (orientation: portrait) {
+        @content;
+    }
+}
+
 @mixin on-min-width ($min-width) {
     @media screen and (min-width: $min-width) {
         @content;

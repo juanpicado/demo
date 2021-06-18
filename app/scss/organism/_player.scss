@@ -23,12 +23,17 @@
         user-select: none;
     }
 
-    .player-overlay {
+    .player-overlay,
+    .player-mobile-overlay {
         position: absolute;
         z-index: 1;
         top: 0;
         bottom: 0;
         @include square(100%);
+    }
+
+    .player-mobile-overlay {
+        display: none;
     }
 
     .player-controls {
@@ -37,5 +42,15 @@
         bottom: 0;
         left: 0;
         width: 100%;
+    }
+
+    @include on-landscape {
+        .player-mobile-overlay {
+            display: block;
+        }
+
+        .player-overlay {
+            display: none;
+        }
     }
 }

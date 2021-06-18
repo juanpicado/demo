@@ -101,4 +101,10 @@
         background-color: $gray;
         overflow: hidden;
     }
+
+    @include on-landscape {
+        .player-mouse-indicator {
+            display: none;
+        }
+    }
 }

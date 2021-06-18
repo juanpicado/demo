@@ -2,7 +2,11 @@ import React, { useRef, useState } from "react";
 import { classes } from "../lib/util/Classes";
 import { usePlayer } from "../context/Player/PlayerContext";
 
-export const PlayerProgress: React.FC = () => {
+interface PlayerProgressProps {
+    isTouch?: boolean;
+}
+
+export const PlayerProgress: React.FC<PlayerProgressProps> = ({ isTouch }) => {
     const { progress, buffer, currentTimeStamp, jumpToAbs, timeByAbs } = usePlayer();
     const containerRef = useRef<HTMLButtonElement | null>(null);
     const indicatorRef = useRef<HTMLDivElement | null>(null);
@@ -18,10 +22,10 @@ export const PlayerProgress: React.FC = () => {
             return;
         }
 
-        const { width, left } = container.getBoundingClientRect();
+        const { width, height, left, bottom } = container.getBoundingClientRect();
 
-        const x = (e.clientX - left) / width;
-        jumpToAbs(x);
+        const x = isTouch ? (e.clientY - bottom) / height : (e.clientX - left) / width;
+        jumpToAbs(Math.abs(x));
     };
 
     const onMouseEnter = () => {

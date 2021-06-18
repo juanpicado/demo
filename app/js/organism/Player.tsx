@@ -12,9 +12,9 @@ export const Player: React.FC<PlayerProps> = ({ item }) => {
     const {
         waiting,
         controlsActive,
-        setControlsActive,
         initVideoPlayer,
         togglePlayState,
+        eventListeners,
     } = usePlayer();
     const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -33,14 +33,20 @@ export const Player: React.FC<PlayerProps> = ({ item }) => {
                     <Spinner />
                 </div>
             )}
-            <video ref={videoRef} className="player-video" playsInline />
-            <div
-                className="player-overlay"
-                onClick={() => {
-                    togglePlayState();
-                    setControlsActive(true);
-                }}
+            <video
+                ref={videoRef}
+                className="player-video"
+                playsInline
+                onPlay={eventListeners.onPlay}
+                onPause={eventListeners.onPause}
+                onLoadedMetadata={eventListeners.onMetadataLoaded}
+                onTimeUpdate={eventListeners.onTimeUpdate}
+                onProgress={eventListeners.onProgress}
+                onSeeked={eventListeners.onSeeked}
+                onWaiting={eventListeners.onWaiting}
             />
+            <div className="player-overlay" onClick={togglePlayState} />
+            <div className="player-mobile-overlay" onClick={eventListeners.onPlayerInteract} />
             {controlsActive && <PlayerControls title={item.title} />}
         </div>
     );

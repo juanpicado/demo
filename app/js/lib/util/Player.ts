@@ -5,7 +5,9 @@ export const isFullscreen = () =>
     // @ts-ignore
     !!document.mozFullScreen ||
     // @ts-ignore
-    !!document.webkitIsFullScreen;
+    !!document.webkitIsFullScreen ||
+    // @ts-ignore
+    !!document.msIsFullScreen;
 
 export const requestFullscreen = (video: HTMLVideoElement) => {
     const el = document.documentElement;
@@ -25,13 +27,21 @@ export const requestFullscreen = (video: HTMLVideoElement) => {
         // @ts-ignore
         el.msRequestFullscreen();
         // @ts-ignore
-    } else if (video.webkitRequestFullscreen) {
+    } else if (video.enterFullscreen) {
         // @ts-ignore
-        video.webkitRequestFullscreen();
+        video.enterFullscreen();
+        // @ts-ignore
+    } else if (video.mozEnterFullScreen) {
+        // @ts-ignore
+        video.mozEnterFullScreen();
         // @ts-ignore
     } else if (video.webkitEnterFullScreen) {
         // @ts-ignore
         video.webkitEnterFullScreen();
+        // @ts-ignore
+    } else if (video.msEnterFullScreen) {
+        // @ts-ignore
+        video.msEnterFullScreen();
         // @ts-ignore
     }
 };
@@ -47,5 +57,9 @@ export const exitFullscreen = () => {
     } else if (document.webkitExitFullscreen) {
         // @ts-ignore
         document.webkitExitFullscreen();
+        // @ts-ignore
+    } else if (document.msExitFullscreen) {
+        // @ts-ignore
+        document.msExitFullscreen();
     }
 };
