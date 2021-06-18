@@ -4,6 +4,9 @@ import { Player } from "../../../app/js/organism/Player";
 import { App } from "../../../app/types/app";
 import { getServerSideItem } from "../../../app/js/lib/api/server";
 import { PlayerProvider } from "../../../app/js/context/Player/PlayerProvider";
+import { cutText } from "../../../app/js/lib/util/Text";
+import { generateImageUrl } from "../../../app/js/lib/util/Urls";
+import { Meta } from "../../../app/js/lib/util/Meta";
 
 interface WatchProps {
     item: App.ItemDetails;
@@ -12,6 +15,11 @@ interface WatchProps {
 const Watch: React.FC<WatchProps> = ({ item }) => {
     return (
         <PlayerProvider>
+            <Meta
+                title={item.title + " - Streamio"}
+                desc={cutText(item.text)}
+                image={item.image ? generateImageUrl(item.image) : undefined}
+            />
             <Player item={item} />
         </PlayerProvider>
     );

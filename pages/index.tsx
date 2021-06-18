@@ -7,6 +7,7 @@ import { BlockSlider } from "../app/js/organism/BlockSlider";
 import { BlockGenre } from "../app/js/organism/BlockGenre";
 import { App } from "../app/types/app";
 import { Api } from "../app/types/api";
+import { Meta } from "../app/js/lib/util/Meta";
 
 export interface IndexProps {
     opener: App.ItemDetails;
@@ -17,6 +18,7 @@ export interface IndexProps {
 const Home: React.FC<IndexProps> = ({ daily, genres, opener }) => {
     return (
         <React.Fragment>
+            <Meta />
             <BlockOpener {...opener} />
             <div className="__block">
                 <BlockSlider title="Popular Today" items={daily} slides={4} />

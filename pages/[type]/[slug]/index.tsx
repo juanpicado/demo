@@ -7,6 +7,9 @@ import { getItemsByGenre, getSeasonById } from "../../../app/js/lib/api/backend"
 import { Api } from "../../../app/types/api";
 import { BlockSlider } from "../../../app/js/organism/BlockSlider";
 import { BlockSeasons } from "../../../app/js/organism/BlockSeasons";
+import { Meta } from "../../../app/js/lib/util/Meta";
+import { cutText } from "../../../app/js/lib/util/Text";
+import { generateImageUrl } from "../../../app/js/lib/util/Urls";
 
 interface ItemProps {
     item: App.ItemDetails;
@@ -19,6 +22,11 @@ const Item: React.FC<ItemProps> = ({ item, recommendations, episodes }) => {
 
     return (
         <React.Fragment>
+            <Meta
+                title={item.title + " - Streamio"}
+                desc={cutText(item.text)}
+                image={item.image ? generateImageUrl(item.image) : undefined}
+            />
             <BlockOpener {...item} isDetailsPage />
             {item.seasons && (
                 <div className="__block">
