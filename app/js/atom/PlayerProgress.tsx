@@ -1,46 +1,47 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { classes } from "../lib/util/Classes";
 import { usePlayer } from "../context/Player/PlayerContext";
+import { useDrag } from "../lib/util/Drag";
 
 interface PlayerProgressProps {
     isTouch?: boolean;
 }
 
 export const PlayerProgress: React.FC<PlayerProgressProps> = ({ isTouch }) => {
-    const { progress, buffer, currentTimeStamp, jumpToAbs, timeByAbs } = usePlayer();
-    const containerRef = useRef<HTMLButtonElement | null>(null);
+    const containerRef = useRef<HTMLDivElement | null>(null);
     const indicatorRef = useRef<HTMLDivElement | null>(null);
-    const [indicatorActive, setIndicatorActive] = useState<boolean>(false);
+    const { progress, buffer, currentTimeStamp, jumpToAbs, timeByAbs } = usePlayer();
+    const { drag, dragging } = useDrag(containerRef, isTouch);
     const [indicatorPosition, setIndicatorPosition] = useState<number>(0);
     const [indicatorTime, setIndicatorTime] = useState<string>("");
 
-    const onClick = (e: React.MouseEvent) => {
-        const indicator = indicatorRef.current;
-        const container = containerRef.current;
-
-        if (!indicator || !container) {
+    useEffect(() => {
+        if (!drag) {
             return;
         }
 
-        const { width, height, left, bottom } = container.getBoundingClientRect();
+        jumpToAbs(drag);
+        setIndicatorTime(timeByAbs(drag));
 
-        const x = isTouch ? (e.clientY - bottom) / height : (e.clientX - left) / width;
-        jumpToAbs(Math.abs(x));
-    };
-
-    const onMouseEnter = () => {
-        setIndicatorActive(true);
-    };
-
-    const onMouseLeave = () => {
-        setIndicatorActive(false);
-    };
-
-    const onMouseMove = (e: React.MouseEvent) => {
-        const indicator = indicatorRef.current;
         const container = containerRef.current;
 
-        if (!indicator || !container) {
+        if (!container) {
+            return;
+        }
+
+        const { width } = container.getBoundingClientRect();
+
+        setIndicatorPosition(drag * width);
+    }, [drag]);
+
+    const onMouseMove = (e: React.MouseEvent) => {
+        if (dragging) {
+            return;
+        }
+
+        const container = containerRef.current;
+
+        if (!container) {
             return;
         }
 
@@ -54,13 +55,7 @@ export const PlayerProgress: React.FC<PlayerProgressProps> = ({ isTouch }) => {
 
     return (
         <div className="player-progress">
-            <button
-                ref={containerRef}
-                className="player-progress-bar"
-                onClick={onClick}
-                onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}
-                onMouseMove={onMouseMove}>
+            <div ref={containerRef} className="player-progress-bar" onMouseMove={onMouseMove}>
                 <div className="player-progress-frame">
                     <div
                         className="player-progress-inner"
@@ -75,7 +70,7 @@ export const PlayerProgress: React.FC<PlayerProgressProps> = ({ isTouch }) => {
                     ref={indicatorRef}
                     className={classes({
                         "player-mouse-indicator": true,
-                        "is-active": indicatorActive,
+                        "is-active": dragging,
                     })}
                     style={{ left: indicatorPosition + "px" }}>
                     {indicatorTime && (
@@ -83,7 +78,7 @@ export const PlayerProgress: React.FC<PlayerProgressProps> = ({ isTouch }) => {
                     )}
                 </div>
                 <div className="player-progress-knob" style={{ left: progress * 100 + "%" }} />
-            </button>
+            </div>
             <span
                 className={classes({
                     "player-progress-timestamp": true,

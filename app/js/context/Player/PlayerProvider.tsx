@@ -80,6 +80,8 @@ export const PlayerProvider: React.FC = ({ children }) => {
         }
 
         video.currentTime = video.duration * abs;
+        setProgress(video.currentTime / video.duration);
+        onPlayerInteract();
     };
 
     const timeByAbs = (abs: number): string => {
@@ -113,6 +115,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
         }
 
         video.currentTime = video.currentTime + seconds;
+        onPlayerInteract();
     };
 
     const toggleSubtitles = (language: string) => {
@@ -161,6 +164,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
     const onPlay = () => {
         onPlayProgress();
         onPlayState();
+        onPlayerInteract();
     };
 
     const onPause = () => {
