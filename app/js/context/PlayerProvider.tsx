@@ -249,7 +249,12 @@ export const PlayerProvider: React.FC = ({ children }) => {
 
     useEffect(() => {
         document.documentElement.classList.add("is-landscape");
-        return () => document.documentElement.classList.remove("is-landscape");
+        document.documentElement.style.width = window.innerHeight + "px";
+
+        return () => {
+            document.documentElement.style.removeProperty("width");
+            document.documentElement.classList.remove("is-landscape");
+        };
     }, []);
 
     useEffect(() => {
