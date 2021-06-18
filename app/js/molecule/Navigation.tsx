@@ -27,11 +27,8 @@ export const Navigation: React.FC = () => {
                     <NavigationLink href={`/${TV_KEY}`} active={router.asPath.includes(TV_KEY)}>
                         TV Shows
                     </NavigationLink>
-                    <NavigationLink href={`/${TV_KEY}`} active={router.asPath.includes("trending")}>
-                        Trending
-                    </NavigationLink>
                     <NavigationLink
-                        href={`/${TV_KEY}`}
+                        href={`/watchlist`}
                         active={router.asPath.includes("watchlist")}>
                         Watchlist
                     </NavigationLink>

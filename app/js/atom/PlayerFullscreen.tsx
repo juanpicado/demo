@@ -1,5 +1,5 @@
 import React from "react";
-import { usePlayer } from "../context/PlayerContext";
+import { usePlayer } from "../context/Player/PlayerContext";
 import { Icon, Maximize, Minimize } from "../lib/util/Icon";
 
 export const PlayerFullscreen: React.FC = () => {

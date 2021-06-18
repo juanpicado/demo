@@ -5,6 +5,7 @@ import { AppProps } from "next/app";
 import "../app/scss/app.scss";
 import { Navigation } from "../app/js/molecule/Navigation";
 import { useRouter } from "next/router";
+import { WatchlistProvider } from "../app/js/context/Watchlist/WatchlistProvider";
 
 NProgress.configure({ showSpinner: false });
 
@@ -18,10 +19,10 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
     }, []);
 
     return (
-        <React.Fragment>
+        <WatchlistProvider>
             {!pageProps.hideNav && <Navigation />}
             <Component {...pageProps} key={router.asPath} />
-        </React.Fragment>
+        </WatchlistProvider>
     );
 };
 

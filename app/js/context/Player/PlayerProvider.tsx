@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { PlayerContext } from "./PlayerContext";
 import Hls from "hls.js";
-import { Player } from "../../types/player";
-import { secondsTimeToTimestamp } from "../lib/util/Time";
+import { Player } from "../../../types/player";
+import { secondsTimeToTimestamp } from "../../lib/util/Time";
 
 const videoSrc = "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8";
 

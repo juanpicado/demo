@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { PlayerControls } from "../molecule/PlayerControls";
-import { usePlayer } from "../context/PlayerContext";
+import { usePlayer } from "../context/Player/PlayerContext";
 import { App } from "../../types/app";
 import { Spinner } from "../atom/Spinner";
 

@@ -43,9 +43,48 @@
         @include transition(opacity, 0.3s);
     }
 
+    .card-frame-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+
+    .card-frame-controls {
+        display: flex;
+        flex-wrap: wrap;
+
+        .button {
+            width: 100%;
+
+            &:last-child {
+                margin-top: 1rem;
+            }
+        }
+    }
+
+    .card-frame-watchlist-button {
+        @include square(2rem);
+
+        &.is-active {
+            .icon-star {
+                fill: $white;
+            }
+        }
+
+        @include hover {
+            .icon-star {
+                fill: $white;
+            }
+        }
+    }
+
+    .icon-star {
+        @include transition(fill, 0.1s);
+    }
+
     .card-frame-title {
         @include text(h4);
-        margin-bottom: 1rem;
     }
 
     .card-frame-text {

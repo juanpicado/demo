@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { classes } from "../lib/util/Classes";
-import { usePlayer } from "../context/PlayerContext";
+import { usePlayer } from "../context/Player/PlayerContext";
 
 export const PlayerProgress: React.FC = () => {
     const { progress, buffer, currentTimeStamp, jumpToAbs, timeByAbs } = usePlayer();

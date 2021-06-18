@@ -1,5 +1,5 @@
 import React from "react";
-import { usePlayer } from "../context/PlayerContext";
+import { usePlayer } from "../context/Player/PlayerContext";
 import { Icon, RotateLeft, RotateRight } from "../lib/util/Icon";
 
 interface PlayerSkipProps {

@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { Player } from "../../types/player";
+import { Player } from "../../../types/player";
 
 interface PlayerContextData {
     initVideoPlayer: (el: HTMLVideoElement) => void;

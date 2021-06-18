@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { usePlayer } from "../context/PlayerContext";
+import { usePlayer } from "../context/Player/PlayerContext";
 import { Icon, Text } from "../lib/util/Icon";
 import { classes } from "../lib/util/Classes";
 

@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import { Player } from "../../../app/js/organism/Player";
 import { App } from "../../../app/types/app";
 import { getServerSideItem } from "../../../app/js/lib/api/server";
-import { PlayerProvider } from "../../../app/js/context/PlayerProvider";
+import { PlayerProvider } from "../../../app/js/context/Player/PlayerProvider";
 
 interface WatchProps {
     item: App.ItemDetails;
