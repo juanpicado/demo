@@ -10,12 +10,15 @@ interface PlayerEventListeners {
     onSeeked: () => void;
     onWaiting: () => void;
     onPlayerInteract: () => void;
+    onVolumeChange: () => void;
 }
 
 interface PlayerContextData {
     initVideoPlayer: (el: HTMLVideoElement) => void;
     playing: boolean;
     waiting: boolean;
+    muted: boolean;
+    volume: number;
     progress: number;
     buffer: number;
     currentTimeStamp: string;
@@ -27,6 +30,8 @@ interface PlayerContextData {
     toggleSubtitles: (index: string) => void;
     togglePlayState: () => void;
     toggleFullscreenState: () => void;
+    toggleMuted: () => void;
+    setVideoVolume: (abs: number) => void;
     timeByAbs: (abs: number) => string;
     jumpToAbs: (abs: number) => void;
     jumpToSecondsFromCurrent: (seconds: number) => void;

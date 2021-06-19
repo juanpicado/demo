@@ -9,6 +9,8 @@
         text-align: right;
         min-width: 6rem;
         opacity: 0;
+        pointer-events: none;
+        user-select: none;
 
         &.is-active {
             opacity: 1;

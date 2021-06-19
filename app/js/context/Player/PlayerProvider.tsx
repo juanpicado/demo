@@ -16,6 +16,8 @@ export const PlayerProvider: React.FC = ({ children }) => {
     const [initialized, setInitialized] = useState<boolean>(false);
     const [playing, setPlaying] = useState<boolean>(false);
     const [waiting, setWaiting] = useState<boolean>(false);
+    const [muted, setMuted] = useState<boolean>(false);
+    const [volume, setVolume] = useState<number>(1);
     const [progress, setProgress] = useState<number>(0);
     const [buffer, setBuffer] = useState<number>(0);
     const [currentTimeStamp, setCurrentTimeStamp] = useState<string>("0");
@@ -60,6 +62,14 @@ export const PlayerProvider: React.FC = ({ children }) => {
         setBuffer(end / video.duration);
     };
 
+    const setVideoVolume = (abs: number) => {
+        if (!video) {
+            return;
+        }
+
+        video.volume = abs;
+    };
+
     const togglePlayState = () => {
         if (!video) {
             return;
@@ -72,6 +82,14 @@ export const PlayerProvider: React.FC = ({ children }) => {
         } else {
             video.pause();
         }
+    };
+
+    const toggleMuted = () => {
+        if (!video) {
+            return;
+        }
+
+        video.muted = !video.muted;
     };
 
     const jumpToAbs = (abs: number) => {
@@ -151,6 +169,15 @@ export const PlayerProvider: React.FC = ({ children }) => {
     //
     // Event Listeners
     //
+    const onVolumeChange = () => {
+        if (!video) {
+            return;
+        }
+
+        setMuted(video.muted);
+        setVolume(video.volume);
+    };
+
     const onMetadataLoaded = () => calcTimestamp();
 
     const onManifestParsed = () => {
@@ -281,6 +308,8 @@ export const PlayerProvider: React.FC = ({ children }) => {
                 initVideoPlayer,
                 playing,
                 waiting,
+                muted,
+                volume,
                 progress,
                 buffer,
                 currentTimeStamp,
@@ -292,6 +321,8 @@ export const PlayerProvider: React.FC = ({ children }) => {
                 toggleSubtitles,
                 togglePlayState,
                 toggleFullscreenState,
+                toggleMuted,
+                setVideoVolume,
                 timeByAbs,
                 jumpToAbs,
                 jumpToSecondsFromCurrent,
@@ -304,6 +335,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
                     onSeeked,
                     onWaiting,
                     onPlayerInteract,
+                    onVolumeChange,
                 },
             }}>
             <div ref={containerRef} className="__slot-watch">

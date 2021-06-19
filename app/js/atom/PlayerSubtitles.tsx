@@ -10,7 +10,6 @@ interface PlayerSubtitlesProps {
 
 export const PlayerSubtitles: React.FC<PlayerSubtitlesProps> = ({ onMouseEnter, onMouseLeave }) => {
     const { subtitles, activeSubtitle, toggleSubtitles } = usePlayer();
-    const [active, setActive] = useState<boolean>(false);
 
     return (
         <div className="player-subtitles" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>

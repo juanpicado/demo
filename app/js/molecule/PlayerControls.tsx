@@ -3,45 +3,42 @@ import { PlayerProgress } from "../atom/PlayerProgress";
 import { PlayerPlay } from "../atom/PlayerPlay";
 import { PlayerFullscreen } from "../atom/PlayerFullscreen";
 import { PlayerSkip } from "../atom/PlayerSkip";
-import { PlayerSubtitles } from "../atom/PlayerSubtitles";
 import { classes } from "../lib/util/Classes";
 import { ArrowLeft, Icon } from "../lib/util/Icon";
 import { useRouter } from "next/router";
+import { PlayerVolume } from "../atom/PlayerVolume";
+import { PlayerVolumeTouch } from "../atom/PlayerVolumeTouch";
 
-interface PlayerControls {
-    title: string;
-}
-
-export const PlayerControls: React.FC<PlayerControls> = ({ title }) => {
+export const PlayerControls: React.FC = () => {
     const router = useRouter();
-    const subtitlesTimeout = useRef<NodeJS.Timeout | null>(null);
-    const [subtitlesActive, setSubtitlesActive] = useState<boolean>(false);
+    const volumeTimeout = useRef<NodeJS.Timeout | null>(null);
+    const [volumeActive, setVolumeActive] = useState<boolean>(false);
 
-    const onMouseEnter = () => {
-        if (subtitlesTimeout.current) {
-            clearTimeout(subtitlesTimeout.current);
+    const onVolumeEnter = () => {
+        if (volumeTimeout.current) {
+            clearTimeout(volumeTimeout.current);
         }
 
-        setSubtitlesActive(true);
+        setVolumeActive(true);
     };
 
-    const onMouseLeave = () => {
-        subtitlesTimeout.current = setTimeout(() => setSubtitlesActive(false), 250);
+    const onVolumeLeave = () => {
+        volumeTimeout.current = setTimeout(() => setVolumeActive(false), 250);
     };
 
     return (
         <div
             className={classes({
                 "player-controls": true,
-                "subtitles-active": subtitlesActive,
+                "volume-active": volumeActive,
             })}>
             <button type="button" className="player-controls-back" onClick={router.back}>
                 <Icon name="arrow-left" icon={ArrowLeft} />
             </button>
-            <div className="player-default-progress">
+            <div className="player-default">
                 <PlayerProgress />
             </div>
-            <div className="player-touch-progress">
+            <div className="player-touch">
                 <PlayerProgress isTouch />
             </div>
             <div className="player-controls-inner">
@@ -51,10 +48,14 @@ export const PlayerControls: React.FC<PlayerControls> = ({ title }) => {
                         <PlayerSkip seconds={-10} />
                         <PlayerSkip seconds={10} />
                     </div>
-                    <div className="player-controls-title">{title}</div>
+                    <div className="player-default">
+                        <PlayerVolume onMouseEnter={onVolumeEnter} onMouseLeave={onVolumeLeave} />
+                    </div>
+                    <div className="player-touch">
+                        <PlayerVolumeTouch />
+                    </div>
                 </div>
                 <div className="player-controls-group">
-                    <PlayerSubtitles onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} />
                     <PlayerFullscreen />
                 </div>
             </div>

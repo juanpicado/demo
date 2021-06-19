@@ -20,7 +20,7 @@ const Watch: React.FC<WatchProps> = ({ item }) => {
                 desc={cutText(item.text)}
                 image={item.image ? generateImageUrl(item.image) : undefined}
             />
-            <Player item={item} />
+            <Player />
         </PlayerProvider>
     );
 };

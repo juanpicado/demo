@@ -1,0 +1,78 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+
+.player-volume {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &.is-muted {
+        .player-volume-progress {
+            pointer-events: none;
+        }
+
+        .player-volume-progress-inner,
+        .player-volume-progress-knob {
+            opacity: 0;
+        }
+    }
+
+    .player-volume-button {
+        @include player-controls-hover(volume, volume-muted);
+    }
+
+    .player-volume-progress-wrapper {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -100%);
+        padding: 1.5rem;
+        border-radius: $radius;
+        background-color: $gray-black;
+        opacity: 0;
+        pointer-events: none;
+        @include transition(opacity, 0.2s);
+
+    }
+
+    .player-volume-progress-frame {
+        position: relative;
+    }
+
+    .player-volume-progress {
+        position: relative;
+        width: 0.5rem;
+        height: 15rem;
+        border-radius: 0.25rem;
+        background-color: $gray;
+        overflow: hidden;
+        transform: translateZ(0);
+    }
+
+    .player-volume-progress-inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        transform: scaleY(1);
+        transform-origin: bottom;
+        will-change: transform;
+        backface-visibility: hidden;
+        background-color: $white;
+    }
+
+    .player-volume-progress-knob {
+        position: absolute;
+        z-index: 2;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 50%);
+        @include square(1.5rem);
+        border-radius: 50%;
+        background-color: $primary;
+        will-change: bottom;
+        backface-visibility: hidden;
+        pointer-events: none;
+    }
+}

@@ -16,6 +16,17 @@
         }
     }
 
+    &.volume-active {
+        .player-volume-progress-wrapper {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .player-progress {
+            opacity: 0;
+        }
+    }
+
     .player-controls-back {
         position: fixed;
         z-index: 1;
@@ -59,16 +70,16 @@
         }
     }
 
-    .player-touch-progress {
+    .player-touch {
         display: none;
     }
 
     @include on-landscape {
-        .player-touch-progress {
+        .player-touch {
             display: block;
         }
 
-        .player-default-progress {
+        .player-default {
             display: none;
         }
     }

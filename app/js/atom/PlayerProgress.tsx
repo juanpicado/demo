@@ -11,7 +11,7 @@ export const PlayerProgress: React.FC<PlayerProgressProps> = ({ isTouch }) => {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const indicatorRef = useRef<HTMLDivElement | null>(null);
     const { progress, buffer, currentTimeStamp, jumpToAbs, timeByAbs } = usePlayer();
-    const { drag, dragging } = useDrag(containerRef, isTouch);
+    const { drag, dragging } = useDrag(containerRef, { isTouch });
     const [indicatorPosition, setIndicatorPosition] = useState<number>(0);
     const [indicatorTime, setIndicatorTime] = useState<string>("");
 

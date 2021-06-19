@@ -1,5 +1,10 @@
 import { MutableRefObject, useEffect, useState } from "react";
 
+interface DragOptions {
+    isTouch?: boolean;
+    isVertical?: boolean;
+}
+
 interface UseDragData {
     drag: number | null;
     dragging: boolean;
@@ -7,7 +12,7 @@ interface UseDragData {
 
 export const useDrag = (
     containerRef: MutableRefObject<HTMLElement | null>,
-    isTouch?: boolean
+    options: DragOptions = {}
 ): UseDragData => {
     const [drag, setDrag] = useState<number | null>(null);
     const [dragging, setDragging] = useState<boolean>(false);
@@ -61,8 +66,12 @@ export const useDrag = (
 
         const { width, height, left, bottom } = container.getBoundingClientRect();
 
-        const x = isTouch ? (clientY - bottom) / height : (clientX - left) / width;
-        setDrag(Math.abs(x));
+        const x =
+            options.isTouch || options.isVertical
+                ? ((clientY - bottom) / height) * -1
+                : (clientX - left) / width;
+
+        setDrag(Math.max(0, Math.min(x, 1)));
     };
 
     return {

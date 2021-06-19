@@ -4,11 +4,7 @@ import { usePlayer } from "../context/Player/PlayerContext";
 import { App } from "../../types/app";
 import { Spinner } from "../atom/Spinner";
 
-interface PlayerProps {
-    item: App.ItemDetails;
-}
-
-export const Player: React.FC<PlayerProps> = ({ item }) => {
+export const Player: React.FC = () => {
     const {
         waiting,
         controlsActive,
@@ -44,10 +40,11 @@ export const Player: React.FC<PlayerProps> = ({ item }) => {
                 onProgress={eventListeners.onProgress}
                 onSeeked={eventListeners.onSeeked}
                 onWaiting={eventListeners.onWaiting}
+                onVolumeChange={eventListeners.onVolumeChange}
             />
             <div className="player-overlay" onClick={togglePlayState} />
             <div className="player-mobile-overlay" onClick={eventListeners.onPlayerInteract} />
-            {controlsActive && <PlayerControls title={item.title} />}
+            {controlsActive && <PlayerControls />}
         </div>
     );
 };
