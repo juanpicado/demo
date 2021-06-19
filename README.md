@@ -1,4 +1,4 @@
-A video streaming platform built with Next.js using a custom video player, providing a streaming example using the HLS protocol.
+A small video streaming platform built with Next.js using a custom video player, providing a streaming example using the HLS protocol.
 
 Check it out: https://next-video-streaming-platform-hls.vercel.app
 
