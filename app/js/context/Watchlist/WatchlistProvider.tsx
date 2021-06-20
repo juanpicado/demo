@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { App } from "../../../types/app";
 import { demoDuration } from "../../atom/CardProgress";
 
@@ -17,8 +17,8 @@ interface WatchlistContextData {
     updateProgress: (item: App.Item | App.ItemDetails, progress: number) => void;
     hasBookmark: (id: number) => boolean;
     hasProgress: (id: number) => number;
-    getBookmarkItems: () => (App.Item | App.ItemDetails)[];
-    getProgressItems: () => (App.Item | App.ItemDetails)[];
+    bookmarkItems: (App.Item | App.ItemDetails)[];
+    progressItems: (App.Item | App.ItemDetails)[];
 }
 
 const WatchlistContext = createContext<WatchlistContextData>({} as WatchlistContextData);
@@ -111,7 +111,7 @@ export const WatchlistProvider: React.FC = ({ children }) => {
         return item.progress;
     };
 
-    const getBookmarkItems = (): (App.Item | App.ItemDetails)[] => {
+    const bookmarkItems = useMemo<(App.Item | App.ItemDetails)[]>(() => {
         if (Object.keys(watchlist).length === 0) {
             return [];
         }
@@ -119,9 +119,9 @@ export const WatchlistProvider: React.FC = ({ children }) => {
         return Object.keys(watchlist)
             .filter(key => watchlist[Number(key)].bookmark)
             .map(key => watchlist[Number(key)].item);
-    };
+    }, [watchlist]);
 
-    const getProgressItems = (): (App.Item | App.ItemDetails)[] => {
+    const progressItems = useMemo<(App.Item | App.ItemDetails)[]>(() => {
         if (Object.keys(watchlist).length === 0) {
             return [];
         }
@@ -129,7 +129,7 @@ export const WatchlistProvider: React.FC = ({ children }) => {
         return Object.keys(watchlist)
             .filter(key => watchlist[Number(key)].progress !== 0)
             .map(key => watchlist[Number(key)].item);
-    };
+    }, [watchlist]);
 
     return (
         <WatchlistContext.Provider
@@ -139,8 +139,8 @@ export const WatchlistProvider: React.FC = ({ children }) => {
                 updateProgress,
                 hasBookmark,
                 hasProgress,
-                getBookmarkItems,
-                getProgressItems,
+                bookmarkItems,
+                progressItems,
             }}>
             {children}
         </WatchlistContext.Provider>
