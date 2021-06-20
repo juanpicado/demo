@@ -26,7 +26,7 @@ by the demo video.
 ## SEO
 In terms of SEO the application is optimized and provides suitable meta tags for every media item generated server side:
 
-![SEO](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/readme-seo.png)
+![SEO](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/readme-seo-demo.png)
 
 ## Getting Started
 
