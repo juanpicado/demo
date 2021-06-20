@@ -1,5 +1,12 @@
 import { Api } from "../../../types/api";
-import { MOVIE_KEY, TV_KEY } from "../util/MediaTypes";
+import {
+    itemDetailsByMediaType,
+    itemsByMediaType,
+    itemsDetailsByMediaType,
+    MOVIE_KEY,
+    TV_KEY,
+} from "../util/MediaTypes";
+import { App } from "../../../types/app";
 
 const baseUrl = process.env.NEXT_PUBLIC_THE_MOVIE_DB_V3_BASE_URL;
 const apiKey = process.env.NEXT_PUBLIC_THE_MOVIE_DB_V3_API_KEY;
@@ -35,11 +42,9 @@ export const getGenres = async (types: string[]): Promise<Record<string, Api.Gen
     }, {} as Record<string, Api.Genre>);
 };
 
-export const getTrending = async (
-    time: string,
-    type: string
-): Promise<Api.Page<Api.TrendingItem[]>> => {
-    return await db<Api.Page<Api.TrendingItem[]>>(`/trending/${type}/${time}`);
+export const getTrending = async (time: string, type: string): Promise<App.Item[]> => {
+    const { results } = await db<Api.Page<Api.Item[]>>(`/trending/${type}/${time}`);
+    return itemsByMediaType(results);
 };
 
 const getMovieById = async (id: number | string): Promise<Api.MovieDetails> => {
@@ -52,12 +57,16 @@ const getTvById = async (id: number | string): Promise<Api.TVDetails> => {
     return { ...item, media_type: TV_KEY };
 };
 
-export const getItemById = async (id: number | string, type: string): Promise<Api.ItemDetails> => {
+export const getItemById = async (id: number | string, type: string): Promise<App.ItemDetails> => {
     switch (type) {
-        case MOVIE_KEY:
-            return getMovieById(id);
-        case TV_KEY:
-            return getTvById(id);
+        case MOVIE_KEY: {
+            const items = await getMovieById(id);
+            return itemDetailsByMediaType(items);
+        }
+        case TV_KEY: {
+            const items = await getTvById(id);
+            return itemDetailsByMediaType(items);
+        }
         default:
             throw new Error("Unspecified media type");
     }
@@ -88,12 +97,16 @@ const getTvByGenre = async (genreId: number | string): Promise<Api.TV[]> => {
     });
 };
 
-export const getItemsByGenre = async (id: number | string, type: string): Promise<Api.Item[]> => {
+export const getItemsByGenre = async (id: number | string, type: string): Promise<App.Item[]> => {
     switch (type) {
-        case MOVIE_KEY:
-            return getMovieByGenre(id);
-        case TV_KEY:
-            return getTvByGenre(id);
+        case MOVIE_KEY: {
+            const items = await getMovieByGenre(id);
+            return itemsByMediaType(items);
+        }
+        case TV_KEY: {
+            const items = await getTvByGenre(id);
+            return itemsByMediaType(items);
+        }
         default:
             throw new Error("Unspecified media type");
     }

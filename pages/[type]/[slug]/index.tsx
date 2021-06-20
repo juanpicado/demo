@@ -4,7 +4,6 @@ import { getServerSideItem } from "../../../app/js/lib/api/server";
 import { BlockOpener } from "../../../app/js/molecule/BlockOpener";
 import { App } from "../../../app/types/app";
 import { getItemsByGenre, getSeasonById } from "../../../app/js/lib/api/backend";
-import { Api } from "../../../app/types/api";
 import { BlockSlider } from "../../../app/js/organism/BlockSlider";
 import { BlockSeasons } from "../../../app/js/organism/BlockSeasons";
 import { Meta } from "../../../app/js/lib/util/Meta";
@@ -13,7 +12,7 @@ import { generateImageUrl } from "../../../app/js/lib/util/Urls";
 
 interface ItemProps {
     item: App.ItemDetails;
-    recommendations?: Api.Item[];
+    recommendations?: App.Item[];
     episodes?: App.Episode[];
 }
 
@@ -25,7 +24,7 @@ const Item: React.FC<ItemProps> = ({ item, recommendations, episodes }) => {
             <Meta
                 title={item.title + " - Streamio"}
                 desc={cutText(item.text)}
-                image={item.image ? generateImageUrl(item.image) : undefined}
+                image={item.backdrop ? generateImageUrl(item.backdrop) : undefined}
             />
             <BlockOpener {...item} isDetailsPage />
             {item.seasons && (

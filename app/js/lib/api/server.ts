@@ -1,8 +1,6 @@
 import { GetServerSidePropsContext } from "next";
-import { Api } from "../../../types/api";
 import { cutIdFromSlug } from "../util/Urls";
 import { getItemById } from "./backend";
-import { itemDetailsByMediaType } from "../util/MediaTypes";
 import { App } from "../../../types/app";
 
 export const getServerSideItem = async (
@@ -11,7 +9,7 @@ export const getServerSideItem = async (
     const slug = ctx.params?.slug;
     const type = ctx.params?.type;
 
-    let item: Api.ItemDetails | null = null;
+    let item: App.ItemDetails | null = null;
 
     if (!slug || "string" !== typeof slug || !type || "string" !== typeof type) {
         return null;
@@ -27,9 +25,9 @@ export const getServerSideItem = async (
         item = await getItemById(id, type);
     }
 
-    if (!item || item.success === false) {
+    if (!item || !item.id) {
         return null;
     }
 
-    return itemDetailsByMediaType(item);
+    return item;
 };

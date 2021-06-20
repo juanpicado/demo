@@ -10,6 +10,14 @@
     background-color: $deep-black;
 }
 
+.__slot-watchlist {
+    padding-top: 7.5rem;
+
+    @include is-desktop {
+        padding-top: 10rem;
+    }
+}
+
 .is-landscape {
     @include on-landscape {
         @include rotate-html;

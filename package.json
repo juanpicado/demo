@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "hls.js": "^1.0.7",
-    "keen-slider": "^5.4.0",
+    "keen-slider": "^5.5.1",
     "lodash": "^4.17.21",
     "next": "^11.0.0",
     "nprogress": "^0.2.0",

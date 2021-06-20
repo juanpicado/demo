@@ -13,22 +13,22 @@ interface CardProps extends App.Item {
     imageSize?: string;
 }
 
-export const Card: React.FC<CardProps> = ({ title, text, image, url, imageSize, id }) => {
+export const Card: React.FC<CardProps> = ({ imageSize, ...item }) => {
     const { toggleWatchlistItem, hasBookmark, hasProgress } = useWatchlist();
 
-    if (!image) return null;
+    if (!item.poster) return null;
 
-    const progress = hasProgress(id);
+    const progress = hasProgress(item.id);
 
     return (
         <button type="button" className="card">
             <div className="card-inner">
-                <Link href={url}>
+                <Link href={item.url}>
                     <div className="card-image-wrapper">
                         <Image
                             className="card-image"
-                            src={generateImageUrl(image, imageSize)}
-                            alt={title}
+                            src={generateImageUrl(item.poster, imageSize)}
+                            alt={item.title}
                             layout="fill"
                         />
                     </div>
@@ -36,17 +36,17 @@ export const Card: React.FC<CardProps> = ({ title, text, image, url, imageSize, 
                 <div className="card-frame">
                     <div className="card-frame-group">
                         <div className="card-frame-head">
-                            <div className="card-frame-title">{title}</div>
+                            <div className="card-frame-title">{item.title}</div>
                             <div
                                 className={classes({
                                     "card-frame-watchlist-button": true,
-                                    "is-active": hasBookmark(id),
+                                    "is-active": hasBookmark(item.id),
                                 })}
-                                onClick={() => toggleWatchlistItem(id)}>
+                                onClick={() => toggleWatchlistItem(item)}>
                                 <Icon name="star" icon={Star} />
                             </div>
                         </div>
-                        <div className="card-frame-text">{cutText(text)}</div>
+                        <div className="card-frame-text">{cutText(item.text)}</div>
                     </div>
                     {!!progress && <CardProgress />}
                 </div>

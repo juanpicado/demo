@@ -8,7 +8,7 @@ import { useInfiniteScroll } from "../lib/util/InfiniteScroll";
 
 export interface IndexProps {
     opener: App.ItemDetails;
-    daily: Api.Item[];
+    daily: App.Item[];
     genres: Record<string, Api.Genre>;
 }
 

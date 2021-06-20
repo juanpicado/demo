@@ -18,7 +18,7 @@ const Watch: React.FC<WatchProps> = ({ item }) => {
             <Meta
                 title={item.title + " - Streamio"}
                 desc={cutText(item.text)}
-                image={item.image ? generateImageUrl(item.image) : undefined}
+                image={item.backdrop ? generateImageUrl(item.backdrop) : undefined}
             />
             <Player />
         </PlayerProvider>

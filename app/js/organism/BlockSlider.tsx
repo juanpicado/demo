@@ -1,16 +1,15 @@
 import React, { useRef } from "react";
-import { Api } from "../../types/api";
+import { App } from "../../types/app";
 import { Card } from "../molecule/Card";
 import { useSlider } from "../lib/util/Slider";
 import { ChevronLeft, ChevronRight, Icon } from "../lib/util/Icon";
 import { classes } from "../lib/util/Classes";
 import { useRouter } from "next/router";
 import { mediaTypes } from "../lib/util/MediaTypes";
-import { itemByMediaType } from "../lib/util/MediaTypes";
 import { SliderControls } from "../atom/SliderControls";
 
 interface SliderProps {
-    items: Api.Item[];
+    items: (App.Item | App.ItemDetails)[];
     title?: string;
     slides?: number;
     mediaType?: string;
@@ -26,6 +25,7 @@ export const BlockSlider: React.FC<SliderProps> = ({ items, title, mediaType, sl
             spacing: 15,
             rubberband: false,
             slidesPerView: slides,
+            autoAdjustSlidesPerView: false,
             breakpoints: {
                 "(max-width: 768px)": {
                     spacing: 10,
@@ -66,17 +66,13 @@ export const BlockSlider: React.FC<SliderProps> = ({ items, title, mediaType, sl
                     <Icon name="chevron-right" icon={ChevronRight} />
                 </button>
                 <div className="block-slider-container keen-slider" ref={sliderRef}>
-                    {items.map((item, index) => {
-                        const card = itemByMediaType(item);
-
-                        return (
-                            <div
-                                className="block-slider-slide keen-slider__slide"
-                                key={card.title + index}>
-                                <Card {...card} imageSize={slides < 6 ? "original" : undefined} />
-                            </div>
-                        );
-                    })}
+                    {items.map((item, index) => (
+                        <div
+                            className="block-slider-slide keen-slider__slide"
+                            key={item.title + index}>
+                            <Card {...item} imageSize={slides < 6 ? "original" : undefined} />
+                        </div>
+                    ))}
                     {mounted && <div className="block-slider-drag-info">Drag me here</div>}
                 </div>
             </div>

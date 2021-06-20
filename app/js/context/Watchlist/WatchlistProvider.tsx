@@ -3,6 +3,7 @@ import { App } from "../../../types/app";
 
 interface WatchlistItem {
     id: number;
+    item: App.Item | App.ItemDetails;
     bookmark: boolean;
     progress: number;
 }
@@ -11,9 +12,10 @@ type WatchlistRecord = Record<number, WatchlistItem>;
 
 interface WatchlistContextData {
     watchlist: WatchlistRecord;
-    toggleWatchlistItem: (id: number) => void;
+    toggleWatchlistItem: (item: App.Item | App.ItemDetails) => void;
     hasBookmark: (id: number) => boolean;
     hasProgress: (id: number) => number | boolean;
+    getBookmarkItems: () => (App.Item | App.ItemDetails)[];
 }
 
 const WatchlistContext = createContext<WatchlistContextData>({} as WatchlistContextData);
@@ -22,7 +24,6 @@ const CONTEXT_WATCHLIST = "streamio-watchlist";
 
 export const WatchlistProvider: React.FC = ({ children }) => {
     const [watchlist, setWatchlist] = useState<WatchlistRecord>({});
-    const [watchlistData, setWatchlistData] = useState<App.ItemDetails[]>([]);
 
     useEffect(() => {
         const json = localStorage.getItem(CONTEXT_WATCHLIST);
@@ -37,22 +38,15 @@ export const WatchlistProvider: React.FC = ({ children }) => {
         localStorage.setItem(CONTEXT_WATCHLIST, JSON.stringify(watchlist));
     }, [watchlist]);
 
-    useEffect(() => {
-        if (Object.keys(watchlist).length === 0) {
-            return;
-        }
-
-        // fetch data
-    }, [Object.keys(watchlist)]);
-
-    const toggleWatchlistItem = (id: number) => {
+    const toggleWatchlistItem = (item: App.Item | App.ItemDetails) => {
         setWatchlist(prevState => {
             return {
                 ...prevState,
-                [id]: {
-                    id,
+                [item.id]: {
+                    id: item.id,
+                    item,
                     progress: 0,
-                    bookmark: prevState[id] ? !prevState[id].bookmark : true,
+                    bookmark: prevState[item.id] ? !prevState[item.id].bookmark : true,
                 },
             };
         });
@@ -78,9 +72,19 @@ export const WatchlistProvider: React.FC = ({ children }) => {
         return item.progress;
     };
 
+    const getBookmarkItems = (): (App.Item | App.ItemDetails)[] => {
+        if (Object.keys(watchlist).length === 0) {
+            return [];
+        }
+
+        return Object.keys(watchlist)
+            .filter(key => watchlist[Number(key)].bookmark)
+            .map(key => watchlist[Number(key)].item);
+    };
+
     return (
         <WatchlistContext.Provider
-            value={{ watchlist, toggleWatchlistItem, hasBookmark, hasProgress }}>
+            value={{ watchlist, toggleWatchlistItem, hasBookmark, hasProgress, getBookmarkItems }}>
             {children}
         </WatchlistContext.Provider>
     );

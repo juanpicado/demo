@@ -6,7 +6,9 @@ export namespace Api {
         results: T;
     }
 
-    interface TrendingItem {
+    type Item = Movie | TV;
+
+    interface Movie extends TrendingItem {
         poster_path: string | null;
         adult: boolean;
         overview: string;
@@ -21,14 +23,8 @@ export namespace Api {
         vote_count: number;
         video: boolean;
         vote_average: number;
-        media_type: string;
-        success?: boolean;
-    }
-
-    type Item = Movie | TV;
-
-    interface Movie extends TrendingItem {
         media_type: "movie";
+        success?: boolean;
     }
 
     interface TV {

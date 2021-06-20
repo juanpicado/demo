@@ -6,7 +6,8 @@ export namespace App {
         id: number;
         title: string;
         original_title: string;
-        image: string | null;
+        backdrop: string | null;
+        poster: string | null;
         text: string;
         url: string;
         media_type: MediaTypes;
@@ -16,7 +17,8 @@ export namespace App {
         id: number;
         title: string;
         original_title: string;
-        image: string | null;
+        backdrop: string | null;
+        poster: string | null;
         text: string;
         url: string;
         infos: Info[];
