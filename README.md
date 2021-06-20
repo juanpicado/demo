@@ -1,6 +1,6 @@
 A small video streaming platform built with Next.js using a custom video player, providing a streaming example using the HLS protocol.
 
-Check it out: https://next-video-streaming-platform-hls.vercel.app
+Check it out to explore all features: https://next-video-streaming-platform-hls.vercel.app
 
 ## API
 The following api is being utilized: https://developers.themoviedb.org/3/getting-started/introduction
@@ -10,7 +10,7 @@ Overview pages like "Home", "TV" and "Movie" are being pre-rendered on build and
 
 Single detail pages could have been statically optimized as well, but unfortunately the movie API is not suitable in this way, hence they are being rendered server side. 
 
-![Media Player](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/preview.png)
+![Media Player](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/readme-preview.png)
 
 ## Video Streaming (HLS)
 HLS breaks down video files into smaller downloadable HTTP files and delivers them using the HTTP protocol. This approach provides several advantages such as smaller loading times, adaptive bitrate video delivery [and more.](https://developer.apple.com/documentation/http_live_streaming)
@@ -24,7 +24,7 @@ by the demo video.
 ![Media Player](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/media-player.png)
 
 ## SEO
-In terms of SEO the application is heavily optimized and provides suitable meta tags for every media item server side:
+In terms of SEO the application is optimized and provides suitable meta tags for every media item generated server side:
 
 ![SEO](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/readme-seo.png)
 
