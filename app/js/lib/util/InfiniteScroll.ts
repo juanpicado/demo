@@ -1,32 +1,37 @@
-import { RefObject, useEffect, useState } from "react";
-import debounce from "lodash/debounce";
+import { useEffect, useState } from "react";
+
+interface InfiniteScrollOptions {
+    initialPage?: number;
+    limit?: number;
+}
 
 interface UseInfiniteScrollData {
     page: number;
 }
 
-export const useInfiniteScroll = (
-    ref: RefObject<HTMLDivElement>,
-    initialPage = 0
-): UseInfiniteScrollData => {
-    const [page, setPage] = useState<number>(initialPage);
+export const useInfiniteScroll = (options: InfiniteScrollOptions): UseInfiniteScrollData => {
+    const [page, setPage] = useState<number>(options.initialPage || 0);
 
     useEffect(() => {
-        const container = ref.current;
+        const onScroll = () => {
+            const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
-        if (!container) {
-            return;
-        }
-
-        const onScroll = debounce(() => {
-            if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
+            if (scrollTop + clientHeight >= scrollHeight - 5 && !hasReachedLimit()) {
                 setPage(prevState => prevState + 1);
             }
-        }, 100);
+        };
 
-        window.addEventListener("scroll", onScroll);
+        window.addEventListener("scroll", onScroll, { passive: true });
         return () => window.removeEventListener("scroll", onScroll);
     }, [page]);
+
+    const hasReachedLimit = () => {
+        if (!options.limit) {
+            return false;
+        }
+
+        return page >= options.limit;
+    };
 
     return {
         page,

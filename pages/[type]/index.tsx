@@ -2,29 +2,14 @@ import React from "react";
 import { GetStaticProps } from "next";
 import { getItemById, getGenres, getTrending } from "../../app/js/lib/api/backend";
 import { itemDetailsByMediaType, MOVIE_KEY, TV_KEY } from "../../app/js/lib/util/MediaTypes";
-import { BlockOpener } from "../../app/js/molecule/BlockOpener";
-import { BlockSlider } from "../../app/js/organism/BlockSlider";
-import { BlockGenre } from "../../app/js/organism/BlockGenre";
-import { IndexProps } from "../index";
 import { Meta } from "../../app/js/lib/util/Meta";
+import { IndexProps, IndexTemplate } from "../../app/js/template/IndexTemplate";
 
-const Type: React.FC<IndexProps> = ({ daily, genres, opener }) => {
+const Type: React.FC<IndexProps> = props => {
     return (
         <React.Fragment>
             <Meta />
-            <BlockOpener {...opener} />
-            <div className="__block">
-                <BlockSlider title="Popular Today" items={daily} slides={4} />
-            </div>
-            <div>
-                {Object.keys(genres)
-                    .slice(0, 6)
-                    .map(genreKey => (
-                        <div key={genreKey} className="__block">
-                            <BlockGenre {...genres[genreKey]} />
-                        </div>
-                    ))}
-            </div>
+            <IndexTemplate {...props} />
         </React.Fragment>
     );
 };
