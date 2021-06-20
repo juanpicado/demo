@@ -1,0 +1,16 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+
+.mobile-navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    @include square(100%);
+    background-color: $black;
+    @include transition(transform, 0.3s);
+
+    .mobile-navigation-inner {
+        @include content-width;
+        padding: 7.5rem 0;
+    }
+}

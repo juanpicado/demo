@@ -1,0 +1,11 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+
+.mobile-navigation-item {
+    @include text(h2);
+    margin-bottom: 1rem;
+
+    &.is-active {
+        color: $primary;
+    }
+}
