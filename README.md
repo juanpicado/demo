@@ -10,7 +10,7 @@ Overview pages like "Home", "TV" and "Movie" are being pre-rendered on build and
 
 Single detail pages could have been statically optimized as well, but unfortunately the movie API is not suitable in this way, hence they are being rendered server side. 
 
-![Media Player](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/readme-preview.png)
+![Preview](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/readme-preview.png)
 
 ## Video Streaming (HLS)
 HLS breaks down video files into smaller downloadable HTTP files and delivers them using the HTTP protocol. This approach provides several advantages such as smaller loading times, adaptive bitrate video delivery [and more.](https://developer.apple.com/documentation/http_live_streaming)
@@ -21,7 +21,7 @@ Because of missing resources, the same demo video is being used for every media 
 The application uses its own custom media player. Unfortunately the audio and subtitle selection had to be removed because of missing support
 by the demo video.
 
-![Media Player](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/media-player.png)
+![Media Player](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/readme-media-player.png)
 
 ## SEO
 In terms of SEO the application is optimized and provides suitable meta tags for every media item generated server side:
