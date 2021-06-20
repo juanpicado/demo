@@ -12,18 +12,21 @@ interface WatchlistProps {
 }
 
 const Watchlist: React.FC<WatchlistProps> = ({ daily }) => {
-    const { getBookmarkItems } = useWatchlist();
-
-    const watchlist = getBookmarkItems();
+    const { getBookmarkItems, getProgressItems } = useWatchlist();
 
     return (
         <div className="__slot-watchlist">
             <Meta title="Watchlist - Streamio" />
-            {watchlist.length === 0 ? (
+            {getBookmarkItems().length === 0 ? (
                 <WatchlistInfo />
             ) : (
                 <div className="__block">
-                    <BlockSlider title="Your watchlist" items={watchlist} slides={4} />
+                    <BlockSlider title="Your bookmarks" items={getBookmarkItems()} slides={4} />
+                </div>
+            )}
+            {getProgressItems().length > 0 && (
+                <div className="__block">
+                    <BlockSlider title="Keep watching" items={getProgressItems()} />
                 </div>
             )}
             {daily && (

@@ -48,7 +48,7 @@ export const Card: React.FC<CardProps> = ({ imageSize, ...item }) => {
                         </div>
                         <div className="card-frame-text">{cutText(item.text)}</div>
                     </div>
-                    {!!progress && <CardProgress />}
+                    {!!progress && <CardProgress progress={progress} />}
                 </div>
             </div>
         </button>

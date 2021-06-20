@@ -1,10 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
+import { debounce } from "lodash";
 import { PlayerControls } from "../molecule/PlayerControls";
 import { usePlayer } from "../context/Player/PlayerContext";
-import { App } from "../../types/app";
 import { Spinner } from "../atom/Spinner";
+import { useWatchlist } from "../context/Watchlist/WatchlistProvider";
+import { App } from "../../types/app";
 
-export const Player: React.FC = () => {
+interface PlayerProps {
+    item: App.ItemDetails;
+}
+
+export const Player: React.FC<PlayerProps> = ({ item }) => {
+    const { updateProgress } = useWatchlist();
     const {
         waiting,
         controlsActive,
@@ -12,6 +19,7 @@ export const Player: React.FC = () => {
         togglePlayState,
         eventListeners,
     } = usePlayer();
+    const currentTimeRef = useRef<number>(0);
     const videoRef = useRef<HTMLVideoElement | null>(null);
 
     useEffect(() => {
@@ -20,7 +28,19 @@ export const Player: React.FC = () => {
         }
 
         initVideoPlayer(videoRef.current);
+
+        return () => updateProgress(item, currentTimeRef.current);
     }, []);
+
+    const onTimeUpdate = () => {
+        eventListeners.onTimeUpdate();
+
+        if (!videoRef.current) {
+            return;
+        }
+
+        currentTimeRef.current = videoRef.current.currentTime;
+    };
 
     return (
         <div className="player">
@@ -36,11 +56,11 @@ export const Player: React.FC = () => {
                 onPlay={eventListeners.onPlay}
                 onPause={eventListeners.onPause}
                 onLoadedMetadata={eventListeners.onMetadataLoaded}
-                onTimeUpdate={eventListeners.onTimeUpdate}
                 onProgress={eventListeners.onProgress}
                 onSeeked={eventListeners.onSeeked}
                 onWaiting={eventListeners.onWaiting}
                 onVolumeChange={eventListeners.onVolumeChange}
+                onTimeUpdate={onTimeUpdate}
             />
             <div className="player-overlay" onClick={togglePlayState} />
             <div className="player-mobile-overlay" onClick={eventListeners.onPlayerInteract} />

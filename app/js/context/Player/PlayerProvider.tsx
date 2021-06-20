@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { PlayerContext } from "./PlayerContext";
 import Hls from "hls.js";
+import { PlayerContext } from "./PlayerContext";
 import { Player } from "../../../types/player";
 import { secondsTimeToTimestamp } from "../../lib/util/Time";
 import { exitFullscreen, isFullscreen, requestFullscreen } from "../../lib/util/Player";
