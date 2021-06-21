@@ -3,16 +3,19 @@ import Link from "next/link";
 import { NavigationLink } from "../atom/NavigationLink";
 import { MOVIE_KEY, TV_KEY } from "../lib/util/MediaTypes";
 import { useRouter } from "next/router";
-import { MobileNavigation } from "./MobileNavigation";
-import { Icon, Hamburger, Close } from "../lib/util/Icon";
+import { MobileNavigation } from "../molecule/MobileNavigation";
+import { Icon, Hamburger, Close, SearchIcon } from "../lib/util/Icon";
 import { classes } from "../lib/util/Classes";
+import { Search } from "../molecule/Search";
 
 export const Navigation: React.FC = () => {
     const router = useRouter();
     const [mobileActive, setMobileActive] = useState<boolean>(false);
+    const [searchActive, setSearchActive] = useState<boolean>(false);
 
     useEffect(() => {
         setMobileActive(false);
+        setSearchActive(false);
     }, [router.asPath]);
 
     return (
@@ -45,17 +48,36 @@ export const Navigation: React.FC = () => {
                         Watchlist
                     </NavigationLink>
                 </div>
-                <div
-                    className="navigation-hamburger"
-                    onClick={() => setMobileActive(prevState => !prevState)}>
-                    {mobileActive ? (
-                        <Icon name="close" icon={Close} />
-                    ) : (
-                        <Icon name="hamburger" icon={Hamburger} />
-                    )}
+                <div className="navigation-controls-group">
+                    <button
+                        type="button"
+                        className="navigation-search"
+                        onClick={() => {
+                            setSearchActive(prevState => !prevState);
+                            setMobileActive(false);
+                        }}>
+                        {searchActive ? (
+                            <Icon name="close" icon={Close} />
+                        ) : (
+                            <Icon name="search" icon={SearchIcon} />
+                        )}
+                    </button>
+                    <div
+                        className="navigation-hamburger"
+                        onClick={() => {
+                            setMobileActive(prevState => !prevState);
+                            setSearchActive(false);
+                        }}>
+                        {mobileActive ? (
+                            <Icon name="close" icon={Close} />
+                        ) : (
+                            <Icon name="hamburger" icon={Hamburger} />
+                        )}
+                    </div>
                 </div>
             </div>
             <MobileNavigation />
+            {searchActive && <Search />}
         </div>
     );
 };

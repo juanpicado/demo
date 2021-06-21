@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { debounce } from "lodash";
 import { PlayerControls } from "../molecule/PlayerControls";
 import { usePlayer } from "../context/Player/PlayerContext";
 import { Spinner } from "../atom/Spinner";

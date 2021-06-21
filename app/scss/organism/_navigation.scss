@@ -16,13 +16,13 @@
     }
 
     .navigation-hamburger {
-        margin-left: auto;
         @include square(2.5rem);
+        margin-left: 1rem;
     }
 
     .navigation-inner {
         position: relative;
-        z-index: 1;
+        z-index: 2;
         display: flex;
         align-items: center;
         padding: 2rem 0;
@@ -43,6 +43,11 @@
         }
     }
 
+    .navigation-controls-group {
+        display: flex;
+        margin-left: auto;
+    }
+
     .navigation-logo {
         font-size: 2.5rem;
         letter-spacing: -0.15rem;
@@ -50,10 +55,32 @@
     }
 
     .mobile-navigation {
+        z-index: 1;
         transform: translate3d(100%, 0, 0);
     }
 
+    .search {
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding-top: 7.5rem;
+        background-color: $black-95;
+    }
+
+    .navigation-search {
+        @include square(2.5rem);
+        @include transition(color, 0.1s);
+    }
+
     @include is-desktop {
+        .navigation-search {
+            color: $gray;
+
+            @include hover {
+                color: $white;
+            }
+        }
+
         .navigation-link-group {
             display: flex;
         }
@@ -65,6 +92,11 @@
         .mobile-navigation,
         .navigation-hamburger {
             display: none;
+        }
+
+        .search {
+            padding-top: 10rem;
+            background-color: $black-95;
         }
     }
 }

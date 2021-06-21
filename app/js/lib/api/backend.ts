@@ -118,3 +118,40 @@ export const getSeasonById = async (
 ): Promise<Api.SeasonDetails> => {
     return await db<Api.SeasonDetails>(`/tv/${tvId}/season/${seasonId}`);
 };
+
+const searchMovie = async (query: string): Promise<Api.Movie[]> => {
+    const { results } = await db<Api.Page<Api.Movie[]>>(`/search/movie`, `&query=${query}`);
+
+    return results.map(result => {
+        return {
+            ...result,
+            media_type: MOVIE_KEY,
+        };
+    });
+};
+
+const searchTV = async (query: string): Promise<Api.TV[]> => {
+    const { results } = await db<Api.Page<Api.TV[]>>(`/search/tv`, `&query=${query}`);
+
+    return results.map(result => {
+        return {
+            ...result,
+            media_type: TV_KEY,
+        };
+    });
+};
+
+export const searchItemByGenre = async (query: string, type: string): Promise<App.Item[]> => {
+    switch (type) {
+        case MOVIE_KEY: {
+            const items = await searchMovie(query);
+            return itemsByMediaType(items);
+        }
+        case TV_KEY: {
+            const items = await searchTV(query);
+            return itemsByMediaType(items);
+        }
+        default:
+            throw new Error("Unspecified media type");
+    }
+};

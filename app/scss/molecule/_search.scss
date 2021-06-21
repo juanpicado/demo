@@ -1,0 +1,74 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+
+.search {
+    @include square(100%);
+
+    .search-inner {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .search-result-list {
+        flex: 1;
+        padding: 2rem 0;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .search-result-list-frame {
+        @include content-width;
+    }
+
+    .search-result-list-inner {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -0.5rem;
+    }
+
+    .search-card {
+        flex: 1 1 calc(50% - 1rem);
+        max-width: calc(50% - 1rem);
+        margin: 0.5rem;
+    }
+
+    .search-input {
+        padding: 0.5rem 0;
+        color: $white;
+        border: none;
+        background: none;
+        border-bottom: 0.2rem solid $dark-gray;
+        @include content-width;
+        @include text(h2);
+        @include transition(border-color, 0.1s);
+
+        &::placeholder {
+            color: $white;
+        }
+
+        &:focus,
+        &:not(:placeholder-shown) {
+            border-color: $white;
+        }
+    }
+
+    @include is-tablet {
+        .search-card {
+            flex: 1 1 calc(25% - 1rem);
+            max-width: calc(25% - 1rem);
+            margin: 0.5rem;
+        }
+    }
+
+    @include is-desktop {
+        .search-card {
+            flex: 1 1 calc(20% - 1rem);
+            max-width: calc(20% - 1rem);
+            margin: 0.5rem;
+        }
+    }
+}

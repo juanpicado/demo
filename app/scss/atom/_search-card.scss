@@ -1,0 +1,27 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+
+.search-card {
+    position: relative;
+    width: 100%;
+    @include fit-aspect-ratio(150%);
+    background-color: $gray-black;
+    overflow: hidden;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    border-radius: $radius;
+
+    .search-card-image-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        @include square(100%);
+        @include transition(transform, 0.2s);
+    }
+
+    @include hover {
+        .search-card-image-wrapper {
+            transform: scale(1.05);
+        }
+    }
+}

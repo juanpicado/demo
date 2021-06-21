@@ -20,6 +20,7 @@
 @import "atom/player-subtitles";
 @import "atom/player-volume";
 @import "atom/player-volume-touch";
+@import "atom/search-card";
 @import "atom/slider-controls";
 @import "atom/spinner";
 @import "atom/watchlist-info";
@@ -28,13 +29,14 @@
 @import "molecule/block-opener";
 @import "molecule/card";
 @import "molecule/mobile-navigation";
-@import "molecule/navigation";
 @import "molecule/player-controls";
+@import "molecule/search";
 @import "molecule/season-list";
 
 // Organism
 @import "organism/block-seasons";
 @import "organism/block-slider";
+@import "organism/navigation";
 @import "organism/player";
 
 // Template

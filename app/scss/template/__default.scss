@@ -28,6 +28,10 @@
     cursor: none;
 }
 
+.no-scroll {
+    overflow: hidden;
+}
+
 .__block {
     display: flex;
     flex-direction: column;

@@ -3,7 +3,7 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { AppProps } from "next/app";
 import "../app/scss/app.scss";
-import { Navigation } from "../app/js/molecule/Navigation";
+import { Navigation } from "../app/js/organism/Navigation";
 import { useRouter } from "next/router";
 import { WatchlistProvider } from "../app/js/context/Watchlist/WatchlistProvider";
 
