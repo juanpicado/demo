@@ -8,7 +8,7 @@ The following api is being utilized: https://developers.themoviedb.org/3/getting
 ## Static Site Generation
 Overview pages like "Home", "TV" and "Movie" are being pre-rendered on build and revalidated every hour (page visit premised), hence are extremely performant and barely have any loading time. 
 
-Single detail pages could have been statically optimized as well, but unfortunately the movie API is not suitable in this way, hence they are being rendered server side. 
+Single detail pages could have been statically optimized as well, but the movie API to this state is not suitable for ssg, hence they are being rendered server side. 
 
 ![Preview](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/readme-preview.png)
 
@@ -24,7 +24,7 @@ by the demo video.
 ![Media Player](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/readme-media-player.png)
 
 ## SEO
-In terms of SEO the application is optimized and provides suitable meta tags for every media item generated server side:
+In terms of SEO the application is optimized and provides suitable meta tags for every media item generated server side.
 
 ![SEO](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/readme-seo-demo.png)
 
