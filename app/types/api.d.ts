@@ -124,7 +124,8 @@ export namespace Api {
         episode_count: number;
         id: number;
         name: string;
-        poster_path: string;
+        overview: string;
+        poster_path: string | null;
         season_number: number;
     }
 

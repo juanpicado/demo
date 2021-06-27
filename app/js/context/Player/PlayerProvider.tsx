@@ -4,10 +4,16 @@ import { PlayerContext } from "./PlayerContext";
 import { Player } from "../../../types/player";
 import { secondsTimeToTimestamp } from "../../lib/util/Time";
 import { exitFullscreen, isFullscreen, requestFullscreen } from "../../lib/util/Player";
+import { useWatchlist } from "../Watchlist/WatchlistProvider";
 
 const videoSrc = "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8";
 
-export const PlayerProvider: React.FC = ({ children }) => {
+interface PlayerProvider {
+    media_id: number;
+}
+
+export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children }) => {
+    const { hasProgress } = useWatchlist();
     const containerRef = useRef<HTMLDivElement | null>(null);
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const hlsRef = useRef<Hls | null>(null);
@@ -166,6 +172,18 @@ export const PlayerProvider: React.FC = ({ children }) => {
         setCurrentTimeStamp(secondsTimeToTimestamp(duration - time));
     };
 
+    const checkWatchlist = () => {
+        if (!video) {
+            return;
+        }
+
+        const x = hasProgress(media_id);
+
+        if (x && x > 0) {
+            video.currentTime = x;
+        }
+    };
+
     //
     // Event Listeners
     //
@@ -181,6 +199,8 @@ export const PlayerProvider: React.FC = ({ children }) => {
     const onMetadataLoaded = () => calcTimestamp();
 
     const onManifestParsed = () => {
+        checkWatchlist();
+
         if (!video || !video.paused) {
             return;
         }

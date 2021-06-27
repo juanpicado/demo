@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { App } from "../../../types/app";
 import { demoDuration } from "../../atom/CardProgress";
+import { mockWatchlist } from "./mock";
 
 interface WatchlistItem {
     id: number;
@@ -9,7 +10,7 @@ interface WatchlistItem {
     progress: number;
 }
 
-type WatchlistRecord = Record<number, WatchlistItem>;
+export type WatchlistRecord = Record<number, WatchlistItem>;
 
 interface WatchlistContextData {
     watchlist: WatchlistRecord;
@@ -34,6 +35,8 @@ export const WatchlistProvider: React.FC = ({ children }) => {
         if (json) {
             const items = JSON.parse(json);
             setWatchlist(items);
+        } else {
+            setWatchlist(mockWatchlist);
         }
     }, []);
 
