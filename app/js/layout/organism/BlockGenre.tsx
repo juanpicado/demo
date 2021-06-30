@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { BlockSlider } from "./BlockSlider";
-import { getItemsByGenre } from "../lib/api/backend";
-import { Api } from "../../types/api";
-import { App } from "../../types/app";
+import { getItemsByGenre } from "../../lib/api/backend";
+import { Api } from "../../../types/api";
+import { App } from "../../../types/app";
 
 export const BlockGenre: React.FC<Api.Genre> = ({ id, name, media_type }) => {
     const [items, setItems] = useState<App.Item[] | null>(null);

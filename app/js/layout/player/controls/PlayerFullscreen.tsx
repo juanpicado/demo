@@ -1,6 +1,6 @@
 import React from "react";
-import { usePlayer } from "../context/Player/PlayerContext";
-import { Icon, Maximize, Minimize } from "../lib/util/Icon";
+import { usePlayer } from "../../../context/Player/PlayerContext";
+import { Icon, Maximize, Minimize } from "../../../lib/util/Icon";
 
 export const PlayerFullscreen: React.FC = () => {
     const { fullscreen, toggleFullscreenState } = usePlayer();

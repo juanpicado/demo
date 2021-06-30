@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
-import { Icon, Volume, VolumeMuted } from "../lib/util/Icon";
-import { useDrag } from "../lib/util/Drag";
-import { usePlayer } from "../context/Player/PlayerContext";
-import { classes } from "../lib/util/Classes";
+import { Icon, Volume, VolumeMuted } from "../../../lib/util/Icon";
+import { useDrag } from "../../../lib/util/Drag";
+import { usePlayer } from "../../../context/Player/PlayerContext";
+import { classes } from "../../../lib/util/Classes";
 
 interface PlayerVolumeProps {
     onMouseEnter: () => void;

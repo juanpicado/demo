@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { classes } from "../lib/util/Classes";
+import { classes } from "../../lib/util/Classes";
 
 interface NavigationLinkProps {
     href: string;

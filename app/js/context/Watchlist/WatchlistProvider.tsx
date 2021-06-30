@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { App } from "../../../types/app";
-import { demoDuration } from "../../atom/CardProgress";
+import { demoDuration } from "../../layout/atom/CardProgress";
 import { mockWatchlist } from "./mock";
 
 interface WatchlistItem {

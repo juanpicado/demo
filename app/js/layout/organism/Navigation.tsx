@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { NavigationLink } from "../atom/NavigationLink";
-import { MOVIE_KEY, TV_KEY } from "../lib/util/MediaTypes";
+import { MOVIE_KEY, TV_KEY } from "../../lib/util/MediaTypes";
 import { useRouter } from "next/router";
 import { MobileNavigation } from "../molecule/MobileNavigation";
-import { Icon, Hamburger, Close, SearchIcon } from "../lib/util/Icon";
-import { classes } from "../lib/util/Classes";
+import { Icon, Hamburger, Close, SearchIcon } from "../../lib/util/Icon";
+import { classes } from "../../lib/util/Classes";
 import { Search } from "../molecule/Search";
 
 export const Navigation: React.FC = () => {
     const router = useRouter();
+    const { type } = router.query;
     const [mobileActive, setMobileActive] = useState<boolean>(false);
     const [searchActive, setSearchActive] = useState<boolean>(false);
 
@@ -77,7 +78,7 @@ export const Navigation: React.FC = () => {
                 </div>
             </div>
             <MobileNavigation />
-            {searchActive && <Search />}
+            {searchActive && <Search type={type && "string" === typeof type ? type : undefined} />}
         </div>
     );
 };

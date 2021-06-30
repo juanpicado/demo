@@ -1,6 +1,6 @@
 import React from "react";
 import { GetServerSideProps } from "next";
-import { Player } from "../../../app/js/organism/Player";
+import { Player } from "../../../app/js/layout/player/Player";
 import { App } from "../../../app/types/app";
 import { getServerSideItem } from "../../../app/js/lib/api/server";
 import { PlayerProvider } from "../../../app/js/context/Player/PlayerProvider";

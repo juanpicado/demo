@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
-import { PlayerControls } from "../molecule/PlayerControls";
-import { usePlayer } from "../context/Player/PlayerContext";
+import { PlayerControls } from "./controls/PlayerControls";
+import { usePlayer } from "../../context/Player/PlayerContext";
 import { Spinner } from "../atom/Spinner";
-import { useWatchlist } from "../context/Watchlist/WatchlistProvider";
-import { App } from "../../types/app";
+import { useWatchlist } from "../../context/Watchlist/WatchlistProvider";
+import { App } from "../../../types/app";
 
 interface PlayerProps {
     item: App.ItemDetails;

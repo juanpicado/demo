@@ -1,14 +1,15 @@
 import React from "react";
 import { GetServerSideProps } from "next";
 import { getServerSideItem } from "../../../app/js/lib/api/server";
-import { BlockOpener } from "../../../app/js/molecule/BlockOpener";
+import { BlockOpener } from "../../../app/js/layout/molecule/BlockOpener";
 import { App } from "../../../app/types/app";
 import { getItemsByGenre, getSeasonById } from "../../../app/js/lib/api/backend";
-import { BlockSlider } from "../../../app/js/organism/BlockSlider";
-import { BlockSeasons } from "../../../app/js/organism/BlockSeasons";
+import { BlockSlider } from "../../../app/js/layout/organism/BlockSlider";
+import { BlockSeasons } from "../../../app/js/layout/organism/BlockSeasons";
 import { Meta } from "../../../app/js/lib/util/Meta";
 import { cutText } from "../../../app/js/lib/util/Text";
 import { generateImageUrl } from "../../../app/js/lib/util/Urls";
+import { useWatchlist } from "../../../app/js/context/Watchlist/WatchlistProvider";
 
 interface ItemProps {
     item: App.ItemDetails;
@@ -17,6 +18,8 @@ interface ItemProps {
 }
 
 const Item: React.FC<ItemProps> = ({ item, recommendations, episodes }) => {
+    const { hasBookmark, toggleWatchlistItem } = useWatchlist();
+
     if (!item) return null;
 
     return (
@@ -26,7 +29,12 @@ const Item: React.FC<ItemProps> = ({ item, recommendations, episodes }) => {
                 desc={cutText(item.text)}
                 image={item.backdrop ? generateImageUrl(item.backdrop) : undefined}
             />
-            <BlockOpener {...item} isDetailsPage />
+            <BlockOpener
+                {...item}
+                hasBookmark={hasBookmark(item.id)}
+                toggleWatchlistItem={toggleWatchlistItem}
+                isDetailsPage
+            />
             {item.seasons && (
                 <div className="__block">
                     <BlockSeasons

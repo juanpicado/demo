@@ -1,5 +1,5 @@
 import React from "react";
-import { secondsTimeToTimestamp } from "../lib/util/Time";
+import { secondsTimeToTimestamp } from "../../lib/util/Time";
 
 // demo video duration, in a normal environment dataset would include duration
 export const demoDuration = 888;

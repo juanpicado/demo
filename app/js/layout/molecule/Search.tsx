@@ -1,9 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { SearchCard } from "../atom/SearchCard";
-import { useSearch } from "../lib/util/Search";
+import { useSearch } from "../../lib/util/Search";
 
-export const Search: React.FC = () => {
-    const { search, setSearch, results } = useSearch();
+interface SearchProps {
+    type?: string;
+}
+
+export const Search: React.FC<SearchProps> = ({ type }) => {
+    const { search, setSearch, results } = useSearch(type);
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     useEffect(() => {

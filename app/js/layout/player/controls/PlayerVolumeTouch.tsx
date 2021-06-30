@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
-import { Icon, Volume, VolumeMuted } from "../lib/util/Icon";
-import { useDrag } from "../lib/util/Drag";
-import { usePlayer } from "../context/Player/PlayerContext";
-import { classes } from "../lib/util/Classes";
+import { Icon, Volume, VolumeMuted } from "../../../lib/util/Icon";
+import { useDrag } from "../../../lib/util/Drag";
+import { usePlayer } from "../../../context/Player/PlayerContext";
+import { classes } from "../../../lib/util/Classes";
 
 export const PlayerVolumeTouch: React.FC = () => {
     const containerRef = useRef<HTMLDivElement | null>(null);

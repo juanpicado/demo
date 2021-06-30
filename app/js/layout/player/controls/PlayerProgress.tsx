@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { classes } from "../lib/util/Classes";
-import { usePlayer } from "../context/Player/PlayerContext";
-import { useDrag } from "../lib/util/Drag";
+import { classes } from "../../../lib/util/Classes";
+import { usePlayer } from "../../../context/Player/PlayerContext";
+import { useDrag } from "../../../lib/util/Drag";
 
 interface PlayerProgressProps {
     isTouch?: boolean;

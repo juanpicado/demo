@@ -3,7 +3,7 @@ import { GetStaticProps } from "next";
 import { getItemById, getGenres, getTrending } from "../../app/js/lib/api/backend";
 import { MOVIE_KEY, TV_KEY } from "../../app/js/lib/util/MediaTypes";
 import { Meta } from "../../app/js/lib/util/Meta";
-import { IndexProps, IndexTemplate } from "../../app/js/template/IndexTemplate";
+import { IndexProps, IndexTemplate } from "../../app/js/layout/template/IndexTemplate";
 
 const Type: React.FC<IndexProps> = props => {
     return (

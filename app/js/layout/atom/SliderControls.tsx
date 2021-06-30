@@ -1,6 +1,6 @@
 import React from "react";
-import { Icon, ChevronLeft, ChevronRight } from "../lib/util/Icon";
-import { classes } from "../lib/util/Classes";
+import { Icon, ChevronLeft, ChevronRight } from "../../lib/util/Icon";
+import { classes } from "../../lib/util/Classes";
 
 interface SliderControlsProps {
     isBeginning: boolean;

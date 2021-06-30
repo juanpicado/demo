@@ -1,20 +1,25 @@
 import React from "react";
 import Image from "next/image";
-import { generateImageUrl } from "../lib/util/Urls";
+import { generateImageUrl } from "../../lib/util/Urls";
 import { Button } from "../atom/Button";
-import { cutText } from "../lib/util/Text";
-import { App } from "../../types/app";
-import { classes } from "../lib/util/Classes";
-import { Icon, Star } from "../lib/util/Icon";
-import { useWatchlist } from "../context/Watchlist/WatchlistProvider";
+import { cutText } from "../../lib/util/Text";
+import { App } from "../../../types/app";
+import { classes } from "../../lib/util/Classes";
+import { Icon, Star } from "../../lib/util/Icon";
+import { useWatchlist } from "../../context/Watchlist/WatchlistProvider";
 
 interface BlockOpenerProps extends App.ItemDetails {
+    hasBookmark: boolean;
+    toggleWatchlistItem: (item: App.ItemDetails) => void;
     isDetailsPage?: boolean;
 }
 
-export const BlockOpener: React.FC<BlockOpenerProps> = ({ isDetailsPage, ...item }) => {
-    const { hasBookmark, toggleWatchlistItem } = useWatchlist();
-
+export const BlockOpener: React.FC<BlockOpenerProps> = ({
+    hasBookmark,
+    toggleWatchlistItem,
+    isDetailsPage,
+    ...item
+}) => {
     return (
         <div className="block-opener">
             <div className="block-opener-inner">
@@ -47,7 +52,7 @@ export const BlockOpener: React.FC<BlockOpenerProps> = ({ isDetailsPage, ...item
                         type="button"
                         className={classes({
                             "block-opener-watchlist-button": true,
-                            "is-active": hasBookmark(item.id),
+                            "is-active": hasBookmark,
                         })}
                         onClick={() => toggleWatchlistItem(item)}>
                         <Icon name="star" icon={Star} />

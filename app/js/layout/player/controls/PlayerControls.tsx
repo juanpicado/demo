@@ -1,13 +1,13 @@
 import React, { useRef, useState } from "react";
-import { PlayerProgress } from "../atom/PlayerProgress";
-import { PlayerPlay } from "../atom/PlayerPlay";
-import { PlayerFullscreen } from "../atom/PlayerFullscreen";
-import { PlayerSkip } from "../atom/PlayerSkip";
-import { classes } from "../lib/util/Classes";
-import { ArrowLeft, Icon } from "../lib/util/Icon";
+import { PlayerProgress } from "./PlayerProgress";
+import { PlayerPlay } from "./PlayerPlay";
+import { PlayerFullscreen } from "./PlayerFullscreen";
+import { PlayerSkip } from "./PlayerSkip";
+import { classes } from "../../../lib/util/Classes";
+import { ArrowLeft, Icon } from "../../../lib/util/Icon";
 import { useRouter } from "next/router";
-import { PlayerVolume } from "../atom/PlayerVolume";
-import { PlayerVolumeTouch } from "../atom/PlayerVolumeTouch";
+import { PlayerVolume } from "./PlayerVolume";
+import { PlayerVolumeTouch } from "./PlayerVolumeTouch";
 
 export const PlayerControls: React.FC = () => {
     const router = useRouter();

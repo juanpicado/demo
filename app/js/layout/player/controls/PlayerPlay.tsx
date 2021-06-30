@@ -1,6 +1,6 @@
 import React from "react";
-import { usePlayer } from "../context/Player/PlayerContext";
-import { Icon, Pause, Play } from "../lib/util/Icon";
+import { usePlayer } from "../../../context/Player/PlayerContext";
+import { Icon, Pause, Play } from "../../../lib/util/Icon";
 
 export const PlayerPlay: React.FC = () => {
     const { playing, togglePlayState } = usePlayer();

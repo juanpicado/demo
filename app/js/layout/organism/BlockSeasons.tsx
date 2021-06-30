@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { App } from "../../types/app";
+import { App } from "../../../types/app";
 import { SeasonList } from "../molecule/SeasonList";
 import { Dropdown } from "../atom/Dropdown";
 

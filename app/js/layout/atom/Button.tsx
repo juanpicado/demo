@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { classes } from "../lib/util/Classes";
+import { classes } from "../../lib/util/Classes";
 
 interface ButtonProps {
     action: string | (() => void);
@@ -9,15 +9,14 @@ interface ButtonProps {
 
 export const Button: React.FC<ButtonProps> = ({ isSecondary, action, children }) => {
     return "string" === typeof action ? (
-        <Link href={action}>
-            <button
-                type="button"
+        <Link href={action} passHref>
+            <a
                 className={classes({
                     button: true,
                     "is-secondary": isSecondary,
                 })}>
                 <span className="button-text">{children}</span>
-            </button>
+            </a>
         </Link>
     ) : (
         <button

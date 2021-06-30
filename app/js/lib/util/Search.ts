@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { searchItemByGenre } from "../api/backend";
 import { App } from "../../../types/app";
-import { useRouter } from "next/router";
 
 interface UseSearchData {
     results: App.Item[];
@@ -9,9 +8,7 @@ interface UseSearchData {
     setSearch: (value: string) => void;
 }
 
-export const useSearch = (): UseSearchData => {
-    const router = useRouter();
-    const { type } = router.query;
+export const useSearch = (type?: string): UseSearchData => {
     const [search, setSearch] = useState<string>("");
     const [results, setResults] = useState<App.Item[]>([]);
 
@@ -24,7 +21,7 @@ export const useSearch = (): UseSearchData => {
     }, [search, type]);
 
     const searchByStr = async () => {
-        if (type && "string" === typeof type) {
+        if (type) {
             const res = await searchItemByGenre(search, type);
             setResults(res);
         } else {

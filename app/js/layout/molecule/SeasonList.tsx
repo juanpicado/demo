@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { App } from "../../types/app";
-import { getSeasonById } from "../lib/api/backend";
-import { generateImageUrl, generateItemUrl } from "../lib/util/Urls";
+import { App } from "../../../types/app";
+import { getSeasonById } from "../../lib/api/backend";
+import { generateImageUrl, generateItemUrl } from "../../lib/util/Urls";
 import { Spinner } from "../atom/Spinner";
-import { Icon, Play } from "../lib/util/Icon";
+import { Icon, Play } from "../../lib/util/Icon";
 
 interface SeasonList extends App.Season {
     tv_id: number;

@@ -1,8 +1,8 @@
 import React from "react";
 import { Meta } from "../../app/js/lib/util/Meta";
 import { useWatchlist } from "../../app/js/context/Watchlist/WatchlistProvider";
-import { BlockSlider } from "../../app/js/organism/BlockSlider";
-import { WatchlistInfo } from "../../app/js/atom/WatchlistInfo";
+import { BlockSlider } from "../../app/js/layout/organism/BlockSlider";
+import { WatchlistInfo } from "../../app/js/layout/atom/WatchlistInfo";
 import { GetStaticProps } from "next";
 import { getTrending } from "../../app/js/lib/api/backend";
 import { App } from "../../app/types/app";

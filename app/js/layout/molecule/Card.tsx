@@ -1,37 +1,43 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { generateImageUrl } from "../lib/util/Urls";
+import { generateImageUrl } from "../../lib/util/Urls";
 import { CardProgress } from "../atom/CardProgress";
-import { App } from "../../types/app";
-import { cutText } from "../lib/util/Text";
-import { Icon, Star } from "../lib/util/Icon";
-import { useWatchlist } from "../context/Watchlist/WatchlistProvider";
-import { classes } from "../lib/util/Classes";
+import { App } from "../../../types/app";
+import { cutText } from "../../lib/util/Text";
+import { Icon, Star } from "../../lib/util/Icon";
+import { classes } from "../../lib/util/Classes";
 
 interface CardProps extends App.Item {
+    toggleWatchlistItem: (item: App.Item) => void;
+    hasBookmark: boolean;
+    progress: number;
     imageSize?: string;
 }
 
-export const Card: React.FC<CardProps> = ({ imageSize, ...item }) => {
-    const { toggleWatchlistItem, hasBookmark, hasProgress } = useWatchlist();
-
+export const Card: React.FC<CardProps> = ({
+    hasBookmark,
+    progress,
+    toggleWatchlistItem,
+    imageSize,
+    ...item
+}) => {
     if (!item.poster) return null;
 
-    const progress = hasProgress(item.id);
-
     return (
-        <button type="button" className="card">
+        <div className="card">
             <div className="card-inner">
-                <Link href={item.url}>
-                    <div className="card-image-wrapper">
-                        <Image
-                            className="card-image"
-                            src={generateImageUrl(item.poster, imageSize)}
-                            alt={item.title}
-                            layout="fill"
-                        />
-                    </div>
+                <Link href={item.url} passHref>
+                    <a>
+                        <div className="card-image-wrapper">
+                            <Image
+                                className="card-image"
+                                src={generateImageUrl(item.poster, imageSize)}
+                                alt={item.title}
+                                layout="fill"
+                            />
+                        </div>
+                    </a>
                 </Link>
                 <div className="card-frame">
                     <div className="card-frame-group">
@@ -40,7 +46,7 @@ export const Card: React.FC<CardProps> = ({ imageSize, ...item }) => {
                             <div
                                 className={classes({
                                     "card-frame-watchlist-button": true,
-                                    "is-active": hasBookmark(item.id),
+                                    "is-active": hasBookmark,
                                 })}
                                 onClick={() => toggleWatchlistItem(item)}>
                                 <Icon name="star" icon={Star} />
@@ -51,6 +57,6 @@ export const Card: React.FC<CardProps> = ({ imageSize, ...item }) => {
                     {!!progress && <CardProgress progress={progress} />}
                 </div>
             </div>
-        </button>
+        </div>
     );
 };

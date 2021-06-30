@@ -1,12 +1,13 @@
 import React, { useRef } from "react";
-import { App } from "../../types/app";
+import { App } from "../../../types/app";
 import { Card } from "../molecule/Card";
-import { useSlider } from "../lib/util/Slider";
-import { ChevronLeft, ChevronRight, Icon } from "../lib/util/Icon";
-import { classes } from "../lib/util/Classes";
+import { useSlider } from "../../lib/util/Slider";
+import { ChevronLeft, ChevronRight, Icon } from "../../lib/util/Icon";
+import { classes } from "../../lib/util/Classes";
 import { useRouter } from "next/router";
-import { mediaTypes } from "../lib/util/MediaTypes";
+import { mediaTypes } from "../../lib/util/MediaTypes";
 import { SliderControls } from "../atom/SliderControls";
+import { useWatchlist } from "../../context/Watchlist/WatchlistProvider";
 
 interface SliderProps {
     items: (App.Item | App.ItemDetails)[];
@@ -17,6 +18,7 @@ interface SliderProps {
 
 export const BlockSlider: React.FC<SliderProps> = ({ items, title, mediaType, slides = 6 }) => {
     const router = useRouter();
+    const { toggleWatchlistItem, hasBookmark, hasProgress } = useWatchlist();
     const { type } = router.query;
     const sliderRef = useRef<HTMLDivElement | null>(null);
     const { mounted, next, prev, isBeginning, isEnd } = useSlider(
@@ -70,7 +72,13 @@ export const BlockSlider: React.FC<SliderProps> = ({ items, title, mediaType, sl
                         <div
                             className="block-slider-slide keen-slider__slide"
                             key={item.title + index}>
-                            <Card {...item} imageSize={slides < 6 ? "original" : undefined} />
+                            <Card
+                                {...item}
+                                progress={hasProgress(item.id)}
+                                hasBookmark={hasBookmark(item.id)}
+                                imageSize={slides < 6 ? "original" : undefined}
+                                toggleWatchlistItem={toggleWatchlistItem}
+                            />
                         </div>
                     ))}
                     {mounted && <div className="block-slider-drag-info">Drag me here</div>}

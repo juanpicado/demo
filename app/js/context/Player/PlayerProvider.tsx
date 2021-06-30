@@ -68,6 +68,43 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children })
         setBuffer(end / video.duration);
     };
 
+    const timeByAbs = (abs: number): string => {
+        if (!video) {
+            return "";
+        }
+
+        const max = video.duration / 59;
+        const t = Math.min(max, Math.max(0, (video.duration * abs) / 59));
+
+        return secondsTimeToTimestamp(t);
+    };
+
+    const calcTimestamp = () => {
+        if (!video) {
+            return;
+        }
+
+        const duration = video.duration / 59;
+        const time = video.currentTime / 59;
+
+        setCurrentTimeStamp(secondsTimeToTimestamp(duration - time));
+    };
+
+    const checkWatchlist = () => {
+        if (!video) {
+            return;
+        }
+
+        const x = hasProgress(media_id);
+
+        if (x && x > 0) {
+            video.currentTime = x;
+        }
+    };
+
+    /**
+     * Controls
+     */
     const setVideoVolume = (abs: number) => {
         if (!video) {
             return;
@@ -106,17 +143,6 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children })
         video.currentTime = video.duration * abs;
         setProgress(video.currentTime / video.duration);
         onPlayerInteract();
-    };
-
-    const timeByAbs = (abs: number): string => {
-        if (!video) {
-            return "";
-        }
-
-        const max = video.duration / 59;
-        const t = Math.min(max, Math.max(0, (video.duration * abs) / 59));
-
-        return secondsTimeToTimestamp(t);
     };
 
     const toggleFullscreenState = () => {
@@ -161,32 +187,9 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children })
         }
     };
 
-    const calcTimestamp = () => {
-        if (!video) {
-            return;
-        }
-
-        const duration = video.duration / 59;
-        const time = video.currentTime / 59;
-
-        setCurrentTimeStamp(secondsTimeToTimestamp(duration - time));
-    };
-
-    const checkWatchlist = () => {
-        if (!video) {
-            return;
-        }
-
-        const x = hasProgress(media_id);
-
-        if (x && x > 0) {
-            video.currentTime = x;
-        }
-    };
-
-    //
-    // Event Listeners
-    //
+    /**
+     * Event Listeners
+     */
     const onVolumeChange = () => {
         if (!video) {
             return;
@@ -338,14 +341,19 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children })
                 setControlsActive,
                 subtitles,
                 activeSubtitle,
+                timeByAbs,
+
+                //region Controls
                 toggleSubtitles,
                 togglePlayState,
                 toggleFullscreenState,
                 toggleMuted,
                 setVideoVolume,
-                timeByAbs,
                 jumpToAbs,
                 jumpToSecondsFromCurrent,
+                //endregion
+
+                //region Listeners
                 eventListeners: {
                     onPlay,
                     onPause,
@@ -357,6 +365,7 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children })
                     onPlayerInteract,
                     onVolumeChange,
                 },
+                //endregion
             }}>
             <div ref={containerRef} className="__slot-watch">
                 {children}
