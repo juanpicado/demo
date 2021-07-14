@@ -10,6 +10,14 @@ Check it out to explore all features (such as keep watching, watchlist, tv show 
 - Redux
 - Dash.js
 
+## In Progress
+Open PopUp instead of a new Page on click:
+
+- Prefetch on hover using redux async thunk
+- Url parameter with id on click to open popup
+- Get prefetched item, if not available yet, wait for prefetched item by listening to state changes
+
+
 ## API
 The following api is being utilized: https://developers.themoviedb.org/3/getting-started/introduction
 
