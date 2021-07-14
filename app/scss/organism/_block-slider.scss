@@ -80,7 +80,9 @@
         height: 5rem;
         width: 100%;
         color: $dark-gray;
+        opacity: 0;
         @include text(p);
+        @include transition(opacity, 0.2s);
     }
 
     .block-slider-next-container,
@@ -156,6 +158,10 @@
                     opacity: 1;
                 }
             }
+        }
+
+        .block-slider-drag-info {
+            opacity: 1;
         }
     }
 
