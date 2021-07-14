@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import Hls from "hls.js";
+import dashjs, { MediaPlayerClass } from "dashjs";
 import { PlayerContext } from "./PlayerContext";
-import { secondsTimeToTimestamp } from "../../lib/util/Time";
 import { exitFullscreen, isFullscreen, requestFullscreen } from "../../lib/util/Player";
 import { useWatchlist } from "../Watchlist/WatchlistProvider";
 import { useDispatch } from "react-redux";
@@ -10,7 +9,7 @@ import { updateVolume, setMuted } from "../../lib/reducers/volume";
 import { setPlaying, setWaiting, setFullscreen, setControls } from "../../lib/reducers/player";
 import { App } from "../../../types/app";
 
-const videoSrc = "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8";
+const videoSrc = "https://dash.akamaized.net/dash264/TestCasesHD/2b/qualcomm/1/MultiResMPEG2.mpd";
 
 interface PlayerProvider {
     item: App.Item | App.ItemDetails;
@@ -19,71 +18,79 @@ interface PlayerProvider {
 export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => {
     const dispatch = useDispatch();
     const watchlist = useWatchlist();
+    const videoRef = useRef<HTMLVideoElement | null>(null);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const currentTimeRef = useRef<number>(0);
 
-    const [video, setVideo] = useState<HTMLVideoElement | null>(null);
+    const [player, setPlayer] = useState<MediaPlayerClass | null>(null);
 
     const initVideoPlayer = (el: HTMLVideoElement) => {
-        if (Hls.isSupported()) {
-            const hls = new Hls();
-            hls.loadSource(videoSrc);
-            hls.attachMedia(el);
-            setVideo(el);
-        } else {
-            el.src = videoSrc;
-            setVideo(el);
-        }
+        const player = dashjs.MediaPlayer().create();
+        player.initialize(el, videoSrc, true);
+        setPlayer(player);
+        videoRef.current = el;
     };
 
     const calcProgress = () => {
-        if (!video) {
+        if (!player) {
             return;
         }
 
-        dispatch(updateProgress(video.currentTime / video.duration));
+        dispatch(updateProgress(player.time() / player.duration()));
     };
 
     const calcBuffer = () => {
-        if (!video) {
+        if (!player) {
             return;
         }
 
-        const end = video.buffered.end(video.buffered.length - 1);
-        dispatch(updateBuffer(end / video.duration));
+        const buffer = player.getBufferLength("video");
+
+        if (buffer) {
+            const diff = (player.time() + buffer) / player.duration();
+            dispatch(updateBuffer(diff));
+        }
     };
 
-    const timeByAbs = (abs: number): string => {
-        if (!video) {
+    const timeBy = (abs: number): string => {
+        if (!player) {
             return "";
         }
 
-        const max = video.duration / 59;
-        const t = Math.min(max, Math.max(0, (video.duration * abs) / 59));
+        const time = player.duration() * abs;
 
-        return secondsTimeToTimestamp(t);
+        return !isNaN(time) ? player.convertToTimeCode(time) : "";
     };
 
-    const calcTimestamp = (): string => {
-        if (!video) {
-            return secondsTimeToTimestamp(0);
+    const time = (): string => {
+        if (!player) {
+            return "";
         }
 
-        const duration = video.duration / 59;
-        const time = video.currentTime / 59;
+        const time = player.time();
 
-        return secondsTimeToTimestamp(duration - time);
+        return !isNaN(time) ? player.convertToTimeCode(time) : "";
+    };
+
+    const missingTime = (): string => {
+        if (!player) {
+            return "";
+        }
+
+        const time = player.duration() - player.time();
+
+        return !isNaN(time) ? player.convertToTimeCode(time) : "";
     };
 
     const checkWatchlist = () => {
-        if (!video) {
+        if (!player) {
             return;
         }
 
         const x = watchlist.hasProgress(item.id);
 
         if (x && x > 0) {
-            video.currentTime = x;
+            player.seek(x);
         }
     };
 
@@ -106,47 +113,45 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => 
      * Controls
      */
     const setVideoVolume = (abs: number) => {
-        if (!video) {
+        if (!player) {
             return;
         }
 
-        video.volume = abs;
+        player.setVolume(abs);
     };
 
     const togglePlayState = () => {
-        if (!video) {
+        if (!player) {
             return;
         }
 
-        if (video.paused) {
-            video.play().catch(() => {
-                dispatch(setWaiting(false));
-            });
+        if (player.isPaused()) {
+            player.play();
         } else {
-            video.pause();
+            player.pause();
         }
     };
 
     const toggleMuted = () => {
-        if (!video) {
+        if (!player) {
             return;
         }
 
-        video.muted = !video.muted;
+        player.setMute(!player.isMuted());
     };
 
     const jumpToAbs = (abs: number) => {
-        if (!video) {
+        if (!player) {
             return;
         }
 
-        video.currentTime = video.duration * abs;
-        dispatch(updateProgress(video.currentTime / video.duration));
+        player.seek(player.duration() * abs);
+        dispatch(updateProgress(player.time() / player.duration()));
         playerInteract();
     };
 
     const toggleFullscreenState = () => {
-        if (!video) {
+        if (!videoRef.current) {
             return;
         }
 
@@ -154,33 +159,24 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => 
             exitFullscreen();
             dispatch(setFullscreen(false));
         } else {
-            requestFullscreen(video);
+            requestFullscreen(videoRef.current);
             dispatch(setFullscreen(true));
         }
     };
 
     const jumpToSecondsFromCurrent = (seconds: number) => {
-        if (!video) {
+        if (!player) {
             return;
         }
 
-        video.currentTime = video.currentTime + seconds;
+        player.seek(player.time() + seconds);
         playerInteract();
     };
 
     /**
      * Event Listeners
      */
-    const onMetadataLoaded = () => {
-        checkWatchlist();
-        calcTimestamp();
-
-        if (!video || !video.paused) {
-            return;
-        }
-
-        togglePlayState();
-    };
+    const onMetadataLoaded = () => checkWatchlist();
 
     const onPlay = () => {
         onPlayProgress();
@@ -188,69 +184,95 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => 
         playerInteract();
     };
 
-    const onPause = () => {
+    const onPaused = () => {
         onPlayState();
     };
 
     const onVolumeChange = () => {
-        if (!video) {
+        if (!player) {
             return;
         }
 
-        dispatch(setMuted(video.muted));
-        dispatch(updateVolume(video.volume));
+        dispatch(setMuted(player.isMuted()));
+        dispatch(updateVolume(player.getVolume()));
     };
 
     const onPlayProgress = () => {
-        if (!video) {
+        if (!player) {
             return;
         }
 
         calcProgress();
 
-        if (!video.paused) {
+        if (!player.isPaused()) {
             requestAnimationFrame(onPlayProgress);
         }
     };
 
     const onPlayState = () => {
-        if (!video) {
+        if (!player) {
             return;
         }
 
-        dispatch(setPlaying(!video.paused));
+        dispatch(setPlaying(!player.isPaused()));
     };
 
     const onSeeked = () => calcProgress();
 
-    const onWaiting = () => {
-        if (!video) {
-            return;
-        }
-
-        if (video.networkState === video.NETWORK_LOADING) {
-            dispatch(setWaiting(true));
-        }
-    };
-
     const onProgress = () => calcBuffer();
 
     const onTimeUpdate = () => {
-        if (!video) {
+        if (!player) {
             return;
         }
 
-        currentTimeRef.current = video.currentTime;
+        currentTimeRef.current = player.time();
         dispatch(setWaiting(false));
     };
 
     const onPlayerInteract = () => playerInteract();
+
+    const onWaiting = () => dispatch(setWaiting(true));
+
+    const initListeners = () => {
+        if (!player) {
+            return;
+        }
+
+        player.on(dashjs.MediaPlayer.events.PLAYBACK_METADATA_LOADED, onMetadataLoaded);
+        player.on(dashjs.MediaPlayer.events.PLAYBACK_PLAYING, onPlay);
+        player.on(dashjs.MediaPlayer.events.PLAYBACK_PAUSED, onPaused);
+        player.on(dashjs.MediaPlayer.events.PLAYBACK_TIME_UPDATED, onTimeUpdate);
+        player.on(dashjs.MediaPlayer.events.PLAYBACK_PROGRESS, onProgress);
+        player.on(dashjs.MediaPlayer.events.PLAYBACK_WAITING, onWaiting);
+        player.on(dashjs.MediaPlayer.events.PLAYBACK_SEEKED, onSeeked);
+    };
+
+    const removeListeners = () => {
+        if (!player) {
+            return;
+        }
+
+        player.off(dashjs.MediaPlayer.events.PLAYBACK_METADATA_LOADED, onMetadataLoaded);
+        player.off(dashjs.MediaPlayer.events.PLAYBACK_PLAYING, onPlay);
+        player.off(dashjs.MediaPlayer.events.PLAYBACK_PAUSED, onPaused);
+        player.off(dashjs.MediaPlayer.events.PLAYBACK_TIME_UPDATED, onTimeUpdate);
+        player.off(dashjs.MediaPlayer.events.PLAYBACK_PROGRESS, onProgress);
+        player.off(dashjs.MediaPlayer.events.PLAYBACK_WAITING, onWaiting);
+        player.off(dashjs.MediaPlayer.events.PLAYBACK_SEEKED, onSeeked);
+    };
+
+    useEffect(() => {
+        initListeners();
+        return () => removeListeners();
+    }, [player]);
 
     useEffect(() => {
         document.addEventListener("mousemove", onPlayerInteract);
 
         return () => {
             document.removeEventListener("mousemove", onPlayerInteract);
+
             watchlist.updateProgress(item, currentTimeRef.current);
 
             if (isFullscreen()) {
@@ -267,8 +289,9 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => 
         <PlayerContext.Provider
             value={{
                 initVideoPlayer,
-                timeByAbs,
-                calcTimestamp,
+                time,
+                missingTime,
+                timeBy,
 
                 //region Controls
                 togglePlayState,
@@ -280,17 +303,8 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => 
                 //endregion
 
                 //region Listeners
-                eventListeners: {
-                    onPlay,
-                    onPause,
-                    onMetadataLoaded,
-                    onTimeUpdate,
-                    onProgress,
-                    onSeeked,
-                    onWaiting,
-                    onVolumeChange,
-                    onPlayerInteract,
-                },
+                onVolumeChange,
+                onPlayerInteract,
                 //endregion
             }}>
             <div className="__slot-watch">{children}</div>

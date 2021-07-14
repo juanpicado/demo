@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.0",
-    "hls.js": "^1.0.7",
+    "dashjs": "^4.0.0-npm",
     "keen-slider": "^5.5.1",
     "next": "^11.0.0",
     "nprogress": "^0.2.0",

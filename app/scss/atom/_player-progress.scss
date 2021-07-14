@@ -6,11 +6,14 @@
     align-items: center;
 
     .player-progress-timestamp {
-        text-align: right;
         min-width: 6rem;
         opacity: 0;
         pointer-events: none;
         user-select: none;
+
+        &.is-right {
+            text-align: right;
+        }
 
         &.is-active {
             opacity: 1;

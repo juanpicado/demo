@@ -9,11 +9,10 @@ export const PlayerProgress: React.FC = () => {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const indicatorRef = useRef<HTMLDivElement | null>(null);
     const { progress, buffer } = useSelector((state: RootState) => state.progress);
-    const { calcTimestamp, jumpToAbs, timeByAbs } = usePlayer();
+    const { time, missingTime, jumpToAbs, timeBy } = usePlayer();
     const { drag, dragging } = useDrag(containerRef);
     const [indicatorPosition, setIndicatorPosition] = useState<number>(0);
     const [indicatorTime, setIndicatorTime] = useState<string>("");
-    const timestamp = calcTimestamp();
 
     useEffect(() => {
         if (!drag) {
@@ -21,7 +20,7 @@ export const PlayerProgress: React.FC = () => {
         }
 
         jumpToAbs(drag);
-        setIndicatorTime(timeByAbs(drag));
+        setIndicatorTime(timeBy(drag));
 
         const container = containerRef.current;
 
@@ -48,13 +47,21 @@ export const PlayerProgress: React.FC = () => {
         const { width, left } = container.getBoundingClientRect();
 
         const x = e.clientX - left;
+        const abs = Math.min(1, Math.max(0, x / width));
 
         setIndicatorPosition(x);
-        setIndicatorTime(timeByAbs(x / width));
+        setIndicatorTime(timeBy(abs));
     };
 
     return (
         <div className="player-progress">
+            <span
+                className={classes({
+                    "player-progress-timestamp": true,
+                    "is-active": "0" !== time(),
+                })}>
+                {time()}
+            </span>
             <div ref={containerRef} className="player-progress-bar" onMouseMove={onMouseMove}>
                 <div className="player-progress-frame">
                     <div
@@ -82,9 +89,10 @@ export const PlayerProgress: React.FC = () => {
             <span
                 className={classes({
                     "player-progress-timestamp": true,
-                    "is-active": "0" !== timestamp,
+                    "is-right": true,
+                    "is-active": "0" !== missingTime(),
                 })}>
-                {timestamp}
+                {missingTime()}
             </span>
         </div>
     );

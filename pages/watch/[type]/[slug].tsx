@@ -1,12 +1,16 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import { GetServerSideProps } from "next";
-import { Player } from "../../../app/js/layout/player/Player";
 import { App } from "../../../app/types/app";
 import { getServerSideItem } from "../../../app/js/lib/api/server";
-import { PlayerProvider } from "../../../app/js/context/Player/PlayerProvider";
 import { cutText } from "../../../app/js/lib/util/Text";
 import { generateImageUrl } from "../../../app/js/lib/util/Urls";
 import { Meta } from "../../../app/js/lib/util/Meta";
+
+const Player = dynamic<WatchProps>(
+    () => import("../../../app/js/layout/player/Player").then(mod => mod.Player),
+    { ssr: false }
+);
 
 interface WatchProps {
     item: App.ItemDetails;
@@ -14,14 +18,14 @@ interface WatchProps {
 
 const Watch: React.FC<WatchProps> = ({ item }) => {
     return (
-        <PlayerProvider item={item}>
+        <>
             <Meta
                 title={item.title + " - Streamio"}
                 desc={cutText(item.text)}
                 image={item.backdrop ? generateImageUrl(item.backdrop) : undefined}
             />
-            <Player />
-        </PlayerProvider>
+            <Player item={item} />
+        </>
     );
 };
 
