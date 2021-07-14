@@ -18,23 +18,12 @@ interface SliderProps {
 
 export const BlockSlider: React.FC<SliderProps> = ({ items, title, mediaType, slides = 6 }) => {
     const router = useRouter();
+    const sliderRef = useRef<HTMLDivElement | null>(null);
     const { toggleWatchlistItem, hasBookmark, hasProgress } = useWatchlist();
     const { type } = router.query;
-    const sliderRef = useRef<HTMLDivElement | null>(null);
     const { mounted, next, prev, isBeginning, isEnd } = useSlider(
         sliderRef,
-        {
-            spacing: 15,
-            rubberband: false,
-            slidesPerView: slides,
-            autoAdjustSlidesPerView: false,
-            breakpoints: {
-                "(max-width: 768px)": {
-                    spacing: 10,
-                    slidesPerView: 2,
-                },
-            },
-        },
+        { slidesPerView: slides },
         [items]
     );
 

@@ -9,6 +9,7 @@ interface UseSliderData {
     next: () => void;
     prev: () => void;
 }
+
 export function useSlider(
     ref: MutableRefObject<HTMLDivElement | null>,
     options?: TOptionsEvents,
@@ -27,6 +28,15 @@ export function useSlider(
 
         sliderRef.current = new KeenSlider(ref.current, {
             ...options,
+            spacing: 15,
+            rubberband: false,
+            autoAdjustSlidesPerView: false,
+            breakpoints: {
+                "(max-width: 768px)": {
+                    spacing: 10,
+                    slidesPerView: 2,
+                },
+            },
             mounted: () => setMounted(true),
             slideChanged: ref => {
                 const slide = ref.details().relativeSlide;
