@@ -11,3 +11,7 @@ body {
 button {
     -webkit-tap-highlight-color: transparent;
 }
+
+#nprogress .bar {
+    background: $primary !important;
+}

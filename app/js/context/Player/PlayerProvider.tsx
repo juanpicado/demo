@@ -2,15 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import Hls from "hls.js";
 import { PlayerContext } from "./PlayerContext";
 import { secondsTimeToTimestamp } from "../../lib/util/Time";
-import {
-    destroyPlayer,
-    exitFullscreen,
-    isFullscreen,
-    preparePlayer,
-    requestFullscreen,
-} from "../../lib/util/Player";
+import { exitFullscreen, isFullscreen, requestFullscreen } from "../../lib/util/Player";
 import { useWatchlist } from "../Watchlist/WatchlistProvider";
-import { useDispatch, useStore } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateBuffer, updateProgress } from "../../lib/reducers/progress";
 import { updateVolume, setMuted } from "../../lib/reducers/volume";
 import { setPlaying, setWaiting, setFullscreen, setControls } from "../../lib/reducers/player";
@@ -253,13 +247,15 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => 
     const onPlayerInteract = () => playerInteract();
 
     useEffect(() => {
-        preparePlayer();
         document.addEventListener("mousemove", onPlayerInteract);
 
         return () => {
             document.removeEventListener("mousemove", onPlayerInteract);
             watchlist.updateProgress(item, currentTimeRef.current);
-            destroyPlayer();
+
+            if (isFullscreen()) {
+                exitFullscreen();
+            }
 
             if (timeoutRef.current) {
                 clearTimeout(timeoutRef.current);

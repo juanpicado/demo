@@ -124,12 +124,12 @@
 }
 
 //region Media Queries
-@mixin on-landscape {
+@mixin on-touch {
     @media screen and (max-width: 767px) and (orientation: portrait) {
         @content;
     }
 
-    @media screen and (hover: none) and (orientation: portrait) {
+    @media screen and (hover: none) {
         @content;
     }
 }

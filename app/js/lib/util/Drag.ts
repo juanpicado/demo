@@ -1,7 +1,6 @@
 import { MutableRefObject, useEffect, useState } from "react";
 
 interface DragOptions {
-    isTouch?: boolean;
     isVertical?: boolean;
 }
 
@@ -66,10 +65,9 @@ export const useDrag = (
 
         const { width, height, left, bottom } = container.getBoundingClientRect();
 
-        const x =
-            options.isTouch || options.isVertical
-                ? ((clientY - bottom) / height) * -1
-                : (clientX - left) / width;
+        const x = options.isVertical
+            ? ((clientY - bottom) / height) * -1
+            : (clientX - left) / width;
 
         setDrag(Math.max(0, Math.min(x, 1)));
     };

@@ -7,7 +7,6 @@ import { classes } from "../../../lib/util/Classes";
 import { ArrowLeft, Icon } from "../../../lib/util/Icon";
 import { useRouter } from "next/router";
 import { PlayerVolume } from "./PlayerVolume";
-import { PlayerVolumeTouch } from "./PlayerVolumeTouch";
 
 export const PlayerControls: React.FC = () => {
     const router = useRouter();
@@ -35,20 +34,15 @@ export const PlayerControls: React.FC = () => {
             <button type="button" className="player-controls-back" onClick={router.back}>
                 <Icon name="arrow-left" icon={ArrowLeft} />
             </button>
-            <div className="player-default">
-                <PlayerProgress />
-            </div>
-            <div className="player-touch">
-                <PlayerProgress isTouch />
-            </div>
+            <PlayerProgress />
             <div className="player-controls-inner">
                 <div className="player-controls-group">
                     <PlayerPlay />
-                    <div className="player-skip-wrapper player-default">
+                    <div className="player-skip-wrapper no-touch">
                         <PlayerSkip seconds={-10} />
                         <PlayerSkip seconds={10} />
                     </div>
-                    <div className="player-default">
+                    <div className="no-touch">
                         <PlayerVolume onMouseEnter={onVolumeEnter} onMouseLeave={onVolumeLeave} />
                     </div>
                 </div>

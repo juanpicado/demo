@@ -1,16 +1,3 @@
-export const preparePlayer = () => {
-    // document.documentElement.classList.add("is-landscape");
-};
-
-export const destroyPlayer = () => {
-    // document.documentElement.style.removeProperty("width");
-    // document.documentElement.classList.remove("is-landscape");
-
-    if (isFullscreen()) {
-        exitFullscreen();
-    }
-};
-
 export const isFullscreen = () =>
     !!document.fullscreenElement ||
     // @ts-ignore

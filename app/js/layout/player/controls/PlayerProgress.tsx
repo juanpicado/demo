@@ -5,16 +5,12 @@ import { useDrag } from "../../../lib/util/Drag";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../lib/store";
 
-interface PlayerProgressProps {
-    isTouch?: boolean;
-}
-
-export const PlayerProgress: React.FC<PlayerProgressProps> = ({ isTouch }) => {
+export const PlayerProgress: React.FC = () => {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const indicatorRef = useRef<HTMLDivElement | null>(null);
     const { progress, buffer } = useSelector((state: RootState) => state.progress);
     const { calcTimestamp, jumpToAbs, timeByAbs } = usePlayer();
-    const { drag, dragging } = useDrag(containerRef, { isTouch });
+    const { drag, dragging } = useDrag(containerRef);
     const [indicatorPosition, setIndicatorPosition] = useState<number>(0);
     const [indicatorTime, setIndicatorTime] = useState<string>("");
     const timestamp = calcTimestamp();

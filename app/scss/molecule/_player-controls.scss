@@ -70,16 +70,8 @@
         }
     }
 
-    .player-touch {
-        display: none;
-    }
-
-    @include on-landscape {
-        .player-touch {
-            display: block;
-        }
-
-        .player-default {
+    @include on-touch {
+        .no-touch {
             display: none;
         }
     }

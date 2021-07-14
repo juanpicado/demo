@@ -44,7 +44,7 @@
         width: 100%;
     }
 
-    @include on-landscape {
+    @include on-touch {
         .player-mobile-overlay {
             display: block;
         }

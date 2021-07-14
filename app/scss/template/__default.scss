@@ -19,7 +19,7 @@
 }
 
 .is-landscape {
-    @include on-landscape {
+    @include on-touch {
         @include rotate-html;
     }
 }

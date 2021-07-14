@@ -109,7 +109,7 @@
         overflow: hidden;
     }
 
-    @include on-landscape {
+    @include on-touch {
         .player-mouse-indicator {
             display: none;
         }
