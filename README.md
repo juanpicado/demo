@@ -1,6 +1,14 @@
-A small video streaming demo platform built with Next.js using a custom video player, providing a streaming example using the HLS protocol.
+A small video streaming demo platform built with Next.js using a custom video player, providing a streaming example following the DASH protocol.
 
 Check it out to explore all features (such as keep watching, watchlist, tv show season list, etc.): https://next-video-streaming-platform-hls.vercel.app
+
+## Frontend
+- React.js
+- Next.js
+- Typescript
+- SASS
+- Redux
+- Dash.js
 
 ## API
 The following api is being utilized: https://developers.themoviedb.org/3/getting-started/introduction
@@ -12,19 +20,17 @@ Single detail pages could have been statically optimized as well, but the movie 
 
 ![Preview](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/readme-preview.png)
 
-## Video Streaming (HLS)
-HLS breaks down video files into smaller downloadable HTTP files and delivers them using the HTTP protocol. This approach provides several advantages such as smaller loading times, adaptive bitrate video delivery [and more.](https://developer.apple.com/documentation/http_live_streaming)
-
-Because of missing resources, the same demo video is being used for every media item.
+## Dynamic Adaptive Streaming
+"Dynamic Adaptive Streaming over HTTP (DASH), also known as MPEG-DASH, is an adaptive bitrate streaming technique that enables high quality streaming of media content over the Internet delivered from conventional HTTP web servers. Similar to Apple's HTTP Live Streaming (HLS) solution, MPEG-DASH works by breaking the content into a sequence of small segments, which are served over HTTP.
+For demo purposes the same demo video is being used for every media item." [Read more.](https://en.wikipedia.org/wiki/Dynamic_Adaptive_Streaming_over_HTTP)
 
 ## Custom Media Player
-The application uses its own custom media player. Unfortunately the audio and subtitle selection had to be removed because of missing support
-by the demo video.
+The application uses its own custom media player. Because of missing resources audio and subtitle selection are not included but could easily be implemented.
 
 ![Media Player](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/readme-media-player.png)
 
 ## SEO
-In terms of SEO the application is optimized and provides suitable meta tags for every media item generated server side.
+In terms of SEO the application is optimized and provides suitable tags for every media item generated server side.
 
 ![SEO](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/readme-seo-demo.png)
 
