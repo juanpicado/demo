@@ -22,21 +22,30 @@
 
     .player-progress-bar {
         position: relative;
-        display: flex;
-        align-items: center;
         width: 100%;
-        height: 0.85rem;
+        height: 1rem;
         @include transition(opacity, 0.2s);
 
         @include hover {
             .player-progress-frame {
-                height: 0.85rem;
+                height: inherit;
             }
 
             .player-mouse-indicator {
                 opacity: 1;
             }
         }
+    }
+
+    .player-progress-frame {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%) translateZ(0);
+        width: 100%;
+        height: 0.5rem;
+        background-color: $gray;
+        overflow: hidden;
     }
 
     .player-progress-inner,
@@ -52,15 +61,6 @@
         backface-visibility: hidden;
     }
 
-    .player-progress-inner {
-        z-index: 1;
-        background-color: $primary;
-    }
-
-    .player-progress-buffer {
-        background-color: $white;
-    }
-
     .player-progress-knob {
         position: absolute;
         z-index: 3;
@@ -72,6 +72,15 @@
         background-color: $primary;
         will-change: left;
         backface-visibility: hidden;
+    }
+
+    .player-progress-inner {
+        z-index: 1;
+        background-color: $primary;
+    }
+
+    .player-progress-buffer {
+        background-color: $white;
     }
 
     .player-mouse-indicator {
@@ -102,14 +111,6 @@
         background-color: $gray-black;
         padding: 0.5rem 1rem;
         border-radius: $radius;
-    }
-
-    .player-progress-frame {
-        position: relative;
-        width: 100%;
-        height: 0.5rem;
-        background-color: $gray;
-        overflow: hidden;
     }
 
     @include on-touch {

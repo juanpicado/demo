@@ -15,7 +15,7 @@ export const PlayerVolume: React.FC<PlayerVolumeProps> = ({ onMouseEnter, onMous
     const containerRef = useRef<HTMLDivElement | null>(null);
     const { toggleMuted, setVideoVolume } = usePlayer();
     const { volume, muted } = useSelector((state: RootState) => state.volume);
-    const { drag } = useDrag(containerRef, { isVertical: true });
+    const { drag, dragging } = useDrag(containerRef, { isVertical: true });
 
     useEffect(() => {
         if (!drag) {
@@ -30,6 +30,7 @@ export const PlayerVolume: React.FC<PlayerVolumeProps> = ({ onMouseEnter, onMous
             className={classes({
                 "player-volume": true,
                 "is-muted": muted,
+                "is-dragging": dragging,
             })}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}>

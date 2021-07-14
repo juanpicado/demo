@@ -6,6 +6,13 @@
     display: flex;
     align-items: center;
 
+    &.is-dragging {
+        .player-volume-progress-wrapper {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
+
     &.is-muted {
         .player-volume-progress {
             pointer-events: none;
@@ -29,10 +36,7 @@
         padding: 1.5rem;
         border-radius: $radius;
         background-color: $gray-black;
-        opacity: 0;
-        pointer-events: none;
         @include transition(opacity, 0.2s);
-
     }
 
     .player-volume-progress-frame {
