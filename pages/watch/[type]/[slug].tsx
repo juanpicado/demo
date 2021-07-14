@@ -14,13 +14,13 @@ interface WatchProps {
 
 const Watch: React.FC<WatchProps> = ({ item }) => {
     return (
-        <PlayerProvider media_id={item.id}>
+        <PlayerProvider item={item}>
             <Meta
                 title={item.title + " - Streamio"}
                 desc={cutText(item.text)}
                 image={item.backdrop ? generateImageUrl(item.backdrop) : undefined}
             />
-            <Player item={item} />
+            <Player />
         </PlayerProvider>
     );
 };

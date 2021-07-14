@@ -2,23 +2,12 @@ import React, { useEffect, useRef } from "react";
 import { PlayerControls } from "./controls/PlayerControls";
 import { usePlayer } from "../../context/Player/PlayerContext";
 import { Spinner } from "../atom/Spinner";
-import { useWatchlist } from "../../context/Watchlist/WatchlistProvider";
-import { App } from "../../../types/app";
+import { useSelector } from "react-redux";
+import { RootState } from "../../lib/store";
 
-interface PlayerProps {
-    item: App.ItemDetails;
-}
-
-export const Player: React.FC<PlayerProps> = ({ item }) => {
-    const { updateProgress } = useWatchlist();
-    const {
-        waiting,
-        controlsActive,
-        initVideoPlayer,
-        togglePlayState,
-        eventListeners,
-    } = usePlayer();
-    const currentTimeRef = useRef<number>(0);
+export const Player: React.FC = () => {
+    const { waiting, controls } = useSelector((state: RootState) => state.player);
+    const { initVideoPlayer, togglePlayState, eventListeners } = usePlayer();
     const videoRef = useRef<HTMLVideoElement | null>(null);
 
     useEffect(() => {
@@ -27,19 +16,7 @@ export const Player: React.FC<PlayerProps> = ({ item }) => {
         }
 
         initVideoPlayer(videoRef.current);
-
-        return () => updateProgress(item, currentTimeRef.current);
     }, []);
-
-    const onTimeUpdate = () => {
-        eventListeners.onTimeUpdate();
-
-        if (!videoRef.current) {
-            return;
-        }
-
-        currentTimeRef.current = videoRef.current.currentTime;
-    };
 
     return (
         <div className="player">
@@ -59,11 +36,11 @@ export const Player: React.FC<PlayerProps> = ({ item }) => {
                 onSeeked={eventListeners.onSeeked}
                 onWaiting={eventListeners.onWaiting}
                 onVolumeChange={eventListeners.onVolumeChange}
-                onTimeUpdate={onTimeUpdate}
+                onTimeUpdate={eventListeners.onTimeUpdate}
             />
             <div className="player-overlay" onClick={togglePlayState} />
             <div className="player-mobile-overlay" onClick={eventListeners.onPlayerInteract} />
-            {controlsActive && <PlayerControls />}
+            {controls && <PlayerControls />}
         </div>
     );
 };

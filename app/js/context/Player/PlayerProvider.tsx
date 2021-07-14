@@ -1,53 +1,44 @@
 import React, { useEffect, useRef, useState } from "react";
 import Hls from "hls.js";
 import { PlayerContext } from "./PlayerContext";
-import { Player } from "../../../types/player";
 import { secondsTimeToTimestamp } from "../../lib/util/Time";
-import { exitFullscreen, isFullscreen, requestFullscreen } from "../../lib/util/Player";
+import {
+    destroyPlayer,
+    exitFullscreen,
+    isFullscreen,
+    preparePlayer,
+    requestFullscreen,
+} from "../../lib/util/Player";
 import { useWatchlist } from "../Watchlist/WatchlistProvider";
+import { useDispatch, useStore } from "react-redux";
+import { updateBuffer, updateProgress } from "../../lib/reducers/progress";
+import { updateVolume, setMuted } from "../../lib/reducers/volume";
+import { setPlaying, setWaiting, setFullscreen, setControls } from "../../lib/reducers/player";
+import { App } from "../../../types/app";
 
 const videoSrc = "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8";
 
 interface PlayerProvider {
-    media_id: number;
+    item: App.Item | App.ItemDetails;
 }
 
-export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children }) => {
-    const { hasProgress } = useWatchlist();
-    const containerRef = useRef<HTMLDivElement | null>(null);
-    const videoRef = useRef<HTMLVideoElement | null>(null);
-    const hlsRef = useRef<Hls | null>(null);
-    const mouseMoveTimeout = useRef<NodeJS.Timeout | null>(null);
+export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => {
+    const dispatch = useDispatch();
+    const watchlist = useWatchlist();
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const currentTimeRef = useRef<number>(0);
 
-    const [initialized, setInitialized] = useState<boolean>(false);
-    const [playing, setPlaying] = useState<boolean>(false);
-    const [waiting, setWaiting] = useState<boolean>(false);
-    const [muted, setMuted] = useState<boolean>(false);
-    const [volume, setVolume] = useState<number>(1);
-    const [progress, setProgress] = useState<number>(0);
-    const [buffer, setBuffer] = useState<number>(0);
-    const [currentTimeStamp, setCurrentTimeStamp] = useState<string>("0");
-    const [fullscreen, setFullscreen] = useState<boolean>(false);
-    const [subtitles, setSubtitles] = useState<Player.Subtitles | null>(null);
-    const [activeSubtitle, setActiveSubtitle] = useState<string | null>(null);
-    const [controlsActive, setControlsActive] = useState<boolean>(true);
-
-    const video = videoRef.current;
-    const container = containerRef.current;
-    const hls = hlsRef.current;
+    const [video, setVideo] = useState<HTMLVideoElement | null>(null);
 
     const initVideoPlayer = (el: HTMLVideoElement) => {
         if (Hls.isSupported()) {
             const hls = new Hls();
             hls.loadSource(videoSrc);
             hls.attachMedia(el);
-            hlsRef.current = hls;
-            videoRef.current = el;
-            setInitialized(true);
+            setVideo(el);
         } else {
             el.src = videoSrc;
-            videoRef.current = el;
-            setInitialized(true);
+            setVideo(el);
         }
     };
 
@@ -56,7 +47,7 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children })
             return;
         }
 
-        setProgress(video.currentTime / video.duration);
+        dispatch(updateProgress(video.currentTime / video.duration));
     };
 
     const calcBuffer = () => {
@@ -65,7 +56,7 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children })
         }
 
         const end = video.buffered.end(video.buffered.length - 1);
-        setBuffer(end / video.duration);
+        dispatch(updateBuffer(end / video.duration));
     };
 
     const timeByAbs = (abs: number): string => {
@@ -79,15 +70,15 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children })
         return secondsTimeToTimestamp(t);
     };
 
-    const calcTimestamp = () => {
+    const calcTimestamp = (): string => {
         if (!video) {
-            return;
+            return secondsTimeToTimestamp(0);
         }
 
         const duration = video.duration / 59;
         const time = video.currentTime / 59;
 
-        setCurrentTimeStamp(secondsTimeToTimestamp(duration - time));
+        return secondsTimeToTimestamp(duration - time);
     };
 
     const checkWatchlist = () => {
@@ -95,11 +86,26 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children })
             return;
         }
 
-        const x = hasProgress(media_id);
+        const x = watchlist.hasProgress(item.id);
 
         if (x && x > 0) {
             video.currentTime = x;
         }
+    };
+
+    const playerInteract = () => {
+        dispatch(setControls(true));
+        document.body.classList.remove("hide-cursor");
+
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
+        }
+
+        timeoutRef.current = setTimeout(() => {
+            document.body.classList.add("hide-cursor");
+            dispatch(setControls(false));
+        }, 3000);
     };
 
     /**
@@ -120,7 +126,7 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children })
 
         if (video.paused) {
             video.play().catch(() => {
-                setWaiting(false);
+                dispatch(setWaiting(false));
             });
         } else {
             video.pause();
@@ -141,21 +147,21 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children })
         }
 
         video.currentTime = video.duration * abs;
-        setProgress(video.currentTime / video.duration);
-        onPlayerInteract();
+        dispatch(updateProgress(video.currentTime / video.duration));
+        playerInteract();
     };
 
     const toggleFullscreenState = () => {
-        if (!container || !video) {
+        if (!video) {
             return;
         }
 
         if (isFullscreen()) {
             exitFullscreen();
-            setFullscreen(false);
+            dispatch(setFullscreen(false));
         } else {
             requestFullscreen(video);
-            setFullscreen(true);
+            dispatch(setFullscreen(true));
         }
     };
 
@@ -165,44 +171,15 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children })
         }
 
         video.currentTime = video.currentTime + seconds;
-        onPlayerInteract();
-    };
-
-    const toggleSubtitles = (language: string) => {
-        if (!video || !hls) {
-            return;
-        }
-
-        let lang: string | null = language;
-
-        if (language === activeSubtitle) {
-            lang = null;
-        }
-
-        setActiveSubtitle(lang);
-
-        for (let i = 0; i < video.textTracks.length; i++) {
-            video.textTracks[i].mode =
-                lang && video.textTracks[i].language === lang ? "showing" : "hidden";
-        }
+        playerInteract();
     };
 
     /**
      * Event Listeners
      */
-    const onVolumeChange = () => {
-        if (!video) {
-            return;
-        }
-
-        setMuted(video.muted);
-        setVolume(video.volume);
-    };
-
-    const onMetadataLoaded = () => calcTimestamp();
-
-    const onManifestParsed = () => {
+    const onMetadataLoaded = () => {
         checkWatchlist();
+        calcTimestamp();
 
         if (!video || !video.paused) {
             return;
@@ -214,11 +191,20 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children })
     const onPlay = () => {
         onPlayProgress();
         onPlayState();
-        onPlayerInteract();
+        playerInteract();
     };
 
     const onPause = () => {
         onPlayState();
+    };
+
+    const onVolumeChange = () => {
+        if (!video) {
+            return;
+        }
+
+        dispatch(setMuted(video.muted));
+        dispatch(updateVolume(video.volume));
     };
 
     const onPlayProgress = () => {
@@ -238,7 +224,7 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children })
             return;
         }
 
-        setPlaying(!video.paused);
+        dispatch(setPlaying(!video.paused));
     };
 
     const onSeeked = () => calcProgress();
@@ -249,102 +235,46 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children })
         }
 
         if (video.networkState === video.NETWORK_LOADING) {
-            setWaiting(true);
+            dispatch(setWaiting(true));
         }
     };
 
     const onProgress = () => calcBuffer();
 
     const onTimeUpdate = () => {
-        setWaiting(false);
-        calcTimestamp();
-    };
-
-    const onSubtitlesLoaded = () => {
         if (!video) {
             return;
         }
 
-        const list: Player.Subtitles = {};
-
-        for (let i = 0; i < video.textTracks.length; i++) {
-            video.textTracks[i].mode = "hidden";
-            list[video.textTracks[i].language] = video.textTracks[i].label;
-        }
-
-        setSubtitles(list);
+        currentTimeRef.current = video.currentTime;
+        dispatch(setWaiting(false));
     };
 
-    const onPlayerInteract = () => {
-        setControlsActive(true);
-        document.body.classList.remove("hide-cursor");
-
-        if (mouseMoveTimeout.current) {
-            clearTimeout(mouseMoveTimeout.current);
-            mouseMoveTimeout.current = null;
-        }
-
-        mouseMoveTimeout.current = setTimeout(() => {
-            document.body.classList.add("hide-cursor");
-            setControlsActive(false);
-        }, 3000);
-    };
-
-    const onMouseMove = () => onPlayerInteract();
+    const onPlayerInteract = () => playerInteract();
 
     useEffect(() => {
-        document.documentElement.classList.add("is-landscape");
-        document.documentElement.style.width = window.innerHeight + "px";
+        preparePlayer();
+        document.addEventListener("mousemove", onPlayerInteract);
 
         return () => {
-            document.documentElement.style.removeProperty("width");
-            document.documentElement.classList.remove("is-landscape");
+            document.removeEventListener("mousemove", onPlayerInteract);
+            watchlist.updateProgress(item, currentTimeRef.current);
+            destroyPlayer();
 
-            if (isFullscreen()) {
-                exitFullscreen();
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
             }
         };
     }, []);
-
-    useEffect(() => {
-        if (!initialized || !hls) {
-            return;
-        }
-
-        hls.on(Hls.Events.MANIFEST_PARSED, onManifestParsed);
-        hls.on(Hls.Events.SUBTITLE_TRACK_LOADED, onSubtitlesLoaded);
-        document.addEventListener("mousemove", onMouseMove);
-        return () => {
-            hls.off(Hls.Events.MANIFEST_PARSED, onManifestParsed);
-            hls.off(Hls.Events.SUBTITLE_TRACK_LOADED, onSubtitlesLoaded);
-            document.removeEventListener("mousemove", onMouseMove);
-
-            if (mouseMoveTimeout.current) {
-                clearTimeout(mouseMoveTimeout.current);
-            }
-        };
-    }, [initialized]);
 
     return (
         <PlayerContext.Provider
             value={{
                 initVideoPlayer,
-                playing,
-                waiting,
-                muted,
-                volume,
-                progress,
-                buffer,
-                currentTimeStamp,
-                fullscreen,
-                controlsActive,
-                setControlsActive,
-                subtitles,
-                activeSubtitle,
                 timeByAbs,
+                calcTimestamp,
 
                 //region Controls
-                toggleSubtitles,
                 togglePlayState,
                 toggleFullscreenState,
                 toggleMuted,
@@ -362,14 +292,12 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ media_id, children })
                     onProgress,
                     onSeeked,
                     onWaiting,
-                    onPlayerInteract,
                     onVolumeChange,
+                    onPlayerInteract,
                 },
                 //endregion
             }}>
-            <div ref={containerRef} className="__slot-watch">
-                {children}
-            </div>
+            <div className="__slot-watch">{children}</div>
         </PlayerContext.Provider>
     );
 };

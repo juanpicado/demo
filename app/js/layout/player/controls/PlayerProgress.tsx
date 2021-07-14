@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { classes } from "../../../lib/util/Classes";
 import { usePlayer } from "../../../context/Player/PlayerContext";
 import { useDrag } from "../../../lib/util/Drag";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../lib/store";
 
 interface PlayerProgressProps {
     isTouch?: boolean;
@@ -10,10 +12,12 @@ interface PlayerProgressProps {
 export const PlayerProgress: React.FC<PlayerProgressProps> = ({ isTouch }) => {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const indicatorRef = useRef<HTMLDivElement | null>(null);
-    const { progress, buffer, currentTimeStamp, jumpToAbs, timeByAbs } = usePlayer();
+    const { progress, buffer } = useSelector((state: RootState) => state.progress);
+    const { calcTimestamp, jumpToAbs, timeByAbs } = usePlayer();
     const { drag, dragging } = useDrag(containerRef, { isTouch });
     const [indicatorPosition, setIndicatorPosition] = useState<number>(0);
     const [indicatorTime, setIndicatorTime] = useState<string>("");
+    const timestamp = calcTimestamp();
 
     useEffect(() => {
         if (!drag) {
@@ -82,9 +86,9 @@ export const PlayerProgress: React.FC<PlayerProgressProps> = ({ isTouch }) => {
             <span
                 className={classes({
                     "player-progress-timestamp": true,
-                    "is-active": "0" !== currentTimeStamp,
+                    "is-active": "0" !== timestamp,
                 })}>
-                {currentTimeStamp}
+                {timestamp}
             </span>
         </div>
     );

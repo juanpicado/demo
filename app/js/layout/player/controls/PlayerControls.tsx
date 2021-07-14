@@ -44,15 +44,12 @@ export const PlayerControls: React.FC = () => {
             <div className="player-controls-inner">
                 <div className="player-controls-group">
                     <PlayerPlay />
-                    <div className="player-skip-wrapper">
+                    <div className="player-skip-wrapper player-default">
                         <PlayerSkip seconds={-10} />
                         <PlayerSkip seconds={10} />
                     </div>
                     <div className="player-default">
                         <PlayerVolume onMouseEnter={onVolumeEnter} onMouseLeave={onVolumeLeave} />
-                    </div>
-                    <div className="player-touch">
-                        <PlayerVolumeTouch />
                     </div>
                 </div>
                 <div className="player-controls-group">

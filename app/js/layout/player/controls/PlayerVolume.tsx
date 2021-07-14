@@ -3,6 +3,8 @@ import { Icon, Volume, VolumeMuted } from "../../../lib/util/Icon";
 import { useDrag } from "../../../lib/util/Drag";
 import { usePlayer } from "../../../context/Player/PlayerContext";
 import { classes } from "../../../lib/util/Classes";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../lib/store";
 
 interface PlayerVolumeProps {
     onMouseEnter: () => void;
@@ -11,7 +13,8 @@ interface PlayerVolumeProps {
 
 export const PlayerVolume: React.FC<PlayerVolumeProps> = ({ onMouseEnter, onMouseLeave }) => {
     const containerRef = useRef<HTMLDivElement | null>(null);
-    const { volume, muted, toggleMuted, setVideoVolume } = usePlayer();
+    const { toggleMuted, setVideoVolume } = usePlayer();
+    const { volume, muted } = useSelector((state: RootState) => state.volume);
     const { drag } = useDrag(containerRef, { isVertical: true });
 
     useEffect(() => {

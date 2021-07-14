@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
+import "../app/scss/app.scss";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { AppProps } from "next/app";
-import "../app/scss/app.scss";
 import { Navigation } from "../app/js/layout/organism/Navigation";
 import { useRouter } from "next/router";
 import { WatchlistProvider } from "../app/js/context/Watchlist/WatchlistProvider";
+import { Provider } from "react-redux";
+import { store } from "../app/js/lib/store";
 
 NProgress.configure({ showSpinner: false });
 
@@ -19,10 +21,12 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
     }, []);
 
     return (
-        <WatchlistProvider>
-            {!pageProps.hideNav && <Navigation />}
-            <Component {...pageProps} key={router.asPath} />
-        </WatchlistProvider>
+        <Provider store={store}>
+            <WatchlistProvider>
+                {!pageProps.hideNav && <Navigation />}
+                <Component {...pageProps} key={router.asPath} />
+            </WatchlistProvider>
+        </Provider>
     );
 };
 

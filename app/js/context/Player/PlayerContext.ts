@@ -1,5 +1,4 @@
 import { createContext, useContext } from "react";
-import { Player } from "../../../types/player";
 
 interface PlayerEventListeners {
     onPlay: () => void;
@@ -15,19 +14,6 @@ interface PlayerEventListeners {
 
 interface PlayerContextData {
     initVideoPlayer: (el: HTMLVideoElement) => void;
-    playing: boolean;
-    waiting: boolean;
-    muted: boolean;
-    volume: number;
-    progress: number;
-    buffer: number;
-    currentTimeStamp: string;
-    fullscreen: boolean;
-    controlsActive: boolean;
-    setControlsActive: (value: boolean) => void;
-    subtitles: Player.Subtitles | null;
-    activeSubtitle: string | null;
-    toggleSubtitles: (index: string) => void;
     togglePlayState: () => void;
     toggleFullscreenState: () => void;
     toggleMuted: () => void;
@@ -35,6 +21,7 @@ interface PlayerContextData {
     timeByAbs: (abs: number) => string;
     jumpToAbs: (abs: number) => void;
     jumpToSecondsFromCurrent: (seconds: number) => void;
+    calcTimestamp: () => string;
     eventListeners: PlayerEventListeners;
 }
 
