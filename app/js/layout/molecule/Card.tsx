@@ -7,6 +7,9 @@ import { App } from "../../../types/app";
 import { cutText } from "../../lib/util/Text";
 import { Icon, Star } from "../../lib/util/Icon";
 import { classes } from "../../lib/util/Classes";
+import { useDispatch } from "react-redux";
+import { preloadItem } from "../../lib/reducers/items";
+import { useRouter } from "next/router";
 
 interface CardProps extends App.Item {
     toggleWatchlistItem: (item: App.Item) => void;
@@ -22,23 +25,28 @@ export const Card: React.FC<CardProps> = ({
     imageSize,
     ...item
 }) => {
+    const router = useRouter();
+    const dispatch = useDispatch();
+
     if (!item.poster) return null;
 
     return (
-        <div className="card">
+        <div
+            className="card"
+            onMouseEnter={() => dispatch(preloadItem({ id: item.id, type: item.media_type }))}>
             <div className="card-inner">
-                <Link href={item.url} passHref>
-                    <a>
-                        <div className="card-image-wrapper">
-                            <Image
-                                className="card-image"
-                                src={generateImageUrl(item.poster, imageSize)}
-                                alt={item.title}
-                                layout="fill"
-                            />
-                        </div>
-                    </a>
-                </Link>
+                <div
+                    className="card-image-wrapper"
+                    onClick={() =>
+                        router.push({ query: { id: item.id } }, undefined, { shallow: true })
+                    }>
+                    <Image
+                        className="card-image"
+                        src={generateImageUrl(item.poster, imageSize)}
+                        alt={item.title}
+                        layout="fill"
+                    />
+                </div>
                 <div className="card-frame">
                     <div className="card-frame-group">
                         <div className="card-frame-head">
