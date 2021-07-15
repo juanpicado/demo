@@ -10,6 +10,7 @@ export namespace App {
         poster: string | null;
         text: string;
         url: string;
+        vote: number;
         media_type: MediaTypes;
     }
 
@@ -23,6 +24,7 @@ export namespace App {
         url: string;
         infos: Info[];
         genres: Api.Genre[];
+        vote: number;
         media_type: MediaTypes;
         seasons?: Season[];
     }

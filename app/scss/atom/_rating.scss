@@ -1,0 +1,22 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+
+.rating {
+    position: relative;
+    @include square(4rem);
+    font-size: 1.5rem;
+
+    .rating-number {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .rating-ring {
+        circle {
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    }
+}

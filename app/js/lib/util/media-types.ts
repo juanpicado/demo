@@ -25,6 +25,7 @@ export const itemByMediaType = (item: Api.Item): App.Item => {
                 backdrop: item.backdrop_path,
                 text: item.overview,
                 url: generateItemUrl(item.media_type, item.title, item.id),
+                vote: item.vote_average,
                 media_type: item.media_type,
             };
         case TV_KEY:
@@ -36,6 +37,7 @@ export const itemByMediaType = (item: Api.Item): App.Item => {
                 backdrop: item.backdrop_path,
                 text: item.overview,
                 url: generateItemUrl(item.media_type, item.name, item.id),
+                vote: item.vote_average,
                 media_type: item.media_type,
             };
     }
@@ -62,6 +64,7 @@ export const itemDetailsByMediaType = (item: Api.ItemDetails): App.ItemDetails =
                     item.runtime ? item.runtime + " min" : null,
                     item.genres.map(genre => genre.name).join(", "),
                 ],
+                vote: item.vote_average,
                 media_type: item.media_type,
             };
         case TV_KEY:
@@ -76,6 +79,7 @@ export const itemDetailsByMediaType = (item: Api.ItemDetails): App.ItemDetails =
                 genres: item.genres,
                 infos: [item.genres.map(genre => genre.name).join(", ")],
                 media_type: item.media_type,
+                vote: item.vote_average,
                 seasons: item.seasons,
             };
     }

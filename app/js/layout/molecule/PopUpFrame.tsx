@@ -7,6 +7,7 @@ import { BlockSeasons } from "../organism/BlockSeasons";
 import { Close, Icon } from "../../lib/util/Icon";
 import { WatchlistButton } from "../atom/WatchlistButton";
 import { BlockList } from "./BlockList";
+import { Rating } from "../atom/Rating";
 
 interface PopUpFrame {
     item: App.ItemDetails;
@@ -27,6 +28,7 @@ export const PopUpFrame: React.FC<PopUpFrame> = ({ item, onClose, recommendation
                     <h1 className="popup-title">{item.title}</h1>
                     <div className="popup-controls">
                         <Button action={"/watch" + item.url}>Play</Button>
+                        <Rating vote={item.vote} />
                         <WatchlistButton item={item} />
                     </div>
                 </div>
@@ -37,6 +39,7 @@ export const PopUpFrame: React.FC<PopUpFrame> = ({ item, onClose, recommendation
                         className="popup-background"
                         layout="fill"
                         objectFit="cover"
+                        priority
                     />
                 )}
             </div>

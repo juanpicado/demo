@@ -1,17 +1,10 @@
-import React, { useRef } from "react";
-import Link from "next/link";
+import React from "react";
 import Image from "next/image";
 import { generateImageUrl } from "../../lib/util/url";
 import { CardProgress } from "../atom/CardProgress";
 import { App } from "../../../types/app";
-import { cutText } from "../../lib/util/text";
-import { Icon, Star } from "../../lib/util/Icon";
-import { classes } from "../../lib/util/classes";
-import { useDispatch } from "react-redux";
-import { preloadItem } from "../../lib/reducers/items";
-import { useRouter } from "next/router";
 import { usePrefetch } from "../../lib/util/prefetch";
-import { WatchlistButton } from "../atom/WatchlistButton";
+import { Rating } from "../atom/Rating";
 
 interface CardProps extends App.Item {
     imageSize?: string;
@@ -35,7 +28,10 @@ export const Card: React.FC<CardProps> = ({ imageSize, ...item }) => {
                 </button>
                 <div className="card-frame">
                     <div className="card-frame-title">{item.title}</div>
-                    <CardProgress id={item.id} />
+                    <div className="card-frame-group">
+                        <Rating vote={item.vote} />
+                        <CardProgress id={item.id} />
+                    </div>
                 </div>
             </div>
         </div>
