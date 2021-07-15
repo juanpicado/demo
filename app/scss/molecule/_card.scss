@@ -65,6 +65,16 @@
         margin-bottom: 1rem;
     }
 
+    .card-frame-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .watchlist-button {
+        pointer-events: auto;
+    }
+
     @include hover {
         transform: translate3d(0, -1.5rem, 0);
 

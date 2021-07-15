@@ -5,6 +5,7 @@ import { CardProgress } from "../atom/CardProgress";
 import { App } from "../../../types/app";
 import { usePrefetch } from "../../lib/util/prefetch";
 import { Rating } from "../atom/Rating";
+import { WatchlistButton } from "../atom/WatchlistButton";
 
 interface CardProps extends App.Item {
     imageSize?: string;
@@ -29,7 +30,10 @@ export const Card: React.FC<CardProps> = ({ imageSize, ...item }) => {
                 <div className="card-frame">
                     <div className="card-frame-title">{item.title}</div>
                     <div className="card-frame-group">
-                        {item.vote > 0 && <Rating vote={item.vote} />}
+                        <div className="card-frame-controls">
+                            <WatchlistButton item={item} />
+                            {item.vote > 0 && <Rating vote={item.vote} />}
+                        </div>
                         <CardProgress id={item.id} />
                     </div>
                 </div>

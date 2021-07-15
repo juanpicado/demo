@@ -48,7 +48,7 @@ export const PopUpFrame: React.FC<PopUpFrame> = ({ item, onClose, recommendation
                     <div className="popup-text">{item.text}</div>
                 </div>
                 {item.seasons && <BlockSeasons seasons={item.seasons} tv_id={item.id} />}
-                {recommendations && (
+                {recommendations && recommendations.length > 0 && (
                     <BlockList title="You could also like" items={recommendations} />
                 )}
             </div>
