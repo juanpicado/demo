@@ -6,7 +6,7 @@
     display: flex;
     width: 100%;
     border-radius: $radius;
-    transform: translateZ(0);
+    transform: translate3d(0, 0, 0);
     overflow: hidden;
     @include fit-aspect-ratio(150%);
     @include transition(transform, 0.2s);
@@ -46,21 +46,14 @@
             content: "";
             position: absolute;
             z-index: -1;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) translateZ(0);
+            top: 0;
+            left: 0;
+            transform: translateZ(0);
             backface-visibility: hidden;
-            width: 110%;
-            height: 110%;
+            @include square(100%);
             background-color: $black;
             opacity: 0.7;
         }
-    }
-
-    .card-frame-head {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 1rem;
     }
 
     .card-frame-watchlist-button {
@@ -91,14 +84,11 @@
 
     .card-frame-title {
         @include text(h4);
-    }
-
-    .card-frame-text {
-        color: $gray;
+        margin-bottom: 1rem;
     }
 
     @include hover {
-        transform: translateY(-1.5rem) translateZ(0);
+        transform: translate3d(0, -1.5rem, 0);
 
         .card-image {
             transform: scale(1.025);

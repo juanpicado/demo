@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../lib/store";
 import { useRouter } from "next/router";
@@ -12,8 +12,19 @@ export const PopUp: React.FC = () => {
     const { id } = router.query;
     const { hasBookmark, toggleWatchlistItem } = useWatchlist();
     const { entities } = useSelector((state: RootState) => state.items);
+    const stageRef = useRef<HTMLDivElement | null>(null);
     const [item, setItem] = useState<App.ItemDetails | null>(null);
     const [recommendations, setRecommendations] = useState<App.Item[] | null>(null);
+
+    useEffect(() => {
+        if (!stageRef.current) {
+            return;
+        }
+
+        stageRef.current.scrollTop = 0;
+
+        return () => setItem(null);
+    }, [id]);
 
     useEffect(() => {
         if (!id || "string" !== typeof id) {
@@ -46,15 +57,18 @@ export const PopUp: React.FC = () => {
 
         const genreId = item.genres[0].id;
         const res = await getItemsByGenre(genreId, item.media_type);
-        setRecommendations(res.filter(rec => rec.id !== item.id));
+
+        // API doesn't support hits per page
+        setRecommendations(res.filter(rec => rec.id !== item.id).slice(0, 8));
     };
 
     if (!item) return null;
 
     return (
         <div className="popup">
-            <div className="popup-stage">
+            <div ref={stageRef} className="popup-stage">
                 <PopUpFrame
+                    key={item.id}
                     item={item}
                     recommendations={recommendations}
                     bookmarked={hasBookmark(item.id)}

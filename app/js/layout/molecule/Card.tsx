@@ -11,21 +11,13 @@ import { useDispatch } from "react-redux";
 import { preloadItem } from "../../lib/reducers/items";
 import { useRouter } from "next/router";
 import { usePrefetch } from "../../lib/util/prefetch";
+import { WatchlistButton } from "../atom/WatchlistButton";
 
 interface CardProps extends App.Item {
-    toggleWatchlistItem: (item: App.Item) => void;
-    hasBookmark: boolean;
-    progress: number;
     imageSize?: string;
 }
 
-export const Card: React.FC<CardProps> = ({
-    hasBookmark,
-    progress,
-    toggleWatchlistItem,
-    imageSize,
-    ...item
-}) => {
+export const Card: React.FC<CardProps> = ({ imageSize, ...item }) => {
     const { onClick, onMouseEnter, onMouseLeave } = usePrefetch(item.id, item.media_type);
 
     if (!item.poster) return null;
@@ -42,21 +34,8 @@ export const Card: React.FC<CardProps> = ({
                     />
                 </button>
                 <div className="card-frame">
-                    <div className="card-frame-group">
-                        <div className="card-frame-head">
-                            <div className="card-frame-title">{item.title}</div>
-                            <div
-                                className={classes({
-                                    "card-frame-watchlist-button": true,
-                                    "is-active": hasBookmark,
-                                })}
-                                onClick={() => toggleWatchlistItem(item)}>
-                                <Icon name="star" icon={Star} />
-                            </div>
-                        </div>
-                        <div className="card-frame-text">{cutText(item.text)}</div>
-                    </div>
-                    {!!progress && <CardProgress progress={progress} />}
+                    <div className="card-frame-title">{item.title}</div>
+                    <CardProgress id={item.id} />
                 </div>
             </div>
         </div>

@@ -6,6 +6,7 @@ import { App } from "../../../types/app";
 import { BlockSeasons } from "../organism/BlockSeasons";
 import { Close, Icon } from "../../lib/util/Icon";
 import { WatchlistButton } from "../atom/WatchlistButton";
+import { BlockList } from "./BlockList";
 
 interface PopUpFrame {
     item: App.ItemDetails;
@@ -15,7 +16,7 @@ interface PopUpFrame {
     toggleWatchlist: () => void;
 }
 
-export const PopUpFrame: React.FC<PopUpFrame> = ({ item, onClose }) => {
+export const PopUpFrame: React.FC<PopUpFrame> = ({ item, onClose, recommendations }) => {
     return (
         <div className="popup-frame">
             <button type="button" className="popup-close" onClick={onClose}>
@@ -44,6 +45,9 @@ export const PopUpFrame: React.FC<PopUpFrame> = ({ item, onClose }) => {
                     <div className="popup-text">{item.text}</div>
                 </div>
                 {item.seasons && <BlockSeasons seasons={item.seasons} tv_id={item.id} />}
+                {recommendations && (
+                    <BlockList title="You could also like" items={recommendations} />
+                )}
             </div>
         </div>
     );

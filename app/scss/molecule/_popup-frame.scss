@@ -47,12 +47,14 @@
         display: flex;
     }
 
-    .popup-text {
+    .popup-text,
+    .block-list {
         width: 100%;
         padding: 0 2rem 2rem;
     }
 
-    .block-seasons {
+    .block-seasons,
+    .block-list {
         margin-top: 2rem;
     }
 
@@ -76,7 +78,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            @include square(calc(100% + 0.5rem));
+            @include square(calc(100% + 1rem));
             border-radius: 50%;
             background-color: $black;
             opacity: 0.5;
@@ -98,10 +100,15 @@
 
         .popup-text {
             width: 60%;
+        }
+
+        .block-list,
+        .popup-text {
             padding: 0 4rem 4rem;
         }
 
-        .block-seasons {
+        .block-seasons,
+        .block-list {
             margin-top: 4rem;
         }
     }

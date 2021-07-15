@@ -11,13 +11,7 @@
     color: $black;
     background-color: $white;
     @include text(button);
-    @include transition(background-color color transform, 0.2s);
-    backface-visibility: hidden;
-
-    .button-text {
-        backface-visibility: hidden;
-        transform: translateZ(0);
-    }
+    @include transition(background-color color, 0.2s);
 
     &.is-secondary {
         color: $white;
@@ -30,13 +24,8 @@
     }
 
     @include hover {
-        transform: scale(1.025);
         color: $white;
         background-color: $primary;
-    }
-
-    &:active {
-        transform: scale(0.975);
     }
 
     @include is-desktop {
