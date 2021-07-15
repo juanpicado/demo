@@ -14,8 +14,8 @@ export interface IndexProps {
 }
 
 export const IndexTemplate: React.FC<IndexProps> = ({ opener, genres, daily }) => {
-    const { page } = useInfiniteScroll({ initialPage: 6, limit: Object.keys(genres).length });
-    const { progressItems, hasBookmark, toggleWatchlistItem } = useWatchlist();
+    // const { page } = useInfiniteScroll({ initialPage: 6, limit: Object.keys(genres).length });
+    const { bookmarkItems, progressItems, hasBookmark, toggleWatchlistItem } = useWatchlist();
 
     return (
         <React.Fragment>
@@ -29,12 +29,17 @@ export const IndexTemplate: React.FC<IndexProps> = ({ opener, genres, daily }) =
                     <BlockSlider title="Keep watching" items={progressItems} />
                 </div>
             )}
+            {bookmarkItems.length > 0 && (
+                <div className="__block">
+                    <BlockSlider title="Your watchlist" items={bookmarkItems} />
+                </div>
+            )}
             <div className="__block">
                 <BlockSlider title="Popular Today" items={daily} slides={4} />
             </div>
             <div>
                 {Object.keys(genres)
-                    .slice(0, page)
+                    .slice(0, 4)
                     .map(genreKey => (
                         <div key={genreKey} className="__block">
                             <BlockGenre {...genres[genreKey]} />

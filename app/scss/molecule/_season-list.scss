@@ -11,7 +11,6 @@
         align-items: center;
         width: 100%;
         padding: 2rem;
-        @include transition(background-color, 0.2s);
         border-bottom: 0.1rem solid $dark-gray;
 
         &:last-child {
@@ -19,8 +18,6 @@
         }
 
         @include hover {
-            background-color: $dark-gray;
-
             .icon-play {
                 color: $white;
             }
@@ -59,13 +56,17 @@
         background-color: $black;
     }
 
-    .season-list-episode-name {
+    .season-list-episode-text {
         flex: 1;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
         margin-left: 2rem;
+    }
+
+    .season-list-episode-name {
         @include text(h4);
+    }
+
+    .season-list-episode-overview {
+        margin-top: 0.5rem;
     }
 
     .season-list-loading {
@@ -91,7 +92,7 @@
             min-width: 15rem;
         }
 
-        .season-list-episode-name {
+        .season-list-episode-text {
             margin: 0 3rem;
         }
 

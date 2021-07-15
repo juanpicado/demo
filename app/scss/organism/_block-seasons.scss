@@ -2,8 +2,6 @@
 @import "../helper/mixins";
 
 .block-seasons {
-    @include content-width;
-
     .block-seasons-inner {
         margin: -1rem 0;
     }
@@ -17,6 +15,7 @@
         justify-content: space-between;
         align-items: flex-end;
         @include text(h3);
+        padding: 0 2rem;
         margin-bottom: 3rem;
     }
 
@@ -27,16 +26,12 @@
     }
 
     @include is-desktop {
-
-
         .season-list-episode-count {
             display: inline-block;
         }
-    }
 
-    @include is-desktop-extra-large {
-        .block-seasons-frame {
-            @include columns(10);
+        .block-seasons-head {
+            padding: 0 4rem;
         }
     }
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { generateImageUrl } from "../../lib/util/Urls";
@@ -10,6 +10,7 @@ import { classes } from "../../lib/util/Classes";
 import { useDispatch } from "react-redux";
 import { preloadItem } from "../../lib/reducers/items";
 import { useRouter } from "next/router";
+import { usePrefetch } from "../../lib/util/prefetch";
 
 interface CardProps extends App.Item {
     toggleWatchlistItem: (item: App.Item) => void;
@@ -25,28 +26,21 @@ export const Card: React.FC<CardProps> = ({
     imageSize,
     ...item
 }) => {
-    const router = useRouter();
-    const dispatch = useDispatch();
+    const { onClick, onMouseEnter, onMouseLeave } = usePrefetch(item.id, item.media_type);
 
     if (!item.poster) return null;
 
     return (
-        <div
-            className="card"
-            onMouseEnter={() => dispatch(preloadItem({ id: item.id, type: item.media_type }))}>
+        <div className="card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
             <div className="card-inner">
-                <div
-                    className="card-image-wrapper"
-                    onClick={() =>
-                        router.push({ query: { id: item.id } }, undefined, { shallow: true })
-                    }>
+                <button type="button" className="card-image-wrapper" onClick={onClick}>
                     <Image
                         className="card-image"
                         src={generateImageUrl(item.poster, imageSize)}
                         alt={item.title}
                         layout="fill"
                     />
-                </div>
+                </button>
                 <div className="card-frame">
                     <div className="card-frame-group">
                         <div className="card-frame-head">

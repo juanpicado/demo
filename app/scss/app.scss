@@ -22,6 +22,7 @@
 @import "atom/search-card";
 @import "atom/slider-controls";
 @import "atom/spinner";
+@import "atom/watchlist-button";
 @import "atom/watchlist-info";
 
 // Molecule
@@ -29,6 +30,7 @@
 @import "molecule/card";
 @import "molecule/mobile-navigation";
 @import "molecule/player-controls";
+@import "molecule/popup-frame";
 @import "molecule/search";
 @import "molecule/season-list";
 
@@ -37,6 +39,7 @@
 @import "organism/block-slider";
 @import "organism/navigation";
 @import "organism/player";
+@import "organism/popup";
 
 // Template
 @import "template/_default";

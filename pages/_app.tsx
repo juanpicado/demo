@@ -7,11 +7,10 @@ import { WatchlistProvider } from "../app/js/context/Watchlist/WatchlistProvider
 import { Provider, useSelector } from "react-redux";
 import { RootState, store } from "../app/js/lib/store";
 import { useNProgress } from "../app/js/lib/util/NProgress";
-import { PopUp } from "../app/js/layout/PopUp";
+import { PopUp } from "../app/js/layout/organism/PopUp";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
     const router = useRouter();
-    useNProgress();
 
     return (
         <Provider store={store}>

@@ -2,6 +2,7 @@ import { App } from "../../../types/app";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getItemById } from "../api/backend";
 import { MediaTypes } from "../util/MediaTypes";
+import { RootState } from "../store";
 
 interface ItemsState {
     entities: Record<string, App.ItemDetails>;
@@ -16,19 +17,34 @@ interface Params {
     type: MediaTypes;
 }
 
-export const preloadItem = createAsyncThunk("items/preloadItem", async ({ id, type }: Params) => {
-    return await getItemById(id, type);
-});
+export const preloadItem = createAsyncThunk(
+    "items/preloadItem",
+    async ({ id, type }: Params, thunkAPI) => {
+        const { items } = thunkAPI.getState() as RootState;
+
+        if (!!items.entities[id]) {
+            return null;
+        }
+
+        return await getItemById(id, type);
+    }
+);
 
 const itemSlice = createSlice({
     name: "items",
     initialState,
     reducers: {},
     extraReducers: builder => {
-        builder.addCase(preloadItem.fulfilled, (state, action: PayloadAction<App.ItemDetails>) => {
-            const item = action.payload;
-            state.entities = { ...state.entities, [item.id]: item };
-        });
+        builder.addCase(
+            preloadItem.fulfilled,
+            (state, action: PayloadAction<App.ItemDetails | null>) => {
+                const item = action.payload;
+
+                if (item) {
+                    state.entities = { ...state.entities, [item.id]: item };
+                }
+            }
+        );
     },
 });
 

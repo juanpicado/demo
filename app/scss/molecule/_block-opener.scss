@@ -75,23 +75,8 @@
         }
     }
 
-    .block-opener-watchlist-button {
-        @include square(3rem);
+    .watchlist-button {
         margin-left: 1rem;
-
-        @include hover {
-            .icon-star {
-                fill: $white;
-            }
-        }
-
-        &.is-active {
-            color: $primary;
-
-            .icon-star {
-                fill: $primary;
-            }
-        }
     }
 
     .icon-star {

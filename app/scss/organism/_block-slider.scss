@@ -27,10 +27,6 @@
         .block-slider-drag-info {
             display: flex;
         }
-
-        .block-slider-container {
-            padding-bottom: 5rem;
-        }
     }
 
     .block-slider-head {
@@ -62,6 +58,7 @@
         position: relative;
         overflow: visible;
         @include content-width;
+        padding-bottom: 5rem;
     }
 
     .block-slider-slide {
@@ -174,11 +171,8 @@
             margin-left: 2rem;
         }
 
-        &.has-prev,
-        &.has-next {
-            .block-slider-container {
-                padding-bottom: 10rem;
-            }
+        .block-slider-container {
+            padding-bottom: 10rem;
         }
 
         .block-slider-drag-info {
