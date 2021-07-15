@@ -1,4 +1,4 @@
-A small video streaming demo platform built with Next.js using a custom video player, providing a streaming example following the DASH protocol.
+A small video streaming demo platform built with Next.js using a custom video player, providing a streaming example following the HLS protocol.
 
 Check it out to explore all features (such as keep watching, watchlist, tv show season list, etc.): https://next-video-streaming-platform-hls.vercel.app
 
@@ -8,39 +8,30 @@ Check it out to explore all features (such as keep watching, watchlist, tv show 
 - Typescript
 - SASS
 - Redux
-- Dash.js
-
-## In Progress
-Open PopUp instead of a new Page on click:
-
-- Prefetch on hover using redux async thunk
-- Url parameter with id on click to open popup
-- Get prefetched item, if not available yet, wait for prefetched item by listening to state changes
-
+- Hls.js
 
 ## API
 The following api is being utilized: https://developers.themoviedb.org/3/getting-started/introduction
 
-## Static Site Generation
+## Data Fetching
+### Static Site Generation
 Overview pages like "Home", "TV" and "Movie" are being pre-rendered on build and revalidated every hour (page visit premised), hence are extremely performant and barely have any loading time. 
 
-Single detail pages could have been statically optimized as well, but the movie API to this state is not suitable for ssg, hence they are being rendered server side. 
+### Clientside
+Since all movie details shouldn't be fetched serverside and the application is using a pop-up for seamless user experience, data is fetched clientside on demand:
+1. Prefetch on hover using redux async thunk
+2. Url parameter with id on click to open popup
+3. Get state if available, if not yet, wait for updated state
 
-![Preview](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/readme-preview.png)
+![Preview](public/readme-preview.png)
 
-## Dynamic Adaptive Streaming
-"Dynamic Adaptive Streaming over HTTP (DASH), also known as MPEG-DASH, is an adaptive bitrate streaming technique that enables high quality streaming of media content over the Internet delivered from conventional HTTP web servers. Similar to Apple's HTTP Live Streaming (HLS) solution, MPEG-DASH works by breaking the content into a sequence of small segments, which are served over HTTP.
-For demo purposes the same demo video is being used for every media item." [Read more.](https://en.wikipedia.org/wiki/Dynamic_Adaptive_Streaming_over_HTTP)
+## HTTP Live Streaming
+HTTP Live Streaming is an HTTP-based adaptive bitrate streaming communications protocol. It resembles MPEG-DASH in that it works by breaking the overall stream into a sequence of small HTTP-based file downloads, each downloading one short chunk of an overall potentially unbounded transport stream. A list of available streams, encoded at different bit rates, is sent to the client using an extended M3U playlist. [Read more.](https://en.wikipedia.org/wiki/HTTP_Live_Streaming)
 
 ## Custom Media Player
 The application uses its own custom media player. Because of missing resources audio and subtitle selection are not included but could easily be implemented.
 
-![Media Player](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/readme-media-player.png)
-
-## SEO
-In terms of SEO the application is optimized and provides suitable tags for every media item generated server side.
-
-![SEO](https://github.com/timfuhrmann/next-video-streaming-platform-hls/blob/develop/public/readme-seo-demo.png)
+![Media Player](public/readme-media-player.png)
 
 ## Getting Started
 
