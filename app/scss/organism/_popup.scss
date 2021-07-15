@@ -30,13 +30,18 @@
         flex-direction: column;
         align-items: center;
         @include square(100%);
-        padding-top: 5rem;
         overflow-y: scroll;
     }
 
     @keyframes fade-in {
         100% {
             opacity: 1;
+        }
+    }
+
+    @include is-desktop {
+        .popup-stage {
+            padding-top: 5rem;
         }
     }
 }

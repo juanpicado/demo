@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Hls from "hls.js";
 import { PlayerContext } from "./PlayerContext";
 import { exitFullscreen, isFullscreen, requestFullscreen } from "../../lib/util/player";
@@ -19,21 +19,20 @@ interface PlayerProvider {
 export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => {
     const dispatch = useDispatch();
     const watchlist = useWatchlist();
-    const videoRef = useRef<HTMLVideoElement | null>(null);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const currentTimeRef = useRef<number>(0);
 
-    const player = videoRef.current;
+    const [player, setPlayer] = useState<HTMLVideoElement | null>(null);
 
     const initVideoPlayer = (el: HTMLVideoElement) => {
         if (Hls.isSupported()) {
             const hls = new Hls();
             hls.loadSource(videoSrc);
             hls.attachMedia(el);
-            videoRef.current = el;
+            setPlayer(el);
         } else {
             el.src = videoSrc;
-            videoRef.current = el;
+            setPlayer(el);
         }
     };
 
@@ -65,7 +64,7 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => 
 
         const time = player.duration * abs;
 
-        return convertToTimeCode(time);
+        return !isNaN(time) ? convertToTimeCode(time) : "";
     };
 
     const time = (): string => {
@@ -75,7 +74,7 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => 
 
         const time = player.currentTime;
 
-        return convertToTimeCode(time);
+        return !isNaN(time) ? convertToTimeCode(time) : "";
     };
 
     const missingTime = (): string => {
@@ -85,7 +84,7 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => 
 
         const time = player.duration - player.currentTime;
 
-        return convertToTimeCode(time);
+        return !isNaN(time) ? convertToTimeCode(time) : "";
     };
 
     const checkWatchlist = () => {
@@ -159,7 +158,7 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => 
     };
 
     const toggleFullscreenState = () => {
-        if (!videoRef.current) {
+        if (!player) {
             return;
         }
 
@@ -167,7 +166,7 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => 
             exitFullscreen();
             dispatch(setFullscreen(false));
         } else {
-            requestFullscreen(videoRef.current);
+            requestFullscreen(player);
             dispatch(setFullscreen(true));
         }
     };
@@ -184,7 +183,15 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => 
     /**
      * Event Listeners
      */
-    const onLoadedMetadata = () => checkWatchlist();
+    const onLoadedMetadata = () => {
+        checkWatchlist();
+
+        if (!player || !player.paused) {
+            return;
+        }
+
+        togglePlayState();
+    };
 
     const onPlay = () => {
         onPlayProgress();
