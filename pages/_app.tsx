@@ -5,7 +5,7 @@ import { Navigation } from "../app/js/layout/organism/Navigation";
 import { useRouter } from "next/router";
 import { WatchlistProvider } from "../app/js/context/Watchlist/WatchlistProvider";
 import { Provider } from "react-redux";
-import { store } from "../app/js/lib/store";
+import { store } from "../app/js/lib/redux/store";
 import { PopUp } from "../app/js/layout/organism/PopUp";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {

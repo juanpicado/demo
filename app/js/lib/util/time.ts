@@ -1,21 +1,19 @@
-export const secondsTimeToTimestamp = (t: number): string => {
-    let min = Math.floor(t);
-    let dec = t - min;
+/**
+ * A utility method which converts seconds into TimeCode (i.e. 300 --> 05:00).
+ *
+ * @param {number} value - A number in seconds to be converted into a formatted time code.
+ * @returns {string} A formatted time code string.
+ */
+export function convertToTimeCode(value: number) {
+    value = Math.max(value, 0);
 
-    const sec = 1 / 60;
-    dec = sec * Math.round(dec / sec);
-
-    let seconds = Math.floor(dec * 59).toString();
-
-    if (seconds.length < 2) {
-        seconds = "0" + seconds;
-    }
-
-    let minutes = min.toString();
-
-    if (minutes.length < 2) {
-        minutes = "0" + minutes;
-    }
-
-    return minutes + ":" + seconds;
-};
+    let h = Math.floor(value / 3600);
+    let m = Math.floor((value % 3600) / 60);
+    let s = Math.floor((value % 3600) % 60);
+    return (
+        (h === 0 ? "" : h < 10 ? "0" + h.toString() + ":" : h.toString() + ":") +
+        (m < 10 ? "0" + m.toString() : m.toString()) +
+        ":" +
+        (s < 10 ? "0" + s.toString() : s.toString())
+    );
+}

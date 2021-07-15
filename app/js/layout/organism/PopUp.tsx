@@ -1,17 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../lib/store";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../lib/redux/store";
 import { useRouter } from "next/router";
 import { App } from "../../../types/app";
 import { PopUpFrame } from "../molecule/PopUpFrame";
 import { useWatchlist } from "../../context/Watchlist/WatchlistProvider";
 import { getItemsByGenre, getRecommendations } from "../../lib/api/backend";
+import { preloadItem } from "../../lib/redux/reducer/items";
+import { MediaTypes } from "../../lib/util/media-types";
 
 export const PopUp: React.FC = () => {
     const router = useRouter();
-    const { id } = router.query;
+    const dispatch = useDispatch();
+    const { id, media } = router.query;
     const { hasBookmark, toggleWatchlistItem } = useWatchlist();
-    const { entities } = useSelector((state: RootState) => state.items);
+    const { entities, fetchRequests } = useSelector((state: RootState) => state.items);
     const stageRef = useRef<HTMLDivElement | null>(null);
     const [item, setItem] = useState<App.ItemDetails | null>(null);
     const [recommendations, setRecommendations] = useState<App.Item[] | null>(null);
@@ -27,7 +30,7 @@ export const PopUp: React.FC = () => {
     }, [id]);
 
     useEffect(() => {
-        if (!id || "string" !== typeof id) {
+        if (!id || !media || "string" !== typeof id || "string" !== typeof media) {
             setItem(null);
             return;
         }
@@ -37,10 +40,12 @@ export const PopUp: React.FC = () => {
         if (entity) {
             document.body.classList.add("no-scroll");
             setItem(entity);
+        } else if (!fetchRequests.includes(parseInt(id, 10))) {
+            dispatch(preloadItem({ id: parseInt(id, 10), type: media as MediaTypes }));
         }
 
         return () => document.body.classList.remove("no-scroll");
-    }, [id, entities]);
+    }, [id, entities, media]);
 
     useEffect(() => {
         if (!item) {
@@ -78,9 +83,13 @@ export const PopUp: React.FC = () => {
                     bookmarked={hasBookmark(item.id)}
                     toggleWatchlist={() => toggleWatchlistItem(item)}
                     onClose={() =>
-                        router.push({ query: { ...router.query, id: undefined } }, undefined, {
-                            shallow: true,
-                        })
+                        router.push(
+                            { query: { ...router.query, id: undefined, media: undefined } },
+                            undefined,
+                            {
+                                shallow: true,
+                            }
+                        )
                     }
                 />
             </div>

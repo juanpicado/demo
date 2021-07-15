@@ -2,7 +2,7 @@ import React from "react";
 import { usePlayer } from "../../../context/Player/PlayerContext";
 import { Icon, Maximize, Minimize } from "../../../lib/util/Icon";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../lib/store";
+import { RootState } from "../../../lib/redux/store";
 
 export const PlayerFullscreen: React.FC = () => {
     const { fullscreen } = useSelector((state: RootState) => state.player);

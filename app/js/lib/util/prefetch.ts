@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { useRef } from "react";
-import { preloadItem } from "../reducers/items";
+import { preloadItem } from "../redux/reducer/items";
 import { MediaTypes } from "./media-types";
 
 export const usePrefetch = (id: number, type: MediaTypes) => {
@@ -10,7 +10,9 @@ export const usePrefetch = (id: number, type: MediaTypes) => {
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     const onClick = () => {
-        router.push({ query: { ...router.query, id: id } }, undefined, { shallow: true });
+        router.push({ query: { ...router.query, id: id, media: type } }, undefined, {
+            shallow: true,
+        });
     };
 
     const onMouseEnter = () => {

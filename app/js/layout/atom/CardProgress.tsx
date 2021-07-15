@@ -1,5 +1,5 @@
 import React from "react";
-import { secondsTimeToTimestamp } from "../../lib/util/time";
+import { convertToTimeCode } from "../../lib/util/time";
 import { useWatchlist } from "../../context/Watchlist/WatchlistProvider";
 
 // demo video duration, in a normal environment dataset would include duration
@@ -17,7 +17,7 @@ export const CardProgress: React.FC<CardProgressProps> = ({ id }) => {
 
     return (
         <div className="card-progress">
-            {secondsTimeToTimestamp(progress / 60)} min
+            {convertToTimeCode(progress)}
             <div className="card-progress-bar">
                 <div
                     className="card-progress-inner"

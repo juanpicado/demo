@@ -2,7 +2,7 @@ import React from "react";
 import { usePlayer } from "../../../context/Player/PlayerContext";
 import { Icon, Pause, Play } from "../../../lib/util/Icon";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../lib/store";
+import { RootState } from "../../../lib/redux/store";
 
 export const PlayerPlay: React.FC = () => {
     const { playing } = useSelector((state: RootState) => state.player);

@@ -4,7 +4,7 @@ import { useDrag } from "../../../lib/util/drag";
 import { usePlayer } from "../../../context/Player/PlayerContext";
 import { classes } from "../../../lib/util/classes";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../lib/store";
+import { RootState } from "../../../lib/redux/store";
 
 interface PlayerVolumeProps {
     onMouseEnter: () => void;

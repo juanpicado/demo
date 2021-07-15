@@ -13,7 +13,7 @@ export const BlockList: React.FC<CardListProps> = ({ items, title }) => {
             {title && <div className="block-list-title">{title}</div>}
             <div className="block-list-frame">
                 {items.map(item => (
-                    <Card {...item} />
+                    <Card key={item.id} {...item} />
                 ))}
             </div>
         </div>

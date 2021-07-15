@@ -37,7 +37,7 @@ export const Rating: React.FC<RatingProps> = ({ vote }) => {
                     cy="60"
                 />
             </svg>
-            <div className="rating-number">{vote}</div>
+            <div className="rating-number">{vote.toFixed(1)}</div>
         </div>
     );
 };

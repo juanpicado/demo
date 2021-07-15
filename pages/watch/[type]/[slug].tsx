@@ -1,16 +1,11 @@
 import React from "react";
-import dynamic from "next/dynamic";
 import { GetServerSideProps } from "next";
 import { App } from "../../../app/types/app";
 import { getServerSideItem } from "../../../app/js/lib/api/server";
 import { cutText } from "../../../app/js/lib/util/text";
 import { generateImageUrl } from "../../../app/js/lib/util/url";
 import { Meta } from "../../../app/js/lib/util/Meta";
-
-const Player = dynamic<WatchProps>(
-    () => import("../../../app/js/layout/player/Player").then(mod => mod.Player),
-    { ssr: false }
-);
+import { Player } from "../../../app/js/layout/player/Player";
 
 interface WatchProps {
     item: App.ItemDetails;

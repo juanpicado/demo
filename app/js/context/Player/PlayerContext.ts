@@ -1,4 +1,6 @@
-import { createContext, useContext } from "react";
+import React, { createContext, useContext } from "react";
+
+interface EventListeners extends React.DOMAttributes<HTMLVideoElement> {}
 
 interface PlayerContextData {
     initVideoPlayer: (el: HTMLVideoElement) => void;
@@ -12,7 +14,7 @@ interface PlayerContextData {
     jumpToAbs: (abs: number) => void;
     jumpToSecondsFromCurrent: (seconds: number) => void;
     onPlayerInteract: () => void;
-    onVolumeChange: () => void;
+    eventListeners: EventListeners;
 }
 
 export const PlayerContext = createContext<PlayerContextData>({} as PlayerContextData);

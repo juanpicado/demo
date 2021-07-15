@@ -3,7 +3,7 @@ import { classes } from "../../../lib/util/classes";
 import { usePlayer } from "../../../context/Player/PlayerContext";
 import { useDrag } from "../../../lib/util/drag";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../lib/store";
+import { RootState } from "../../../lib/redux/store";
 
 export const PlayerProgress: React.FC = () => {
     const containerRef = useRef<HTMLDivElement | null>(null);
