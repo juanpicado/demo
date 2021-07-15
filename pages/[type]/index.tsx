@@ -39,6 +39,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             daily,
             opener,
             genres,
+            type,
         },
         revalidate: 60 * 60,
     };
