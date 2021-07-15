@@ -6,7 +6,7 @@
     flex: 1;
     width: 100%;
     max-width: 90rem;
-    background-color: $gray-black;
+    background-color: $popup-black;
 
     .popup-head {
         position: relative;
@@ -40,7 +40,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(0deg, $gray-black 0%, transparent 100%);
+        background: linear-gradient(0deg, $popup-black 0%, transparent 100%);
     }
 
     .popup-content {
@@ -88,7 +88,7 @@
 
     @include is-tablet {
         .popup-background-overlay {
-            background: linear-gradient(0deg, $gray-black 0%, transparent 50%);
+            background: linear-gradient(0deg, $popup-black 0%, transparent 50%);
         }
     }
 
