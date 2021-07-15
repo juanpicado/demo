@@ -1,6 +1,6 @@
 A small video streaming demo platform built with Next.js using a custom video player, providing a streaming example following the HLS protocol.
 
-Check it out to explore all features (such as keep watching, watchlist, tv show season list, etc.): https://next-video-streaming-platform-hls.vercel.app
+Check it out to explore all features (such as keep watching, watchlist, tv show seasons, etc.): https://stream-io.vercel.app/
 
 ## Frontend
 - React.js
