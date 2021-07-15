@@ -4,14 +4,9 @@ import { PlayerContext } from "./PlayerContext";
 import { exitFullscreen, isFullscreen, requestFullscreen } from "../../lib/util/player";
 import { useWatchlist } from "../Watchlist/WatchlistProvider";
 import { useDispatch } from "react-redux";
-import { updateBuffer, updateProgress } from "../../lib/redux/reducer/player/progress";
-import { updateVolume, setMuted } from "../../lib/redux/reducer/player/volume";
-import {
-    setPlaying,
-    setWaiting,
-    setFullscreen,
-    setControls,
-} from "../../lib/redux/reducer/player/player";
+import { updateBuffer, updateProgress } from "../../lib/redux/reducer/progress";
+import { updateVolume, setMuted } from "../../lib/redux/reducer/volume";
+import { setPlaying, setWaiting, setFullscreen, setControls } from "../../lib/redux/reducer/player";
 import { App } from "../../../types/app";
 import { convertToTimeCode } from "../../lib/util/time";
 

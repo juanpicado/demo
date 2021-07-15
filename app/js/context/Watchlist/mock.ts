@@ -9,8 +9,8 @@ export const mockWatchlist: WatchlistRecord = {
             original_title: "Rick and Morty",
             poster: "/8kOWDBK6XlPUzckuHDo3wwVRFwt.jpg",
             backdrop: "/eV3XnUul4UfIivz3kxgeIozeo50.jpg",
-            text:
-                "Rick is a mentally-unbalanced but scientifically-gifted old man who has recently reconnected with his family. He spends most of his time involving his young grandson Morty in dangerous, outlandish adventures throughout space and alternate universes. Compounded with Morty's already unstable family life, these events cause Morty much distress at home and school.",
+            vote: 8.8,
+            text: "Rick is a mentally-unbalanced but scientifically-gifted old man who has recently reconnected with his family. He spends most of his time involving his young grandson Morty in dangerous, outlandish adventures throughout space and alternate universes. Compounded with Morty's already unstable family life, these events cause Morty much distress at home and school.",
             url: "/tv/rick%20and%20morty-60625",
             genres: [
                 { id: "16", name: "Animation", media_type: "tv" },
@@ -91,8 +91,8 @@ export const mockWatchlist: WatchlistRecord = {
             original_title: "Fear the Walking Dead",
             poster: "/4UjiPdFKJGJYdxwRs2Rzg7EmWqr.jpg",
             backdrop: "/58PON1OrnBiX6CqEHgeWKVwrCn6.jpg",
-            text:
-                'What did the world look like as it was transforming into the horrifying apocalypse depicted in "The Walking Dead"? This spin-off set in Los Angeles, following new characters as they face the beginning of the end of the world, will answer that question.',
+            vote: 7.7,
+            text: 'What did the world look like as it was transforming into the horrifying apocalypse depicted in "The Walking Dead"? This spin-off set in Los Angeles, following new characters as they face the beginning of the end of the world, will answer that question.',
             url: "/tv/fear%20the%20walking%20dead-62286",
             genres: [
                 { id: "10759", name: "Action & Adventure", media_type: "tv" },
