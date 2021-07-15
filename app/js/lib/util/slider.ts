@@ -32,8 +32,14 @@ export function useSlider(
             rubberband: false,
             autoAdjustSlidesPerView: false,
             breakpoints: {
+                "(max-width: 1024px)": {
+                    slidesPerView: 4,
+                },
                 "(max-width: 768px)": {
                     spacing: 10,
+                    slidesPerView: 3,
+                },
+                "(max-width: 425px)": {
                     slidesPerView: 2,
                 },
             },
