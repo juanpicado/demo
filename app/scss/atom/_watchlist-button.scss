@@ -3,4 +3,9 @@
 
 .watchlist-button {
     @include square(3rem);
+    @include transition(color, 0.2s);
+
+    @include hover {
+        color: $primary;
+    }
 }
