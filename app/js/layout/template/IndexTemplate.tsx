@@ -4,7 +4,7 @@ import { BlockSlider } from "../organism/BlockSlider";
 import { BlockGenre } from "../organism/BlockGenre";
 import { App } from "../../../types/app";
 import { Api } from "../../../types/api";
-import { useInfiniteScroll } from "../../lib/util/InfiniteScroll";
+import { useInfiniteScroll } from "../../lib/util/infinite-scroll";
 import { useWatchlist } from "../../context/Watchlist/WatchlistProvider";
 
 export interface IndexProps {

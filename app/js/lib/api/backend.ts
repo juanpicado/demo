@@ -5,7 +5,7 @@ import {
     itemsDetailsByMediaType,
     MOVIE_KEY,
     TV_KEY,
-} from "../util/MediaTypes";
+} from "../util/media-types";
 import { App } from "../../../types/app";
 
 const baseUrl = process.env.NEXT_PUBLIC_THE_MOVIE_DB_V3_BASE_URL;

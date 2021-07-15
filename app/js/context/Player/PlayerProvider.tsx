@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import dashjs, { MediaPlayerClass } from "dashjs";
 import { PlayerContext } from "./PlayerContext";
-import { exitFullscreen, isFullscreen, requestFullscreen } from "../../lib/util/Player";
+import { exitFullscreen, isFullscreen, requestFullscreen } from "../../lib/util/player";
 import { useWatchlist } from "../Watchlist/WatchlistProvider";
 import { useDispatch } from "react-redux";
 import { updateBuffer, updateProgress } from "../../lib/reducers/progress";

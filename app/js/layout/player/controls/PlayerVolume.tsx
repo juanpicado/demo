@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { Icon, Volume, VolumeMuted } from "../../../lib/util/Icon";
-import { useDrag } from "../../../lib/util/Drag";
+import { useDrag } from "../../../lib/util/drag";
 import { usePlayer } from "../../../context/Player/PlayerContext";
-import { classes } from "../../../lib/util/Classes";
+import { classes } from "../../../lib/util/classes";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../lib/store";
 

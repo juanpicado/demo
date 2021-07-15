@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { SearchCard } from "../atom/SearchCard";
-import { useSearch } from "../../lib/util/Search";
+import { useSearch } from "../../lib/util/search";
 
 interface SearchProps {
     type?: string;

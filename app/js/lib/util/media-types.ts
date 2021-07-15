@@ -1,6 +1,6 @@
 import { Api } from "../../../types/api";
-import { generateItemUrl } from "./Urls";
-import { parseDate } from "./Date";
+import { generateItemUrl } from "./url";
+import { parseDate } from "./date";
 import { App } from "../../../types/app";
 
 export const MOVIE_KEY = "movie";

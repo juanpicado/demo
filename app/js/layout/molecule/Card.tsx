@@ -1,12 +1,12 @@
 import React, { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { generateImageUrl } from "../../lib/util/Urls";
+import { generateImageUrl } from "../../lib/util/url";
 import { CardProgress } from "../atom/CardProgress";
 import { App } from "../../../types/app";
-import { cutText } from "../../lib/util/Text";
+import { cutText } from "../../lib/util/text";
 import { Icon, Star } from "../../lib/util/Icon";
-import { classes } from "../../lib/util/Classes";
+import { classes } from "../../lib/util/classes";
 import { useDispatch } from "react-redux";
 import { preloadItem } from "../../lib/reducers/items";
 import { useRouter } from "next/router";

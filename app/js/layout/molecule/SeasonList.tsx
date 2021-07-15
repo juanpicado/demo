@@ -3,10 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { App } from "../../../types/app";
 import { getSeasonById } from "../../lib/api/backend";
-import { generateImageUrl, generateItemUrl } from "../../lib/util/Urls";
+import { generateImageUrl, generateItemUrl } from "../../lib/util/url";
 import { Spinner } from "../atom/Spinner";
 import { Icon, Play } from "../../lib/util/Icon";
-import { cutText } from "../../lib/util/Text";
+import { cutText } from "../../lib/util/text";
 
 interface SeasonList extends App.Season {
     tv_id: number;

@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
-import { generateImageUrl } from "../../lib/util/Urls";
+import { generateImageUrl } from "../../lib/util/url";
 import { Button } from "../atom/Button";
-import { cutText } from "../../lib/util/Text";
+import { cutText } from "../../lib/util/text";
 import { App } from "../../../types/app";
 import { Plus, Check, Icon } from "../../lib/util/Icon";
 import { usePrefetch } from "../../lib/util/prefetch";

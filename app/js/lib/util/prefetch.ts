@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { useRef } from "react";
 import { preloadItem } from "../reducers/items";
-import { MediaTypes } from "./MediaTypes";
+import { MediaTypes } from "./media-types";
 
 export const usePrefetch = (id: number, type: MediaTypes) => {
     const router = useRouter();

@@ -3,7 +3,7 @@ import { PlayerProgress } from "./PlayerProgress";
 import { PlayerPlay } from "./PlayerPlay";
 import { PlayerFullscreen } from "./PlayerFullscreen";
 import { PlayerSkip } from "./PlayerSkip";
-import { classes } from "../../../lib/util/Classes";
+import { classes } from "../../../lib/util/classes";
 import { ArrowLeft, Icon } from "../../../lib/util/Icon";
 import { useRouter } from "next/router";
 import { PlayerVolume } from "./PlayerVolume";

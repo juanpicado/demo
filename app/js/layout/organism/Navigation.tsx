@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { NavigationLink } from "../atom/NavigationLink";
-import { MOVIE_KEY, TV_KEY } from "../../lib/util/MediaTypes";
+import { MOVIE_KEY, TV_KEY } from "../../lib/util/media-types";
 import { useRouter } from "next/router";
 import { MobileNavigation } from "../molecule/MobileNavigation";
 import { Icon, Hamburger, Close, SearchIcon } from "../../lib/util/Icon";
-import { classes } from "../../lib/util/Classes";
+import { classes } from "../../lib/util/classes";
 import { Search } from "../molecule/Search";
 
 export const Navigation: React.FC = () => {

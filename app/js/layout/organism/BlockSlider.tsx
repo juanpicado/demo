@@ -1,11 +1,11 @@
 import React, { useRef } from "react";
 import { App } from "../../../types/app";
 import { Card } from "../molecule/Card";
-import { useSlider } from "../../lib/util/Slider";
+import { useSlider } from "../../lib/util/slider";
 import { ChevronLeft, ChevronRight, Icon } from "../../lib/util/Icon";
-import { classes } from "../../lib/util/Classes";
+import { classes } from "../../lib/util/classes";
 import { useRouter } from "next/router";
-import { mediaTypes } from "../../lib/util/MediaTypes";
+import { mediaTypes } from "../../lib/util/media-types";
 import { SliderControls } from "../atom/SliderControls";
 import { useWatchlist } from "../../context/Watchlist/WatchlistProvider";
 

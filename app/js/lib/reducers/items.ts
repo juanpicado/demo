@@ -1,7 +1,7 @@
 import { App } from "../../../types/app";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getItemById } from "../api/backend";
-import { MediaTypes } from "../util/MediaTypes";
+import { MediaTypes } from "../util/media-types";
 import { RootState } from "../store";
 
 interface ItemsState {

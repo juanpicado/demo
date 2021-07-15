@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "../atom/Button";
 import Image from "next/image";
-import { generateImageUrl } from "../../lib/util/Urls";
+import { generateImageUrl } from "../../lib/util/url";
 import { App } from "../../../types/app";
 import { BlockSeasons } from "../organism/BlockSeasons";
 import { Close, Icon } from "../../lib/util/Icon";
