@@ -8,6 +8,9 @@
     left: 0;
     @include square(100%);
     overflow: hidden;
+    opacity: 0;
+    animation: fade-in 0.2s ease forwards;
+    will-change: opacity;
 
     .popup-overlay {
         position: absolute;
@@ -29,5 +32,11 @@
         @include square(100%);
         padding-top: 5rem;
         overflow-y: scroll;
+    }
+
+    @keyframes fade-in {
+        100% {
+            opacity: 1;
+        }
     }
 }
