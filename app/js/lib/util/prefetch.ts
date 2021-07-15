@@ -10,7 +10,7 @@ export const usePrefetch = (id: number, type: MediaTypes) => {
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     const onClick = () => {
-        router.push({ query: { id: id } }, undefined, { shallow: true });
+        router.push({ query: { ...router.query, id: id } }, undefined, { shallow: true });
     };
 
     const onMouseEnter = () => {

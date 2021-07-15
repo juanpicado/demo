@@ -59,7 +59,11 @@ export const PopUp: React.FC = () => {
                     recommendations={recommendations}
                     bookmarked={hasBookmark(item.id)}
                     toggleWatchlist={() => toggleWatchlistItem(item)}
-                    onClose={() => router.push({ query: {} }, undefined, { shallow: true })}
+                    onClose={() =>
+                        router.push({ query: { ...router.query, id: undefined } }, undefined, {
+                            shallow: true,
+                        })
+                    }
                 />
             </div>
             <button type="button" className="popup-overlay" />
