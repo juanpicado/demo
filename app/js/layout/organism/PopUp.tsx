@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { App } from "../../../types/app";
 import { PopUpFrame } from "../molecule/PopUpFrame";
 import { useWatchlist } from "../../context/Watchlist/WatchlistProvider";
-import { getItemsByGenre } from "../../lib/api/backend";
+import { getItemsByGenre, getRecommendations } from "../../lib/api/backend";
 
 export const PopUp: React.FC = () => {
     const router = useRouter();
@@ -47,16 +47,15 @@ export const PopUp: React.FC = () => {
             return;
         }
 
-        getRecommendations().catch(console.error);
+        fetchRecommendation().catch(console.error);
     }, [item]);
 
-    const getRecommendations = async () => {
+    const fetchRecommendation = async () => {
         if (!item) {
             return;
         }
 
-        const genreId = item.genres[0].id;
-        const res = await getItemsByGenre(genreId, item.media_type);
+        const res = await getRecommendations(item.id, item.media_type);
 
         // API doesn't support hits per page
         setRecommendations(res.filter(rec => rec.id !== item.id).slice(0, 8));

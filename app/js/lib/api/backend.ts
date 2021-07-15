@@ -3,6 +3,7 @@ import {
     itemDetailsByMediaType,
     itemsByMediaType,
     itemsDetailsByMediaType,
+    MediaTypes,
     MOVIE_KEY,
     TV_KEY,
 } from "../util/media-types";
@@ -149,6 +150,43 @@ export const searchItemByGenre = async (query: string, type: string): Promise<Ap
         }
         case TV_KEY: {
             const items = await searchTV(query);
+            return itemsByMediaType(items);
+        }
+        default:
+            throw new Error("Unspecified media type");
+    }
+};
+
+const getTvRecommendations = async (id: number): Promise<Api.TV[]> => {
+    const { results } = await db<Api.Page<Api.TV[]>>(`/tv/${id}/recommendations`);
+
+    return results.map(result => {
+        return {
+            ...result,
+            media_type: TV_KEY,
+        };
+    });
+};
+
+const getMovieRecommendations = async (id: number): Promise<Api.Movie[]> => {
+    const { results } = await db<Api.Page<Api.Movie[]>>(`/movie/${id}/recommendations`);
+
+    return results.map(result => {
+        return {
+            ...result,
+            media_type: MOVIE_KEY,
+        };
+    });
+};
+
+export const getRecommendations = async (id: number, type: MediaTypes) => {
+    switch (type) {
+        case MOVIE_KEY: {
+            const items = await getMovieRecommendations(id);
+            return itemsByMediaType(items);
+        }
+        case TV_KEY: {
+            const items = await getTvRecommendations(id);
             return itemsByMediaType(items);
         }
         default:

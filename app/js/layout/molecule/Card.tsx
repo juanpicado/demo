@@ -29,7 +29,7 @@ export const Card: React.FC<CardProps> = ({ imageSize, ...item }) => {
                 <div className="card-frame">
                     <div className="card-frame-title">{item.title}</div>
                     <div className="card-frame-group">
-                        <Rating vote={item.vote} />
+                        {item.vote > 0 && <Rating vote={item.vote} />}
                         <CardProgress id={item.id} />
                     </div>
                 </div>
