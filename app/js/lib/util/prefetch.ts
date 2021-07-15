@@ -4,7 +4,20 @@ import { useRef } from "react";
 import { preloadItem } from "../redux/reducer/items";
 import { MediaTypes } from "./media-types";
 
-export const usePrefetch = (id: number, type: MediaTypes) => {
+interface PrefetchData {
+    onClick: () => void;
+    onMouseEnter: () => void;
+    onMouseLeave: () => void;
+}
+
+/**
+ * A custom React hook to prefetch data on hover.
+ *
+ * @param {number} id - The item's id.
+ * @param {MediaTypes} type - The item's media type.
+ * @returns {PrefetchData} An object containing functions to trigger data fetching.
+ */
+export const usePrefetch = (id: number, type: MediaTypes): PrefetchData => {
     const router = useRouter();
     const dispatch = useDispatch();
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);

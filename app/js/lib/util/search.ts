@@ -2,13 +2,19 @@ import { useEffect, useState } from "react";
 import { searchItemByGenre } from "../api/backend";
 import { App } from "../../../types/app";
 
-interface UseSearchData {
+interface SearchData {
     results: App.Item[];
     search: string;
     setSearch: (value: string) => void;
 }
 
-export const useSearch = (type?: string): UseSearchData => {
+/**
+ * A custom React hook to process a search string.
+ *
+ * @param {string} type - The media type the search will take place for.
+ * @returns {SearchData} An object containing search results among other values and functions.
+ */
+export const useSearch = (type?: string): SearchData => {
     const [search, setSearch] = useState<string>("");
     const [results, setResults] = useState<App.Item[]>([]);
 

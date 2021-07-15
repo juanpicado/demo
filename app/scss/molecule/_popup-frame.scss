@@ -86,6 +86,11 @@
         }
     }
 
+    .item-info {
+        color: $white;
+        margin-top: 1rem;
+    }
+
     @include is-tablet {
         .popup-background-overlay {
             background: linear-gradient(0deg, $popup-black 0%, transparent 50%);

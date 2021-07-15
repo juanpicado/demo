@@ -1,5 +1,5 @@
 import { GetServerSidePropsContext } from "next";
-import { cutIdFromSlug } from "../util/url";
+import { idFromSlug } from "../util/url";
 import { getItemById } from "./backend";
 import { App } from "../../../types/app";
 
@@ -15,7 +15,7 @@ export const getServerSideItem = async (
         return null;
     }
 
-    const id = cutIdFromSlug(slug);
+    const id = idFromSlug(slug);
 
     if (!id) {
         return null;

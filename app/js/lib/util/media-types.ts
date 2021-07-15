@@ -1,5 +1,5 @@
 import { Api } from "../../../types/api";
-import { generateItemUrl } from "./url";
+import { generateSlug } from "./url";
 import { parseDate } from "./date";
 import { App } from "../../../types/app";
 
@@ -24,7 +24,7 @@ export const itemByMediaType = (item: Api.Item): App.Item => {
                 poster: item.poster_path,
                 backdrop: item.backdrop_path,
                 text: item.overview,
-                url: generateItemUrl(item.media_type, item.title, item.id),
+                url: generateSlug(item.media_type, item.title, item.id),
                 vote: item.vote_average,
                 media_type: item.media_type,
             };
@@ -36,7 +36,7 @@ export const itemByMediaType = (item: Api.Item): App.Item => {
                 poster: item.poster_path,
                 backdrop: item.backdrop_path,
                 text: item.overview,
-                url: generateItemUrl(item.media_type, item.name, item.id),
+                url: generateSlug(item.media_type, item.name, item.id),
                 vote: item.vote_average,
                 media_type: item.media_type,
             };
@@ -57,7 +57,7 @@ export const itemDetailsByMediaType = (item: Api.ItemDetails): App.ItemDetails =
                 poster: item.poster_path,
                 backdrop: item.backdrop_path,
                 text: item.overview,
-                url: generateItemUrl(item.media_type, item.title, item.id),
+                url: generateSlug(item.media_type, item.title, item.id),
                 genres: item.genres,
                 infos: [
                     parseDate(item.release_date),
@@ -75,7 +75,7 @@ export const itemDetailsByMediaType = (item: Api.ItemDetails): App.ItemDetails =
                 poster: item.poster_path,
                 backdrop: item.backdrop_path,
                 text: item.overview,
-                url: generateItemUrl(item.media_type, item.name, item.id),
+                url: generateSlug(item.media_type, item.name, item.id),
                 genres: item.genres,
                 infos: [item.genres.map(genre => genre.name).join(", ")],
                 media_type: item.media_type,

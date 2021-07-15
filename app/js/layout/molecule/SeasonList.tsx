@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { App } from "../../../types/app";
 import { getSeasonById } from "../../lib/api/backend";
-import { generateImageUrl, generateItemUrl } from "../../lib/util/url";
+import { generateImageUrl, generateSlug } from "../../lib/util/url";
 import { Spinner } from "../atom/Spinner";
 import { Icon, Play } from "../../lib/util/Icon";
 import { cutText } from "../../lib/util/text";
@@ -37,7 +37,7 @@ export const SeasonList: React.FC<SeasonList> = ({
                 episodes.map((episode, index) => (
                     <Link
                         key={index}
-                        href={"/watch" + generateItemUrl("tv", episode.name, tv_id)}
+                        href={"/watch" + generateSlug("tv", episode.name, tv_id)}
                         passHref>
                         <a className="season-list-episode">
                             <span className="season-list-episode-number">{index + 1}</span>

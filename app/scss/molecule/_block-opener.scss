@@ -17,20 +17,8 @@
         @include text(h1);
     }
 
-    .block-opener-info {
+    .item-info {
         margin-top: 1rem;
-        @include text(meta);
-    }
-
-    .block-opener-info-separator {
-        &::after {
-            content: "|";
-            margin: 0 1rem;
-        }
-
-        &:last-child {
-            display: none;
-        }
     }
 
     .block-opener-text {

@@ -1,4 +1,4 @@
-export const generateItemUrl = (type: string, title: string, id: string | number): string => {
+export const generateSlug = (type: string, title: string, id: number): string => {
     if (!title) {
         return "";
     }
@@ -6,7 +6,7 @@ export const generateItemUrl = (type: string, title: string, id: string | number
     return `/${type}/${encodeURIComponent(`${title.toLowerCase()}-${id}`)}`;
 };
 
-export const cutIdFromSlug = (slug: string): string => {
+export const idFromSlug = (slug: string): string => {
     const id = slug.match(/-([^\-]+)\/?$/);
     return id ? id[1] : "" || "";
 };

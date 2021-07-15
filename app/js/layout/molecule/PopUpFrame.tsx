@@ -8,6 +8,7 @@ import { Close, Icon } from "../../lib/util/Icon";
 import { WatchlistButton } from "../atom/WatchlistButton";
 import { BlockList } from "./BlockList";
 import { Rating } from "../atom/Rating";
+import { ItemInfo } from "../atom/ItemInfo";
 
 interface PopUpFrame {
     item: App.ItemDetails;
@@ -26,6 +27,7 @@ export const PopUpFrame: React.FC<PopUpFrame> = ({ item, onClose, recommendation
             <div className="popup-head">
                 <div className="popup-head-content">
                     <h1 className="popup-title">{item.title}</h1>
+                    <ItemInfo infos={item.infos} />
                     <div className="popup-controls">
                         <Button action={"/watch" + item.url}>Play</Button>
                         <Rating vote={item.vote} />
