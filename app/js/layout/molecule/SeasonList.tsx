@@ -3,9 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { App } from "../../../types/app";
 import { getSeasonById } from "../../lib/api/backend";
-import { generateImageUrl, generateItemUrl } from "../../lib/util/Urls";
+import { generateImageUrl, generateItemUrl } from "../../lib/util/url";
 import { Spinner } from "../atom/Spinner";
 import { Icon, Play } from "../../lib/util/Icon";
+import { cutText } from "../../lib/util/text";
 
 interface SeasonList extends App.Season {
     tv_id: number;
@@ -34,8 +35,11 @@ export const SeasonList: React.FC<SeasonList> = ({
         <div className="season-list">
             {episodes ? (
                 episodes.map((episode, index) => (
-                    <Link key={index} href={"/watch" + generateItemUrl("tv", episode.name, tv_id)}>
-                        <button type="button" className="season-list-episode">
+                    <Link
+                        key={index}
+                        href={"/watch" + generateItemUrl("tv", episode.name, tv_id)}
+                        passHref>
+                        <a className="season-list-episode">
                             <span className="season-list-episode-number">{index + 1}</span>
                             <div className="season-list-episode-image">
                                 {episode.still_path && (
@@ -47,9 +51,14 @@ export const SeasonList: React.FC<SeasonList> = ({
                                     />
                                 )}
                             </div>
-                            <span className="season-list-episode-name">{episode.name}</span>
+                            <div className="season-list-episode-text">
+                                <div className="season-list-episode-name">{episode.name}</div>
+                                <div className="season-list-episode-overview">
+                                    {cutText(episode.overview, 150)}
+                                </div>
+                            </div>
                             <Icon name="play" icon={Play} />
-                        </button>
+                        </a>
                     </Link>
                 ))
             ) : (

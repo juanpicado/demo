@@ -25,7 +25,7 @@ export const useSearch = (type?: string): UseSearchData => {
             const res = await searchItemByGenre(search, type);
             setResults(res);
         } else {
-            // Unfortunately the api does not allow to search for all media types at once
+            // The api does not allow to search for all media types at once
             const movie = await searchItemByGenre(search, "movie");
             const tv = await searchItemByGenre(search, "tv");
             setResults([...tv, ...movie]);

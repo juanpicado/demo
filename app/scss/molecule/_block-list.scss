@@ -1,0 +1,15 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+
+.block-list {
+    .block-list-title {
+        margin-bottom: 2rem;
+        @include text(h3);
+    }
+
+    .block-list-frame {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+        grid-gap: 2rem;
+    }
+}

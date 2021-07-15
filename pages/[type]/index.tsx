@@ -1,7 +1,7 @@
 import React from "react";
 import { GetStaticProps } from "next";
 import { getItemById, getGenres, getTrending } from "../../app/js/lib/api/backend";
-import { MOVIE_KEY, TV_KEY } from "../../app/js/lib/util/MediaTypes";
+import { MOVIE_KEY, TV_KEY } from "../../app/js/lib/util/media-types";
 import { Meta } from "../../app/js/lib/util/Meta";
 import { IndexProps, IndexTemplate } from "../../app/js/layout/template/IndexTemplate";
 
@@ -39,6 +39,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             daily,
             opener,
             genres,
+            type,
         },
         revalidate: 60 * 60,
     };

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { classes } from "../../../lib/util/Classes";
+import { classes } from "../../../lib/util/classes";
 import { usePlayer } from "../../../context/Player/PlayerContext";
-import { useDrag } from "../../../lib/util/Drag";
+import { useDrag } from "../../../lib/util/drag";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../lib/store";
 

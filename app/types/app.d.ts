@@ -1,5 +1,5 @@
 import { Api, Season } from "./api";
-import { MediaTypes } from "../js/lib/util/MediaTypes";
+import { MediaTypes } from "../js/lib/util/media-types";
 
 export namespace App {
     interface Item {

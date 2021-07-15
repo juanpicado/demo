@@ -3,8 +3,8 @@ import dynamic from "next/dynamic";
 import { GetServerSideProps } from "next";
 import { App } from "../../../app/types/app";
 import { getServerSideItem } from "../../../app/js/lib/api/server";
-import { cutText } from "../../../app/js/lib/util/Text";
-import { generateImageUrl } from "../../../app/js/lib/util/Urls";
+import { cutText } from "../../../app/js/lib/util/text";
+import { generateImageUrl } from "../../../app/js/lib/util/url";
 import { Meta } from "../../../app/js/lib/util/Meta";
 
 const Player = dynamic<WatchProps>(

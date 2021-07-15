@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ChevronDown, Icon } from "../../lib/util/Icon";
-import { classes } from "../../lib/util/Classes";
+import { classes } from "../../lib/util/classes";
 
 interface DropdownProps {
     options: string[];

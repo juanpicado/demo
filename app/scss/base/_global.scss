@@ -12,6 +12,16 @@ button {
     -webkit-tap-highlight-color: transparent;
 }
 
+.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
 #nprogress .bar {
     background: $primary !important;
 }

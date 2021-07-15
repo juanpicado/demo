@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { classes } from "../../lib/util/Classes";
+import { classes } from "../../lib/util/classes";
 
 interface ButtonProps {
     action: string | (() => void);
@@ -15,7 +15,7 @@ export const Button: React.FC<ButtonProps> = ({ isSecondary, action, children })
                     button: true,
                     "is-secondary": isSecondary,
                 })}>
-                <span className="button-text">{children}</span>
+                {children}{" "}
             </a>
         </Link>
     ) : (
@@ -26,7 +26,7 @@ export const Button: React.FC<ButtonProps> = ({ isSecondary, action, children })
                 "is-secondary": isSecondary,
             })}
             onClick={action}>
-            <span className="button-text">{children}</span>
+            {children}{" "}
         </button>
     );
 };

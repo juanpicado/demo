@@ -1,5 +1,5 @@
 import { GetServerSidePropsContext } from "next";
-import { cutIdFromSlug } from "../util/Urls";
+import { cutIdFromSlug } from "../util/url";
 import { getItemById } from "./backend";
 import { App } from "../../../types/app";
 

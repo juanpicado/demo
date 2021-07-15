@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import { generateImageUrl } from "../../lib/util/Urls";
+import { generateImageUrl } from "../../lib/util/url";
 import { Button } from "../atom/Button";
-import { cutText } from "../../lib/util/Text";
+import { cutText } from "../../lib/util/text";
 import { App } from "../../../types/app";
-import { classes } from "../../lib/util/Classes";
-import { Icon, Star } from "../../lib/util/Icon";
-import { useWatchlist } from "../../context/Watchlist/WatchlistProvider";
+import { Plus, Check, Icon } from "../../lib/util/Icon";
+import { usePrefetch } from "../../lib/util/prefetch";
+import { WatchlistButton } from "../atom/WatchlistButton";
 
 interface BlockOpenerProps extends App.ItemDetails {
     hasBookmark: boolean;
@@ -20,6 +20,8 @@ export const BlockOpener: React.FC<BlockOpenerProps> = ({
     isDetailsPage,
     ...item
 }) => {
+    const { onClick, onMouseEnter, onMouseLeave } = usePrefetch(item.id, item.media_type);
+
     return (
         <div className="block-opener">
             <div className="block-opener-inner">
@@ -41,22 +43,17 @@ export const BlockOpener: React.FC<BlockOpenerProps> = ({
                 <div className="block-opener-text">
                     {!isDetailsPage ? cutText(item.text) : item.text}
                 </div>
-                <div className="block-opener-controls">
+                <div
+                    className="block-opener-controls"
+                    onMouseEnter={onMouseEnter}
+                    onMouseLeave={onMouseLeave}>
                     <Button action={"/watch" + item.url}>Play</Button>
                     {!isDetailsPage && (
-                        <Button action={item.url} isSecondary>
+                        <Button action={onClick} isSecondary>
                             More info
                         </Button>
                     )}
-                    <button
-                        type="button"
-                        className={classes({
-                            "block-opener-watchlist-button": true,
-                            "is-active": hasBookmark,
-                        })}
-                        onClick={() => toggleWatchlistItem(item)}>
-                        <Icon name="star" icon={Star} />
-                    </button>
+                    <WatchlistButton item={item} />
                 </div>
             </div>
             {item.backdrop && (
