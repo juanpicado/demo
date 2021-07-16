@@ -29,6 +29,7 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => 
             const hls = new Hls();
             hls.loadSource(videoSrc);
             hls.attachMedia(el);
+            hls.subtitleDisplay = false;
             setPlayer(el);
         } else {
             el.src = videoSrc;
@@ -49,12 +50,10 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => 
             return;
         }
 
-        // const buffer = player.getBufferLength("video");
-        //
-        // if (buffer) {
-        //     const diff = (player.currentTime + buffer) / player.duration;
-        //     dispatch(updateBuffer(diff));
-        // }
+        const buffer = player.buffered.end(player.buffered.length - 1) || 0;
+
+        const diff = buffer / player.duration;
+        dispatch(updateBuffer(diff));
     };
 
     const timeBy = (abs: number): string => {
@@ -186,7 +185,15 @@ export const PlayerProvider: React.FC<PlayerProvider> = ({ item, children }) => 
     const onLoadedMetadata = () => {
         checkWatchlist();
 
-        if (!player || !player.paused) {
+        if (!player) {
+            return;
+        }
+
+        for (let i = 0; i < player.textTracks.length; i++) {
+            player.textTracks[i].mode = "hidden";
+        }
+
+        if (!player.paused) {
             return;
         }
 
