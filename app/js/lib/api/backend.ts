@@ -169,7 +169,7 @@ const getTvRecommendations = async (id: number): Promise<Api.TV[]> => {
 };
 
 const getMovieRecommendations = async (id: number): Promise<Api.Movie[]> => {
-    const { results } = await db<Api.Page<Api.Movie[]>>(`/movie/${id}/recommendations`);
+    const { results } = await db<Api.Page<Api.Movie[]>>(`/movie/${id}/similar`);
 
     return results.map(result => {
         return {

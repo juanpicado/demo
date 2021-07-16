@@ -31,7 +31,7 @@ export const usePrefetch = (id: number, type: MediaTypes): PrefetchData => {
     const onMouseEnter = () => {
         timeoutRef.current = setTimeout(() => {
             dispatch(preloadItem({ id, type }));
-        }, 300);
+        }, 500);
     };
 
     const onMouseLeave = () => {
