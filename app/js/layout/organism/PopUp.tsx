@@ -26,7 +26,7 @@ export const PopUp: React.FC = () => {
 
         stageRef.current.scrollTop = 0;
 
-        return () => reset();
+        return () => setRecommendations(null);
     }, [id]);
 
     useEffect(() => {
@@ -64,11 +64,6 @@ export const PopUp: React.FC = () => {
 
         // API doesn't support hits per page
         setRecommendations(res.filter(rec => rec.id !== item.id).slice(0, 8));
-    };
-
-    const reset = () => {
-        setItem(null);
-        setRecommendations(null);
     };
 
     if (!item) return null;
