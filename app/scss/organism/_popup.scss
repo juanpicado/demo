@@ -23,14 +23,24 @@
 
     .popup-stage {
         position: absolute;
-        z-index: 1;
         top: 0;
         left: 0;
         display: flex;
         flex-direction: column;
-        align-items: center;
         @include square(100%);
         overflow-y: scroll;
+    }
+
+    .popup-frame {
+        z-index: 1;
+    }
+
+    .popup-stage-inner {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        flex: 1;
     }
 
     @keyframes fade-in {
@@ -40,7 +50,7 @@
     }
 
     @include is-desktop {
-        .popup-stage {
+        .popup-stage-inner {
             padding-top: 5rem;
         }
     }

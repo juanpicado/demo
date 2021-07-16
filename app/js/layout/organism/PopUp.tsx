@@ -66,29 +66,29 @@ export const PopUp: React.FC = () => {
         setRecommendations(res.filter(rec => rec.id !== item.id).slice(0, 8));
     };
 
+    const onClose = () => {
+        router.push({ query: { ...router.query, id: undefined, media: undefined } }, undefined, {
+            shallow: true,
+        });
+    };
+
     if (!item) return null;
 
     return (
         <div className="popup">
             <div ref={stageRef} className="popup-stage">
-                <PopUpFrame
-                    key={item.id}
-                    item={item}
-                    recommendations={recommendations}
-                    bookmarked={hasBookmark(item.id)}
-                    toggleWatchlist={() => toggleWatchlistItem(item)}
-                    onClose={() =>
-                        router.push(
-                            { query: { ...router.query, id: undefined, media: undefined } },
-                            undefined,
-                            {
-                                shallow: true,
-                            }
-                        )
-                    }
-                />
+                <div className="popup-stage-inner">
+                    <PopUpFrame
+                        key={item.id}
+                        item={item}
+                        recommendations={recommendations}
+                        bookmarked={hasBookmark(item.id)}
+                        toggleWatchlist={() => toggleWatchlistItem(item)}
+                        onClose={onClose}
+                    />
+                    <button type="button" className="popup-overlay" onClick={onClose} />
+                </div>
             </div>
-            <button type="button" className="popup-overlay" />
         </div>
     );
 };
