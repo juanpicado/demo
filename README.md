@@ -1,6 +1,6 @@
-A small video streaming demo platform built with Next.js using a custom video player, providing a streaming example following the HLS protocol.
+A video streaming demo platform built with Next.js using a custom video player, providing a streaming example following the HLS protocol.
 
-Check it out to explore all features (such as keep watching, watchlist, tv show seasons, etc.): https://stream-io.vercel.app/
+Check it out to explore all features: https://stream-io.vercel.app/
 
 ## Frontend
 - React.js
@@ -18,7 +18,6 @@ The following api is being utilized: https://developers.themoviedb.org/3/getting
 Overview pages like "Home", "TV" and "Movie" are being pre-rendered on build and revalidated every hour (page visit premised), hence are extremely performant and barely have any loading time. 
 
 ### Clientside
-Since every item's details shouldn't be fetched serverside and the application is using a pop-up for seamless user experience, item related details are fetched clientside on demand:
 1. Prefetch on hover using redux async thunk
 2. Url parameter with id on click to open popup
 3. Get state if available, if not yet, wait for updated state
