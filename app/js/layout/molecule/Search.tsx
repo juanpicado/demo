@@ -1,14 +1,33 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
+import debounce from "lodash/debounce";
 import { SearchCard } from "../atom/SearchCard";
 import { useSearch } from "../../lib/util/search";
+import { App } from "../../../types/app";
 
 interface SearchProps {
     type?: string;
 }
 
 export const Search: React.FC<SearchProps> = ({ type }) => {
-    const { search, setSearch, results } = useSearch(type);
+    const { searchFetch } = useSearch(type);
+    const [results, setResults] = useState<App.Item[]>([]);
     const inputRef = useRef<HTMLInputElement | null>(null);
+    const handleSearch = (e: any) => {
+        if ((e.target as HTMLInputElement).value) {
+            fetchDebounce((e.target as HTMLInputElement).value);
+        }
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const fetchData = async (search: string) => {
+        try {
+            const response = await searchFetch(search);
+            setResults(response);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    const fetchDebounce = useMemo(() => debounce(fetchData, 200), [fetchData]);
 
     useEffect(() => {
         if (inputRef.current) {
@@ -28,8 +47,7 @@ export const Search: React.FC<SearchProps> = ({ type }) => {
                     type="text"
                     name="search"
                     placeholder="Whatup?"
-                    value={search}
-                    onInput={e => setSearch((e.target as HTMLInputElement).value)}
+                    onChange={handleSearch}
                 />
                 <div className="search-result-list">
                     <div className="search-result-list-frame">

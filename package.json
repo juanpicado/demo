@@ -13,6 +13,8 @@
     "keen-slider": "^5.5.1",
     "next": "^11.0.0",
     "react": "^17.0.2",
+    "lodash": "4.17.21",
+    "p-debounce": "2.1.0",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
     "redux-logger": "^3.0.6"
@@ -20,6 +22,7 @@
   "devDependencies": {
     "@types/react": "^17.0.3",
     "@types/react-redux": "^7.1.18",
+    "@types/lodash": "4.14.175",
     "@types/redux-logger": "^3.0.9",
     "eslint": "^7.28.0",
     "eslint-config-next": "^11.0.0",

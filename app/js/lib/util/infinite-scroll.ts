@@ -22,6 +22,7 @@ export const useInfiniteScroll = (options: InfiniteScrollOptions): UseInfiniteSc
         };
 
         window.addEventListener("scroll", onScroll, { passive: true });
+        // bad boy 👿, this should be commented out
         return () => window.removeEventListener("scroll", onScroll);
     }, [page]);
 
